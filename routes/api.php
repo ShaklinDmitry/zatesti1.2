@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
+Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
+
