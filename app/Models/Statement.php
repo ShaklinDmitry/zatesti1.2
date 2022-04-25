@@ -18,8 +18,8 @@ class Statement extends Model
      * @param Request $request
      * @return bool
      */
-    public function add(Request $request){
-        $this->text = $request->text;
+    public function add(Request $text){
+        $this->text = $text;
         $result = $this->save();
         return $result;
     }

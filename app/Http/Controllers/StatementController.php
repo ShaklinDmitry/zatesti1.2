@@ -13,10 +13,16 @@ class StatementController extends Controller
      * @return json
      */
     public function createStatement(Request $request){
-        $statement = new Statement();
-        $result = $statement->add($request);
 
-        if($result){
+        $statement = new Statement();
+
+        if(empty($request->text)){
+            $createStatementResult = false;
+        }else{
+            $createStatementResult = $statement->add($request);
+        }
+
+        if($createStatementResult){
             $responseData = [
                 "data" => [
                     "message" => "Statement was create successfull.",
@@ -27,7 +33,7 @@ class StatementController extends Controller
         }else{
             $responseData = [
                 "error" => [
-                    "message" => "Statement not created"
+                    "message" => "Statement not created."
                 ]
             ];
             return response() -> json($responseData,200);

@@ -30,6 +30,20 @@ services:
     networks:
       - travellist
 
+  mysql_test:
+      image: mysql:8
+      volumes:
+          - ./mysqldatatest:/var/lib/mysql
+      environment:
+          - "MYSQL_ROOT_PASSWORD=secret"
+          - "MYSQL_DATABASE=zatestiBaseTest"
+          - "MYSQL_USER=user"
+          - "MYSQL_PASSWORD=password"
+      ports:
+          - "3321:3306"
+      networks:
+          - travellist
+
   nginx:
     image: nginx:alpine
     container_name: travellist-nginx
