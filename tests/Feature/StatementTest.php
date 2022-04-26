@@ -26,6 +26,11 @@ class StatementTest extends TestCase
             );
     }
 
+    /**
+     * Тестирование неудачного создания высказывания, когда при создании требуемого поля нет
+     *
+     * @return void
+     */
     public function test_failed_create_statement(){
         $response = $this->post('/api/statements',
             ['wrongField' => "new statement"]);
@@ -36,6 +41,24 @@ class StatementTest extends TestCase
             ]
             ]
         );
+    }
+
+
+    /**
+     * Тестирование получения списка высказываний
+     *
+     * @return void
+     */
+    public function test_get_statements(){
+        $this->artisan('migrate:fresh');
+
+         $this->post('/api/statements',
+            ['text' => "test statement"]);
+
+        $response = $this->get('/api/statements');
+
+        dd($response);
+
     }
 
 

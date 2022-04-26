@@ -19,7 +19,7 @@ class StatementController extends Controller
         if(empty($request->text)){
             $createStatementResult = false;
         }else{
-            $createStatementResult = $statement->add($request);
+            $createStatementResult = $statement->add($request->text);
         }
 
         if($createStatementResult){
@@ -43,7 +43,7 @@ class StatementController extends Controller
 
     /**
      * получить все высказывания
-     * @return void
+     * @return json
      */
     public function getStatements(){
         $statement = new Statement();
