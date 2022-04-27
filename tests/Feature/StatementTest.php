@@ -57,7 +57,18 @@ class StatementTest extends TestCase
 
         $response = $this->get('/api/statements');
 
-        dd($response);
+        $response->assertJson(
+            [
+                "data" => [
+                    "statements" => [
+                        array(
+                            'text' => 'test statement',
+                        )]
+                ]
+            ]
+        );
+
+    //    dd($response);
 
     }
 
