@@ -52,7 +52,7 @@ class StatementTest extends TestCase
     public function test_get_statements(){
         $this->artisan('migrate:fresh');
 
-         $this->post('/api/statements',
+        $this->post('/api/statements',
             ['text' => "test statement"]);
 
         $response = $this->get('/api/statements');
@@ -67,10 +67,56 @@ class StatementTest extends TestCase
                 ]
             ]
         );
+    }
 
-    //    dd($response);
+    /**
+     * Тестирование удачного удаления высказывания
+     *
+     * @return void
+     */
+    public function test_success_delete_statement(){
+        $this->artisan('migrate:fresh');
+
+        $this->post('/api/statements',
+            ['text' => "test statement"]);
+
+        $getStatementsResponse = $this->get('/api/statements');
+
+        $id  = $getStatementsResponse['data']['statements'][0]['id'];
+
+        $deleteResponse = $this->delete('/api/statements',
+                            ['id' => $id]);
+
+        $deleteResponse->assertJson(
+            ["data" => [
+                "message" => "Statement was deleted."
+                ]
+            ]
+        );
 
     }
+
+
+    /**
+     * Тестирование неудачного удаления высказывания
+     *
+     * @return void
+     */
+    public function test_failed_delete_statement(){
+        $this->artisan('migrate:fresh');
+
+        $deleteResponse = $this->delete('/api/statements',
+            ['id' => -1]);
+
+        $deleteResponse->assertJson(
+            ["error" => [
+                "message" => "Statement not deleted."
+            ]
+            ]
+        );
+
+    }
+
 
 
 }

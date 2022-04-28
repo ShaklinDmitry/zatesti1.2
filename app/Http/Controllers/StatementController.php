@@ -58,4 +58,35 @@ class StatementController extends Controller
 
         return $response;
     }
+
+
+    /**
+     * Удалить высказывание
+     *
+     * @return json
+     */
+    public function deleteStatement(Request $request){
+        $statement = new Statement();
+
+        $result = $statement->deleteItem($request->id);
+
+        if($result){
+            $responseData = [
+                "data" => [
+                    "message" => "Statement was deleted.",
+                ]
+            ];
+
+            return response() -> json($responseData, 200);
+        }else{
+            $responseData = [
+                "error" => [
+                    "message" => "Statement not deleted."
+                ]
+            ];
+            return response() -> json($responseData,200);
+        }
+
+    }
+
 }

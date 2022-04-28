@@ -32,4 +32,17 @@ class Statement extends Model
     public function getAll(){
         return $this->all();
     }
+
+
+    /**
+     * Удалить элемент по id
+     * @param $id
+     * @return bool|void|null
+     */
+    public function deleteItem($id){
+        return $this->select('*')->where([
+            ['id', '=', $id]
+        ])->delete();
+
+    }
 }

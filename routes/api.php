@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use NotificationChannels\Telegram\TelegramUpdates;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
 Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
-
+Route::delete('statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
