@@ -25,15 +25,7 @@ Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'ge
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 
 
-Route::get('/sendtouser', function(){
-
-    $user = \App\Models\User::find(1);
-
-    Auth::login($user);
-    $user = auth()->user();
-  //  dd($user);
-    $user->notify(new \App\Notifications\TelegramNotification('new message'));
-});
+Route::post('/notification', [\App\Http\Controllers\NotificationController::class, 'sendNotification']);
 
 Route::get('telegram', function () {
     $updates = TelegramUpdates::create()
