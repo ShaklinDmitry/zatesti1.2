@@ -45,4 +45,33 @@ class Statement extends Model
         ])->delete();
 
     }
+
+
+    /**
+     * Получить высказывание, которое еще не было отправлено
+     * @return void
+     */
+    public function getNotSendedStatement(){
+        return $this->select('*')->where(
+            [
+                ['send_date_time', '=', '1970-01-01 00:00:00']
+            ]
+        )->first();
+    }
+
+
+    /**
+     *  Отметить время отправки высказывания
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function markSendedStatement($id){
+        return $this->where(
+            [
+                ['id', '=', $id]
+            ]
+        )->update(['send_date_time' => NOW()]);
+    }
+
 }
