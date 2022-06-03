@@ -25,7 +25,7 @@ Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'ge
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 
 
-Route::post('/notification', [\App\Http\Controllers\NotificationController::class, 'sendNotification']);
+Route::get('/notification', [\App\Http\Controllers\NotificationController::class, 'sendNotification']);
 
 Route::get('telegram', function () {
     $updates = TelegramUpdates::create()
