@@ -33,7 +33,12 @@ class StatementNotificationTest extends TestCase
      * @return void
      */
     public function test_find_user_for_sending_statement(){
-
+        $this->artisan('migrate:fresh');
+        $user = User::factory()->create();
+        $user = \App\Models\User::find(1);
+        $this->assertNotNull(
+            $user
+        );
     }
 
 
