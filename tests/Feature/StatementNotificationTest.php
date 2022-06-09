@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
+use Illuminate\Support\Facades\DB;
 
 class StatementNotificationTest extends TestCase
 {
@@ -60,7 +61,27 @@ class StatementNotificationTest extends TestCase
         );
     }
 
+    /**
+     * Тестирование пометки отправленного высказывания(чтобы далее оно больше не отправлялось повторно)
+     * @return void
+     */
+    public function test_marking_sended_statement(){
+        $this->artisan('migrate:fresh');
 
+        $response = $this->post('/api/statements',
+            ['text' => "new statement for testing send statement"]);
+
+        $statementModel = new Statement();
+        $statement = $statementModel->getNotSendedStatement();
+
+        $statement->markSendedStatement($statement->id);
+
+        $markedStatement = DB::table('statement')->where('send_date_time','<>', '1970-01-01 00:00:00')->first();
+
+        $this->assertNotNull(
+            $markedStatement
+        );
+    }
 
 
 }
