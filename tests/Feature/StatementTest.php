@@ -117,6 +117,26 @@ class StatementTest extends TestCase
 
     }
 
+    /**
+     * Тестирование создания текста, который потом будет расперсен на высказывания
+     *
+     * @return void
+     */
+    public function test_create_text_for_parsing_into_statements(){
+        $this->artisan('migrate:fresh');
+
+        $response = $this->post('/api/statements/text',
+            ['text' => "test text for parsing"]);
+
+        $response->assertJson(
+            ["data" => [
+                "message" => "Text was added."
+            ]
+            ]
+        );
+
+    }
+
 
 
 }

@@ -11,7 +11,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel-notification-channels/telegram": "2.0.0"
+        "laravel-notification-channels/telegram": "2.0.0",
+        "doctrine/dbal": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

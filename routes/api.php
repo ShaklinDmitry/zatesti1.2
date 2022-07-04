@@ -27,6 +27,9 @@ Route::delete('/statements',[\App\Http\Controllers\StatementController::class, '
 
 Route::get('/notification', [\App\Http\Controllers\NotificationController::class, 'sendNotification']);
 
+Route::post('/statements/text', [\App\Http\Controllers\StatementController::class, 'createTextForParsingIntoStatements']);
+
+
 Route::get('telegram', function () {
     $updates = TelegramUpdates::create()
         // (Optional). Get's the latest update. NOTE: All previous updates will be forgotten using this method.
