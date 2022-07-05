@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Statement;
 use App\Models\TextForParsingIntoStatements;
+use App\Services\ParseTextForStatementsService;
 use Illuminate\Http\Request;
 
 class StatementController extends Controller
@@ -116,6 +117,12 @@ class StatementController extends Controller
                 ];
                 return response() -> json($responseData,200);
             }
+    }
+
+
+    public function parseTextToCreateStatements(){
+        $parseTextForStatementService = new ParseTextForStatementsService();
+        $parseTextForStatementService->parseText();
     }
 
 }

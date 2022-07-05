@@ -49,7 +49,7 @@ class Statement extends Model
 
     /**
      * Получить высказывание, которое еще не было отправлено
-     * @return void
+     * @return model
      */
     public function getNotSendedStatement(){
         return $this->select('*')->where(
