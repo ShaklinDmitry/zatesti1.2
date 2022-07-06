@@ -25,9 +25,10 @@ Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'ge
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 
 
-Route::get('/notification', [\App\Http\Controllers\NotificationController::class, 'sendNotification']);
+Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);
 
-Route::post('/statements/text', [\App\Http\Controllers\StatementController::class, 'createTextForParsingIntoStatements']);
+Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
+Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
 
 
 Route::get('telegram', function () {

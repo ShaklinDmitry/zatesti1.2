@@ -54,7 +54,7 @@ class StatementNotificationTest extends TestCase
             ['text' => "new statement for testing send statement"]);
 
         $statement = new Statement();
-        $notSendedStatement = $statement->getNotSendedStatement();
+        $notSendedStatement = $statement->getStatementForSending();
 
         $this->assertNotNull(
             $notSendedStatement
@@ -72,9 +72,9 @@ class StatementNotificationTest extends TestCase
             ['text' => "new statement for testing send statement"]);
 
         $statementModel = new Statement();
-        $statement = $statementModel->getNotSendedStatement();
+        $statement = $statementModel->getStatementForSending();
 
-        $statement->markSendedStatement($statement->id);
+        $statement->markStatementHasBeenSent($statement->id);
 
         $markedStatement = DB::table('statement')->where('send_date_time','<>', '1970-01-01 00:00:00')->first();
 

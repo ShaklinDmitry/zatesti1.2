@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Statement;
-use App\Models\TextForParsingIntoStatements;
-use App\Services\ParseTextForStatementsService;
+use App\Models\TextForSplitIntoStatements;
+use App\Services\SplitTextForStatementsService;
 use Illuminate\Http\Request;
 
 class StatementController extends Controller
@@ -91,38 +91,5 @@ class StatementController extends Controller
 
     }
 
-    /**
-     * Функция, которая получает текст, который дальше парсится в высказывания
-     *
-     * @return void
-     */
-    public function createTextForParsingIntoStatements(Request $request){
-            $textForParsing = new TextForParsingIntoStatements();
-
-            $result = $textForParsing->addText($request->text);
-
-            if($result){
-                $responseData = [
-                    "data" => [
-                        "message" => "Text was added.",
-                    ]
-                ];
-
-                return response() -> json($responseData, 200);
-            }else{
-                $responseData = [
-                    "error" => [
-                        "message" => "Text was not added."
-                    ]
-                ];
-                return response() -> json($responseData,200);
-            }
-    }
-
-
-    public function parseTextToCreateStatements(){
-        $parseTextForStatementService = new ParseTextForStatementsService();
-        $parseTextForStatementService->parseText();
-    }
 
 }
