@@ -7,7 +7,7 @@ use App\Models\Statement;
 class StatementNotificationService
 {
 
-    /**
+    /*
      * Отправить высказывание
      * @return void
      */
