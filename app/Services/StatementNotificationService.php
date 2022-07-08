@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Statement;
+use Illuminate\Support\Facades\Auth;
 
 class StatementNotificationService
 {
@@ -22,5 +23,14 @@ class StatementNotificationService
         $user->notify(new \App\Notifications\TelegramNotification($statement->text));
 
         $statement->markStatementHasBeenSent($statement->id);
+
+        $response = [
+            "data" => [
+                "message" => "Notification has been sended.",
+            ]
+        ];
+
+        return response() -> json($response, 200);
+
     }
 }

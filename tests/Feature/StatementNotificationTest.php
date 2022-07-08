@@ -15,8 +15,23 @@ class StatementNotificationTest extends TestCase
 {
 
     public function test_send_notification(){
+        $this->artisan('migrate:fresh');
+
+        $user = User::factory()->create();
+
+        $this->post('/api/statements',
+            ['text' => "new statement for testing send statement"]);
+
         $response = $this->get('/api/notification');
 
+        dd($response);
+
+        $response->assertJson(
+            ["data" => [
+                "message" => "Notification has been sended."
+                ]
+            ]
+        );
     }
 
 

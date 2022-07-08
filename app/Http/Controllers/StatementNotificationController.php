@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Statement;
 use App\Services\StatementNotificationService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\DB;
 
 class StatementNotificationController extends Controller
