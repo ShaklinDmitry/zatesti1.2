@@ -23,12 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
 Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
+Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
 
 
 Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);
-
-Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
-Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
 
 
 Route::get('telegram', function () {

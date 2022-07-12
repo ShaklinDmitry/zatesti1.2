@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Statement;
 use App\Models\User;
 use App\Notifications\TelegramNotification;
+use App\Services\StatementNotificationService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
@@ -22,13 +23,14 @@ class StatementNotificationTest extends TestCase
         $this->post('/api/statements',
             ['text' => "new statement for testing send statement"]);
 
+        Notification::fake();
+
         $response = $this->get('/api/notification');
 
-        dd($response);
-
         $response->assertJson(
-            ["data" => [
-                "message" => "Notification has been sended."
+            [
+                "data" => [
+                    "message" => "Notification has been sended.",
                 ]
             ]
         );

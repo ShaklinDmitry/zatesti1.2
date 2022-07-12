@@ -17,6 +17,8 @@ class StatementNotificationController extends Controller
      */
     public function sendStatementNotification(){
         $statementNotificationService = new StatementNotificationService();
-        $statementNotificationService->sendStatementNotification();
+        $result = $statementNotificationService->sendStatementNotification();
+
+        return $result;
     }
 }
