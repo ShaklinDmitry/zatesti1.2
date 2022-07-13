@@ -67,10 +67,10 @@ class StatementNotificationTest extends TestCase
 
 
     /**
-     * Тестирование получения неотправленных сообщений
+     * Тестирование функционала на получение сообщений для отправки. Случай когда есть сообщения, которые нужно отправлять
      * @return void
      */
-    public function test_get_statement_for_sending(){
+    public function test_get_statement_for_sending_true(){
         $this->artisan('migrate:fresh');
 
         $response = $this->post('/api/statements',
@@ -79,7 +79,24 @@ class StatementNotificationTest extends TestCase
         $statement = new Statement();
         $statementForSending = $statement->getStatementForSending();
 
+        //если не пуст тогда все ОК
         $this->assertNotNull(
+            $statementForSending
+        );
+    }
+
+    /**
+     * Тестирование функционала на получение сообщений для отправки. Случай когда нет сообщений, которые нужно отправлять
+     * @return void
+     */
+    public function test_get_statement_for_sending_false(){
+        $this->artisan('migrate:fresh');
+
+        $statement = new Statement();
+        $statementForSending = $statement->getStatementForSending();
+
+        //если не пуст тогда все ОК
+        $this->assertNull(
             $statementForSending
         );
     }
@@ -88,7 +105,27 @@ class StatementNotificationTest extends TestCase
      * Тестирование пометки отправленного высказывания(чтобы далее оно больше не отправлялось повторно)
      * @return void
      */
-    public function test_mark_sended_statement(){
+    public function test_mark_sended_statement_true(){
+        $this->artisan('migrate:fresh');
+
+        $response = $this->post('/api/statements',
+            ['text' => "new statement for testing send statement"]);
+
+        $statementModel = new Statement();
+        $statement = $statementModel->getStatementForSending();
+
+        $markedStatement = DB::table('statement')->where('send_date_time','<>', '1970-01-01 00:00:00')->first();
+
+        $this->assertNull(
+            $markedStatement
+        );
+    }
+
+    /**
+     * Тестирование пометки отправленного высказывания(чтобы далее оно больше не отправлялось повторно)
+     * @return void
+     */
+    public function test_mark_sended_statement_false(){
         $this->artisan('migrate:fresh');
 
         $response = $this->post('/api/statements',
