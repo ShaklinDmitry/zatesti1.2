@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TextForSplitIntoStatements;
-use App\Services\SplitTextForStatementsService;
+use App\Services\SplitTextIntoStatementsService;
 use Illuminate\Http\Request;
 
 class TextForStatementsController extends Controller
@@ -38,7 +38,7 @@ class TextForStatementsController extends Controller
 
 
     public function splitTextIntoStatements(){
-        $splitTextForStatementService = new SplitTextForStatementsService();
+        $splitTextForStatementService = new SplitTextIntoStatementsService();
         $statements = $splitTextForStatementService->getStatements();
 
 

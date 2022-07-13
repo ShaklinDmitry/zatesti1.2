@@ -14,9 +14,12 @@ class TextForSplitIntoStatements extends Model
     /**
      * Добавить текст для последующего его парсинга
      * @param $text
-     * @return mixed
+     * @return bool
      */
     public function addText($text){
+        if(is_null($this->text)){
+            return false;
+        }
         $this->text = $text;
         $result = $this->save();
         return $result;

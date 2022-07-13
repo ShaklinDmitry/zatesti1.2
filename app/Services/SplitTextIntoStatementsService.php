@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\TextForSplitIntoStatements;
 
-class SplitTextForStatementsService
+class SplitTextIntoStatementsService
 {
 
     /**
@@ -16,9 +16,7 @@ class SplitTextForStatementsService
 
         $text = $textForParsing->getText();
 
-        dd($text);
-
-
+        return $text;
     }
 
 }
