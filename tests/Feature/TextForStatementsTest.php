@@ -55,13 +55,22 @@ class TextForStatementsTest extends TestCase
     public function test_get_statements_from_text(){
         $this->artisan('migrate:fresh');
 
+//        $this->post('/api/statements/text',
+//            ['text' => "Sentence number1. Sentence number 2. Sentence number 3."]);
+
         $this->post('/api/statements/text',
-            ['text123' => "Sentence number1. Sentence number 2. Sentence number 3."]);
+            ['text' => ""]);
 
         $textForStatementsService = new TextForStatementsService();
         $statements = $textForStatementsService->getStatements();
 
-        
+        dd($statements);
+
+        $this->assertEquals(
+            3,
+            count($statements) - 1,
+            "there must be 3 sentences"
+        );
 
     }
 
