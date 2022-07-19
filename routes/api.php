@@ -24,6 +24,7 @@ Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'c
 Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
+Route::post('/statements/textsplitter', [\App\Http\Controllers\TextForStatementsController::class, 'splitTextIntoStatements']);
 
 
 Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);

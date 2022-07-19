@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Statement;
-use App\Models\TextForSplitIntoStatements;
-use App\Services\SplitTextIntoStatementsService;
+use App\Models\TextForStatements;
+use App\Services\TextForStatementsService;
 use Illuminate\Http\Request;
 
 class StatementController extends Controller

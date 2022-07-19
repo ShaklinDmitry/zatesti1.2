@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TextForSplitIntoStatements extends Model
+class TextForStatements extends Model
 {
     use HasFactory;
 
@@ -17,7 +17,8 @@ class TextForSplitIntoStatements extends Model
      * @return bool
      */
     public function addText($text){
-        if(is_null($this->text)){
+
+        if(is_null($text)){
             return false;
         }
         $this->text = $text;

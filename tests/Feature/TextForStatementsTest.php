@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Services\TextForStatementsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -19,8 +20,6 @@ class TextForStatementsTest extends TestCase
 
         $response = $this->post('/api/statements/text',
             ['text' => "new statement"]);
-
-        dd($response);
 
         $response->assertJson(
             [
@@ -50,6 +49,19 @@ class TextForStatementsTest extends TestCase
                 ]
             ]
         );
+
+    }
+
+    public function test_get_statements_from_text(){
+        $this->artisan('migrate:fresh');
+
+        $this->post('/api/statements/text',
+            ['text123' => "Sentence number1. Sentence number 2. Sentence number 3."]);
+
+        $textForStatementsService = new TextForStatementsService();
+        $statements = $textForStatementsService->getStatements();
+
+        
 
     }
 

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TextForSplitIntoStatements;
-use App\Services\SplitTextIntoStatementsService;
+use App\Models\Statement;
+use App\Models\TextForStatements;
+use App\Services\TextForStatementsService;
 use Illuminate\Http\Request;
 
 class TextForStatementsController extends Controller
@@ -14,7 +15,7 @@ class TextForStatementsController extends Controller
      * @return void
      */
     public function createText(Request $request){
-        $textForParsing = new TextForSplitIntoStatements();
+        $textForParsing = new TextForStatements();
 
         $result = $textForParsing->addText($request->text);
 
@@ -36,12 +37,28 @@ class TextForStatementsController extends Controller
         }
     }
 
-
+    /**
+     * разделить текст на высказывания и записать в БД
+     *
+     * @return mixed
+     */
     public function splitTextIntoStatements(){
-        $splitTextForStatementService = new SplitTextIntoStatementsService();
-        $statements = $splitTextForStatementService->getStatements();
+        $textForStatementsService = new TextForStatementsService();
+        $statements = $textForStatementsService->getStatements();
 
 
+        foreach ($statements as $text){
+            $statement = new Statement();
+            $statement->add($text);
+        }
+
+        $responseData = [
+            "data" => [
+                "message" => "The text was divided into sentences.",
+            ]
+        ];
+
+        return response() -> json($responseData,200);
     }
 
 }
