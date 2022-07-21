@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\TextForStatements;
 
+
 class TextForStatementsService
 {
 
@@ -14,7 +15,11 @@ class TextForStatementsService
     public function getStatements(){
         $textForParsing = new TextForStatements();
 
-        $text = $textForParsing->getText();
+        try{
+            $text = $textForParsing->getText();
+        }catch(Exception $e){
+            print_r($e);
+        }
 
         $statements = explode(".", $text->text);
 

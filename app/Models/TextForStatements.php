@@ -32,10 +32,16 @@ class TextForStatements extends Model
      * @return mixed
      */
     public function getText(){
-        return $this->select('*')->where(
+        $text = $this->select('*')->where(
             [
                 ['is_parsed', '=', '0']
             ]
         )->first();
+
+        if($text == null){
+            throw new \Exception('Текст для извлечения высказываний отсутвует');
+        }
+
+        return $text;
     }
 }
