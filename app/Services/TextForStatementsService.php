@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\TextForStatements;
 
 
@@ -17,7 +18,7 @@ class TextForStatementsService
 
         try{
             $text = $textForParsing->getText();
-        }catch(Exception $e){
+        }catch(TextForStatementsIsNullException $e){
             echo $e->getMessage();
         }
         $text = $textForParsing->getText();

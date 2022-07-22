@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\TextForStatementsIsNullException;
 use App\Services\TextForStatementsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -52,20 +53,20 @@ class TextForStatementsTest extends TestCase
 
     }
 
-    public function test_get_statements_from_text_with_correct_text(){
-        $this->artisan('migrate:fresh');
-
-        $this->post('/api/statements/text',
-            ['text' => ""]);
-
-        $textForStatementsService = new TextForStatementsService();
-        $statements = $textForStatementsService->getStatements();
-
-        $this->assertEquals(
-
-        );
-
-    }
+//    public function test_get_statements_from_text_with_correct_text(){
+//        $this->artisan('migrate:fresh');
+//
+//        $this->post('/api/statements/text',
+//            ['text' => ""]);
+//
+//        $textForStatementsService = new TextForStatementsService();
+//        $statements = $textForStatementsService->getStatements();
+//
+//        $this->assertEquals(
+//
+//        );
+//
+//    }
 
     public function test_get_statements_from_text_with_empty_text(){
         $this->artisan('migrate:fresh');
@@ -79,13 +80,10 @@ class TextForStatementsTest extends TestCase
         $textForStatementsService = new TextForStatementsService();
         $statements = $textForStatementsService->getStatements();
 
-        dd($statements);
+//        dd($statements);
 
-        $this->assertEquals(
-            3,
-            count($statements) - 1,
-            "there must be 3 sentences"
-        );
+        $this->expectException(TextForStatementsIsNullException::class);
+
 
     }
 
