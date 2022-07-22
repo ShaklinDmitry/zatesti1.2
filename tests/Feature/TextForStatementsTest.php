@@ -52,7 +52,22 @@ class TextForStatementsTest extends TestCase
 
     }
 
-    public function test_get_statements_from_text_(){
+    public function test_get_statements_from_text_with_correct_text(){
+        $this->artisan('migrate:fresh');
+
+        $this->post('/api/statements/text',
+            ['text' => ""]);
+
+        $textForStatementsService = new TextForStatementsService();
+        $statements = $textForStatementsService->getStatements();
+
+        $this->assertEquals(
+
+        );
+
+    }
+
+    public function test_get_statements_from_text_with_empty_text(){
         $this->artisan('migrate:fresh');
 
 //        $this->post('/api/statements/text',

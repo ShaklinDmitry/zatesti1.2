@@ -18,8 +18,9 @@ class TextForStatementsService
         try{
             $text = $textForParsing->getText();
         }catch(Exception $e){
-            print_r($e);
+            echo $e->getMessage();
         }
+        $text = $textForParsing->getText();
 
         $statements = explode(".", $text->text);
 
