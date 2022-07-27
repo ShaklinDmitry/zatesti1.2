@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Exceptions\TextForStatementsIsNullException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,7 +30,6 @@ class TextForStatements extends Model
     /**
      * Получить текст для парсинга
      * @return mixed
-     * @throws TextForStatementsIsNullException
      */
     public function getText(){
         $text = $this->select('*')->where(
@@ -39,10 +37,6 @@ class TextForStatements extends Model
                 ['is_parsed', '=', '0']
             ]
         )->first();
-
-        if($text == null){
-            throw new TextForStatementsIsNullException();
-        }
 
         return $text;
     }

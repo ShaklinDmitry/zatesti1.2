@@ -12,19 +12,18 @@ class TextForStatementsService
     /**
      *Разделить текст на предложения
      * @return array
+     * @throws TextForStatementsIsNullException
      */
     public function getStatements(){
         $textForParsing = new TextForStatements();
 
-        try{
-            $text = $textForParsing->getText();
-        }catch(TextForStatementsIsNullException $e){
-            echo $e->getMessage();
-        }
         $text = $textForParsing->getText();
 
-        $statements = explode(".", $text->text);
+        if($text == null){
+            throw new TextForStatementsIsNullException();
+        }
 
+        $statements = explode(".", $text->text);
         return $statements;
     }
 

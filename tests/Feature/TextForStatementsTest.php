@@ -53,37 +53,36 @@ class TextForStatementsTest extends TestCase
 
     }
 
-//    public function test_get_statements_from_text_with_correct_text(){
-//        $this->artisan('migrate:fresh');
-//
-//        $this->post('/api/statements/text',
-//            ['text' => ""]);
-//
-//        $textForStatementsService = new TextForStatementsService();
-//        $statements = $textForStatementsService->getStatements();
-//
-//        $this->assertEquals(
-//
-//        );
-//
-//    }
+    public function test_get_statements_from_text_with_correct_text(){
+        $this->artisan('migrate:fresh');
+
+        $this->post('/api/statements/text',
+            ['text' => "Sentence1.Sentence2.Sentence3"]);
+
+        $textForStatementsService = new TextForStatementsService();
+        $statements = $textForStatementsService->getStatements();
+
+        $this->assertSame(
+            [
+                0 => 'Sentence1',
+                1 => 'Sentence2',
+                2 => 'Sentence3'
+            ],
+            $statements
+        );
+
+    }
 
     public function test_get_statements_from_text_with_empty_text(){
         $this->artisan('migrate:fresh');
 
-//        $this->post('/api/statements/text',
-//            ['text' => "Sentence number1. Sentence number 2. Sentence number 3."]);
 
         $this->post('/api/statements/text',
             ['text' => ""]);
 
         $textForStatementsService = new TextForStatementsService();
-        $statements = $textForStatementsService->getStatements();
-
-//        dd($statements);
-
         $this->expectException(TextForStatementsIsNullException::class);
-
+        $statements = $textForStatementsService->getStatements();
 
     }
 
