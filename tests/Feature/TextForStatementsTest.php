@@ -3,7 +3,8 @@
 namespace Tests\Feature;
 
 use App\Exceptions\TextForStatementsIsNullException;
-use App\Services\TextForStatementsService;
+use App\Models\Text;
+use App\Services\TextService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -53,14 +54,14 @@ class TextForStatementsTest extends TestCase
 
     }
 
-    public function test_get_statements_from_text_with_correct_text(){
+
+    public function test_сreation_statements_obtained_after_splitting_text(){
         $this->artisan('migrate:fresh');
 
         $this->post('/api/statements/text',
             ['text' => "Sentence1.Sentence2.Sentence3"]);
 
-        $textForStatementsService = new TextForStatementsService();
-        $statements = $textForStatementsService->getStatements();
+        $statements = $this->post('/api/statements/getting_statements_from_text');
 
         $this->assertSame(
             [
@@ -70,20 +71,6 @@ class TextForStatementsTest extends TestCase
             ],
             $statements
         );
-
-    }
-
-    public function test_get_statements_from_text_with_empty_text(){
-        $this->artisan('migrate:fresh');
-
-
-        $this->post('/api/statements/text',
-            ['text' => ""]);
-
-        $textForStatementsService = new TextForStatementsService();
-        $this->expectException(TextForStatementsIsNullException::class);
-        $statements = $textForStatementsService->getStatements();
-
     }
 
 }

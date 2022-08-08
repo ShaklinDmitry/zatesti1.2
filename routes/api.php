@@ -23,8 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
 Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
-Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
-Route::post('/statements/textsplitter', [\App\Http\Controllers\TextForStatementsController::class, 'splitTextIntoStatements']);
+Route::post('/statements/text', [\App\Http\Controllers\TextController::class, 'createText']);
+Route::post('/statements/getting_statements_from_text', [\App\Http\Controllers\TextController::class, 'gettingStatementsFromText']);
 
 
 Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);

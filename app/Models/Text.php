@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TextForStatements extends Model
+class Text extends Model
 {
     use HasFactory;
 
@@ -29,15 +29,19 @@ class TextForStatements extends Model
 
     /**
      * Получить текст для парсинга
-     * @return mixed
+     * @return string|null
      */
-    public function getText(){
+    public function getNotParsedText(){
         $text = $this->select('*')->where(
             [
                 ['is_parsed', '=', '0']
             ]
         )->first();
 
-        return $text;
+        if(isset($text->text)){
+            return $text->text;
+        }else{
+            return null;
+        }
     }
 }

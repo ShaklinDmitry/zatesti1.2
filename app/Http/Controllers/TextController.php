@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\Statement;
-use App\Models\TextForStatements;
-use App\Services\TextForStatementsService;
+use App\Models\Text;
+use App\Services\StatementService;
+use App\Services\TextService;
 use Illuminate\Http\Request;
 
-class TextForStatementsController extends Controller
+class TextController extends Controller
 {
     /**
      * Функция, которая получает  и сохраняет текст, который дальше парсится в высказывания
      *
-     * @return void
+     * @return json
      */
     public function createText(Request $request){
-        $textForParsing = new TextForStatements();
+        $textForParsing = new Text();
 
         $result = $textForParsing->addText($request->text);
 
@@ -40,25 +42,28 @@ class TextForStatementsController extends Controller
     /**
      * разделить текст на высказывания и записать в БД
      *
-     * @return mixed
+     * @return json
      */
-    public function splitTextIntoStatements(){
-        $textForStatementsService = new TextForStatementsService();
-        $statements = $textForStatementsService->getStatements();
+    public function createStatements(TextService $textService, StatementService $statementService){
 
+        try{
+            $statements = $textService->makeStatements();
 
-        foreach ($statements as $text){
-            $statement = new Statement();
-            $statement->add($text);
+            $statementService->saveStatements($statements);
+
+            $responseData = [
+                "data" => [
+                    "message" => "The text was divided into statements.",
+                ]
+            ];
+
+            return response() -> json($responseData,200);
+
+        }catch (\TextForStatementsIsNullException $e){
+
+            echo $e->getMessage();
+
         }
-
-        $responseData = [
-            "data" => [
-                "message" => "The text was divided into sentences.",
-            ]
-        ];
-
-        return response() -> json($responseData,200);
     }
 
 }

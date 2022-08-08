@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Statement;
-use App\Models\TextForStatements;
-use App\Services\TextForStatementsService;
+use App\Models\Text;
+use App\Services\TextService;
 use Illuminate\Http\Request;
 
 class StatementController extends Controller
