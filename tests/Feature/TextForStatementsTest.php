@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Exceptions\TextForStatementsIsNullException;
+use App\Models\Statement;
 use App\Models\Text;
+use App\Services\StatementService;
 use App\Services\TextService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -61,7 +63,10 @@ class TextForStatementsTest extends TestCase
         $this->post('/api/statements/text',
             ['text' => "Sentence1.Sentence2.Sentence3"]);
 
-        $statements = $this->post('/api/statements/getting_statements_from_text');
+        $result = $this->post('/api/statements/make_statements_from_text');
+
+        $statementService = new StatementService();
+        $statements = $statementService->getStatements()->pluck('text')->toArray();
 
         $this->assertSame(
             [
@@ -71,6 +76,16 @@ class TextForStatementsTest extends TestCase
             ],
             $statements
         );
+
+        $result->assertJson(
+            [
+                "data" => [
+                    "message" => "The text was divided into statements.",
+                ]
+            ]
+        );
     }
+
+
 
 }

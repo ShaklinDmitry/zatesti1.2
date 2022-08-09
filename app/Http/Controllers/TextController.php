@@ -44,7 +44,7 @@ class TextController extends Controller
      *
      * @return json
      */
-    public function createStatements(TextService $textService, StatementService $statementService){
+    public function makeStatementsFromText(TextService $textService, StatementService $statementService){
 
         try{
             $statements = $textService->makeStatements();

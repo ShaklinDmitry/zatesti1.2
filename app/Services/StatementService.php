@@ -12,10 +12,21 @@ class StatementService
      * @param array $statements
      */
     public function saveStatements(array $statements){
-        foreach ($statements as $statement){
+        foreach ($statements as $statementText){
             $statement = new Statement();
-            $statement->add($statement);
+            $statement->add($statementText);
         }
     }
 
+
+    /**
+     * Для получения высказываний
+     * @param Statement $statement
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getStatements(){
+        $statement = new Statement();
+        $statements = $statement->getAll();
+        return $statements;
+    }
 }
