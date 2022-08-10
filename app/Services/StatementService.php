@@ -29,4 +29,15 @@ class StatementService
         $statements = $statement->getAll();
         return $statements;
     }
+
+    /**
+     * Добавить высказывание в БД
+     * @param $text
+     * @return bool
+     */
+    public function addStatement($text){
+        $statement = new Statement();
+        $addStatementResult = $statement->add($text);
+        return $addStatementResult;
+    }
 }

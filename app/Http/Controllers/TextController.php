@@ -16,12 +16,11 @@ class TextController extends Controller
      *
      * @return json
      */
-    public function createText(Request $request){
-        $textForParsing = new Text();
+    public function createText(Request $request, TextService $textService){
 
-        $result = $textForParsing->addText($request->text);
+        $textCreateResult = $textService->addText($request->text);
 
-        if($result){
+        if($textCreateResult){
             $responseData = [
                 "data" => [
                     "message" => "Text was added.",

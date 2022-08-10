@@ -24,20 +24,18 @@ class TextService
         if($textNotSeparatedIntoStatements == null){
             throw new TextForStatementsIsNullException();
         }
-        $statementsAfterSeparatingTextWithSpecialSign = $this->explodeText($textNotSeparatedIntoStatements);
+        $statementsAfterSeparatingTextWithSpecialSign = explode(".", $textNotSeparatedIntoStatements);
 
         return $statementsAfterSeparatingTextWithSpecialSign;
     }
 
     /**
-     *Разделить текст на предложения
-     * @return array
-     * @throws TextForStatementsIsNullException
+     * Для добавления нового текста в БД
+     * @param $text
+     * @return bool
      */
-    public function explodeText(string $text): array{
-
-        $result = explode(".", $text);
-
+    public function addText($text){
+        $result = $this->text->addText($text);
         return $result;
     }
 
