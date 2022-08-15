@@ -7,6 +7,7 @@ use App\Models\Text;
 use App\Services\StatementService;
 use App\Services\TextService;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateStatementRequest;
 
 class StatementController extends Controller
 {
@@ -15,7 +16,7 @@ class StatementController extends Controller
      * создать новое высказывание
      * @return json
      */
-    public function createStatement(Request $request, StatementService $statementService){
+    public function createStatement(CreateStatementRequest $request, StatementService $statementService){
 
         if(empty($request->text)){
             $createStatementResult = false;
