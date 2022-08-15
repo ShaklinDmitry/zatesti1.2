@@ -35,6 +35,11 @@ class CreateStatementRequest extends FormRequest
     }
 
 
+    /**
+     * Для создания того как будет выглядеть ошибка валидации
+     * @param Validator $validator
+     * @return HttpResponseException\
+     */
     protected function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json(
             ['error'=>
