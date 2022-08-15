@@ -18,25 +18,14 @@ class StatementController extends Controller
      */
     public function createStatement(CreateStatementRequest $request, StatementService $statementService){
 
-        if(empty($request->text)){
-            $createStatementResult = false;
-        }else{
-            $createStatementResult = $statementService->addStatement($request->text);
-        }
+        $createStatementResult = $statementService->addStatement($request->text);
 
-        if($createStatementResult){
-            $responseData = [
-                "data" => [
-                    "message" => "Statement was create successfull.",
-                ]
-            ];
-        }else{
-            $responseData = [
-                "error" => [
-                    "message" => "Statement not created."
-                ]
-            ];
-        }
+        $responseData = [
+            "data" => [
+                "message" => "Statement was create successfull.",
+            ]
+        ];
+
         return response() -> json($responseData,200);
     }
 

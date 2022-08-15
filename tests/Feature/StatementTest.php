@@ -37,7 +37,7 @@ class StatementTest extends TestCase
 
         $response->assertJson(
             ["error" => [
-                "message" => "Statement not created."
+                "message" => [ '0' => "The text of the statement is missing in the request. Unable to create statement."]
             ]
             ]
         );

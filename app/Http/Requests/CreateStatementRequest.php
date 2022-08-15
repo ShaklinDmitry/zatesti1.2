@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+
 
 class CreateStatementRequest extends FormRequest
 {
@@ -29,5 +32,15 @@ class CreateStatementRequest extends FormRequest
         return [
             'text.required' => 'The text of the statement is missing in the request. Unable to create statement.',
         ];
+    }
+
+
+    protected function failedValidation(Validator $validator) {
+        throw new HttpResponseException(response()->json(
+            ['error'=>
+                [
+                    'message' => $validator->errors()->all()
+                ]
+            ], 200));
     }
 }
