@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Statement;
+use App\Models\Text;
+use App\Services\StatementService;
+use App\Services\TextService;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateStatementRequest;
 
 class StatementController extends Controller
 {
@@ -12,32 +16,17 @@ class StatementController extends Controller
      * создать новое высказывание
      * @return json
      */
-    public function createStatement(Request $request){
+    public function createStatement(CreateStatementRequest $request, StatementService $statementService){
 
-        $statement = new Statement();
+        $createStatementResult = $statementService->addStatement($request->text);
 
-        if(empty($request->text)){
-            $createStatementResult = false;
-        }else{
-            $createStatementResult = $statement->add($request->text);
-        }
+        $responseData = [
+            "data" => [
+                "message" => "Statement was create successfull.",
+            ]
+        ];
 
-        if($createStatementResult){
-            $responseData = [
-                "data" => [
-                    "message" => "Statement was create successfull.",
-                ]
-            ];
-
-            return response() -> json($responseData, 201);
-        }else{
-            $responseData = [
-                "error" => [
-                    "message" => "Statement not created."
-                ]
-            ];
-            return response() -> json($responseData,200);
-        }
+        return response() -> json($responseData,200);
     }
 
 
@@ -88,5 +77,6 @@ class StatementController extends Controller
         }
 
     }
+
 
 }

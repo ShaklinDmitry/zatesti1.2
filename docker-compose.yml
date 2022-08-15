@@ -8,15 +8,15 @@ services:
       context: ./
       dockerfile: Dockerfile
     image: travellist
-    container_name: travellist-app
+    container_name: travellist-appDev
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
     networks:
-      - travellist
+      - travellistDev
 
-  mysql:
+  mysqlDev:
     image: mysql:8
     volumes:
       - ./mysqldata:/var/lib/mysql
@@ -26,11 +26,11 @@ services:
       - "MYSQL_USER=user"
       - "MYSQL_PASSWORD=password"
     ports:
-      - "3320:3306"
+      - "3330:3306"
     networks:
-      - travellist
+      - travellistDev
 
-  mysql_test:
+  mysql_testDev:
       image: mysql:8
       volumes:
           - ./mysqldatatest:/var/lib/mysql
@@ -40,36 +40,24 @@ services:
           - "MYSQL_USER=user"
           - "MYSQL_PASSWORD=password"
       ports:
-          - "3321:3306"
+          - "3331:3306"
       networks:
-          - travellist
+          - travellistDev
 
-  mysql_dev:
-      image: mysql:8
-      volumes:
-          - ./mysqldatatest:/var/lib/mysql
-      environment:
-          - "MYSQL_ROOT_PASSWORD=secret"
-          - "MYSQL_DATABASE=zatestiBaseDev"
-          - "MYSQL_USER=user"
-          - "MYSQL_PASSWORD=password"
-      ports:
-          - "3322:3306"
-      networks:
-          - travellist
 
-  nginx:
+
+  nginxDev:
     image: nginx:alpine
-    container_name: travellist-nginx
+    container_name: travellist-nginxDev
     restart: unless-stopped
     ports:
-      - 8000:80
+      - 8100:80
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d/
     networks:
-      - travellist
+      - travellistDev
 
 networks:
-  travellist:
+  travellistDev:
     driver: bridge
