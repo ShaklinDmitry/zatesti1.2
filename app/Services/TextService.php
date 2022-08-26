@@ -34,7 +34,7 @@ class TextService
      * @param $text
      * @return bool
      */
-    public function addText($text){
+    public function addText(string $text): bool{
         $result = $this->text->addText($text);
         return $result;
     }

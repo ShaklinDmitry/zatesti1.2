@@ -27,16 +27,18 @@ Route::post('/statements/text', [\App\Http\Controllers\TextController::class, 'c
 Route::post('/statements/make_statements_from_text', [\App\Http\Controllers\TextController::class, 'makeStatementsFromText']);
 
 
+Route::get('/saveUserResponse', [\App\Http\Controllers\ResponsesFromUserController::class, 'saveResponse']);
+
 Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);
 
 
 Route::get('telegram', function () {
     $updates = TelegramUpdates::create()
         // (Optional). Get's the latest update. NOTE: All previous updates will be forgotten using this method.
-        // ->latest()
+         ->latest()
 
         // (Optional). Limit to 2 updates (By default, updates starting with the earliest unconfirmed update are returned).
-        ->limit(2)
+    //    ->limit(2)
 
         // (Optional). Add more params to the request.
         ->options([
@@ -44,20 +46,20 @@ Route::get('telegram', function () {
         ])
         ->get();
 
- //   return $updates;
+    return $updates['result'][0]['message'];
 
-    if($updates['ok']) {
-        // Chat ID
-        $chatId = $updates['result'][0]['message']['chat']['id'];
-
-       // dd($chatId);
-
-        return TelegramMessage::create()
-            // Optional recipient user id.
-            ->to($chatId)
-            // Markdown supported.
-            ->content("Hello there!");
-
-        //     return $chatId;
-    }
+//    if($updates['ok']) {
+//        // Chat ID
+//        $chatId = $updates['result'][0]['message']['chat']['id'];
+//
+//       // dd($chatId);
+//
+//        return TelegramMessage::create()
+//            // Optional recipient user id.
+//            ->to($chatId)
+//            // Markdown supported.
+//            ->content("Hello there!");
+//
+//        //     return $chatId;
+//    }
 });
