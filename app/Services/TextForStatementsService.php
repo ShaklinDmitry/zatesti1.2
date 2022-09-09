@@ -3,13 +3,13 @@
 namespace App\Services;
 
 use App\Exceptions\TextForStatementsIsNullException;
-use App\Models\Text;
+use App\Models\TextForStatements;
 
 
-class TextService
+class TextForStatementsService
 {
 
-    public function __construct(private Text $text){}
+    public function __construct(private TextForStatements $textForStatements){}
 
 
     /**
@@ -19,11 +19,17 @@ class TextService
      * @throws TextForStatementsIsNullException
      */
     public function makeStatements(){
-        $textNotSeparatedIntoStatements = $this->text->getNotParsedText();
+
+        $textNotSeparatedIntoStatements = $this->textForStatements->select('*')->where(
+            [
+                ['is_parsed', '=', '0']
+            ]
+        )->first();
 
         if($textNotSeparatedIntoStatements == null){
             throw new TextForStatementsIsNullException();
         }
+
         $statementsAfterSeparatingTextWithSpecialSign = explode(".", $textNotSeparatedIntoStatements);
 
         return $statementsAfterSeparatingTextWithSpecialSign;
@@ -35,8 +41,9 @@ class TextService
      * @return bool
      */
     public function addText(string $text): bool{
-        $result = $this->text->addText($text);
-        return $result;
+        $this->textForStatements->text = $text;
+        $saveTextResult = $this->textForStatements->save();
+        return $saveTextResult;
     }
 
 }

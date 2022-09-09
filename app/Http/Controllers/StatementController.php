@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Statement;
-use App\Models\Text;
+use App\Models\TextForStatements;
 use App\Services\StatementService;
-use App\Services\TextService;
+use App\Services\TextForStatementsService;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStatementRequest;
 

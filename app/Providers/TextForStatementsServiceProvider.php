@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Text;
-use App\Services\TextService;
+use App\Models\TextForStatements;
+use App\Services\TextForStatementsService;
 use Illuminate\Support\ServiceProvider;
 
 class TextForStatementsServiceProvider extends ServiceProvider
@@ -15,10 +15,10 @@ class TextForStatementsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(TextService::class, function ($app) {
-            $textForStatements = new Text();
+        $this->app->bind(TextForStatementsService::class, function ($app) {
+            $textForStatements = new TextForStatements();
 
-            return new TextService($textForStatements);
+            return new TextForStatementsService($textForStatements);
         });
     }
 

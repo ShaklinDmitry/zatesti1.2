@@ -4,9 +4,9 @@ namespace Tests\Feature;
 
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\Statement;
-use App\Models\Text;
+use App\Models\TextForStatements;
 use App\Services\StatementService;
-use App\Services\TextService;
+use App\Services\TextForStatementsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;

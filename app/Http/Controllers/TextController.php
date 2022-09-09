@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\Statement;
-use App\Models\Text;
+use App\Models\TextForStatements;
 use App\Services\StatementService;
-use App\Services\TextService;
+use App\Services\TextForStatementsService;
 use Illuminate\Http\Request;
 
 class TextController extends Controller
@@ -16,7 +16,7 @@ class TextController extends Controller
      *
      * @return json
      */
-    public function createText(Request $request, TextService $textService){
+    public function createText(Request $request, TextForStatementsService $textService){
 
         $textCreateResult = $textService->addText($request->text);
 
@@ -26,16 +26,16 @@ class TextController extends Controller
                     "message" => "Text was added.",
                 ]
             ];
-
-            return response() -> json($responseData, 200);
         }else{
             $responseData = [
                 "error" => [
                     "message" => "Text was not added."
                 ]
             ];
-            return response() -> json($responseData,200);
         }
+
+        return response() -> json($responseData,200);
+
     }
 
     /**
@@ -43,7 +43,7 @@ class TextController extends Controller
      *
      * @return json
      */
-    public function makeStatementsFromText(TextService $textService, StatementService $statementService){
+    public function makeStatementsFromText(TextForStatementsService $textService, StatementService $statementService){
 
         try{
             $statements = $textService->makeStatements();
