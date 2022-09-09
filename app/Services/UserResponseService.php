@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\UserResponseDTO;
 use NotificationChannels\Telegram\TelegramUpdates;
 use App\Models\UserResponse;
 
@@ -14,13 +15,11 @@ class UserResponseService
      * Функция для сохранения ответа пользователя
      * @return bool
      */
-    public function saveUserResponse(){
-        $userResponse = TelegramUpdates::create()->latest()->options(['timeout' => 0,])->get();
+    public function saveUserResponse(UserResponseDTO $userResponseData){
+        $this->userResponse->text = $userResponseData->responseText;
+        $this->userResponse->message_id = $userResponseData->responseMessageId;
 
-        $responseText = $userResponse['result'][0]['message']['text'];
-        $responseMessageId = $userResponse['result'][0]['message']['message_id'];
-
-        $saveResponseResult = $this->userResponse->saveUserResponse($responseText,$responseMessageId);
+        $saveResponseResult = $this->userResponse->save();
 
         return $saveResponseResult;
     }

@@ -11,19 +11,4 @@ class UserResponse extends Model
 
     protected $table = 'user_response';
 
-    /**
-     * Для сохранения текста ответа пользователя
-     * @param string $text
-     * @param int $message_id
-     * @return bool
-     */
-    public function saveUserResponse(string $text, int $message_id){
-        $this->text = $text;
-        $this->message_id = $message_id;
-
-        $saveResponseResult = $this->save();
-        return $saveResponseResult;
-    }
-
-
 }
