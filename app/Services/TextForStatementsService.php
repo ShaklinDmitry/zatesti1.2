@@ -20,19 +20,19 @@ class TextForStatementsService
      */
     public function makeStatements(){
 
-        $textNotSeparatedIntoStatements = $this->textForStatements->select('*')->where(
+        $notParsedText = $this->textForStatements->select('*')->where(
             [
                 ['is_parsed', '=', '0']
             ]
-        )->first();
+        )->first()['text'];
 
-        if($textNotSeparatedIntoStatements == null){
+        if($notParsedText == null){
             throw new TextForStatementsIsNullException();
         }
 
-        $statementsAfterSeparatingTextWithSpecialSign = explode(".", $textNotSeparatedIntoStatements);
+        $statements = explode(".", $notParsedText);
 
-        return $statementsAfterSeparatingTextWithSpecialSign;
+        return $statements;
     }
 
     /**
@@ -42,7 +42,9 @@ class TextForStatementsService
      */
     public function addText(string $text): bool{
         $this->textForStatements->text = $text;
+
         $saveTextResult = $this->textForStatements->save();
+
         return $saveTextResult;
     }
 

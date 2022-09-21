@@ -9,7 +9,7 @@ use App\Services\StatementService;
 use App\Services\TextForStatementsService;
 use Illuminate\Http\Request;
 
-class TextController extends Controller
+class TextForStatementsController extends Controller
 {
     /**
      * Функция, которая получает  и сохраняет текст, который дальше парсится в высказывания

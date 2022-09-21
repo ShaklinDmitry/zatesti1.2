@@ -18,7 +18,7 @@ class TextForStatementsTest extends TestCase
      *
      * @return void
      */
-    public function test_create_text_for_split_into_statements_true()
+    public function test_create_text_for_split_into_statements()
     {
         $this->artisan('migrate:fresh');
 
@@ -34,30 +34,8 @@ class TextForStatementsTest extends TestCase
         );
     }
 
-    /**
-     * Тестируем создание текста, который далее будет разбит на высказывания. Сценарий, когда создание текста не происходит
-     *
-     * @return void
-     */
-    public function test_create_text_for_split_into_statements_false(){
-        $this->artisan('migrate:fresh');
 
-        //специально шлю не тот параметр text123 вместо text
-        $response = $this->post('/api/statements/text',
-            ['text123' => "new statement"]);
-
-        $response->assertJson(
-            [
-                "error" => [
-                    "message" => "Text was not added."
-                ]
-            ]
-        );
-
-    }
-
-
-    public function test_сreation_statements_obtained_after_splitting_text(){
+    public function test_make_statements_from_text(){
         $this->artisan('migrate:fresh');
 
         $this->post('/api/statements/text',

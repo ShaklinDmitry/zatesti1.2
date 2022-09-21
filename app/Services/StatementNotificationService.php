@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Auth;
 class StatementNotificationService
 {
 
-    /*
-     * Отправить высказывание
-     * @return void
+    /**
+     * Для отправки уведомлений с высказываниями
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function sendStatementNotification(){
+    public function sendNotification(){
         $user = \App\Models\User::find(1);
         Auth::login($user);
         $user = auth()->user();
