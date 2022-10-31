@@ -12,15 +12,18 @@ use Illuminate\Http\Request;
 class TextForStatementsController extends Controller
 {
     /**
-     * Функция, которая получает  и сохраняет текст, который дальше парсится в высказывания
+     * Функция, которая сохраняет текст
      *
      * @return json
      */
     public function createText(Request $request, TextForStatementsService $textService){
 
-        $textCreateResult = $textService->addText($request->text);
+        $user = auth('sanctum')->user();
+        $userAttributes = $user->getAttributes();
 
-        if($textCreateResult){
+        $text = $textService->addText($request->text, $userAttributes['id']);
+
+        if($text != null){
             $responseData = [
                 "data" => [
                     "message" => "Text was added.",
@@ -43,12 +46,10 @@ class TextForStatementsController extends Controller
      *
      * @return json
      */
-    public function makeStatementsFromText(TextForStatementsService $textService, StatementService $statementService){
+    public function makeStatementsFromText(TextForStatementsService $textForStatementsService, StatementService $statementService){
 
         try{
-            $statements = $textService->makeStatements();
-
-            $statementService->saveStatements($statements);
+            $makeStatementsResult = $textForStatementsService->makeStatements($statementService);
 
             $responseData = [
                 "data" => [

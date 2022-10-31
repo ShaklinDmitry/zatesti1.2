@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\TextForStatements;
+use Illuminate\Database\Eloquent\Model;
 
 
 class TextForStatementsService
@@ -13,39 +14,76 @@ class TextForStatementsService
 
 
     /**
-     * Функуия возвращает массив высказываний, которые получаются после парсинга текста
-     *
-     * @return array
+     * Функция для возврата текста, который еще не был распарсен
+     * @return TextForStatements|null
      * @throws TextForStatementsIsNullException
      */
-    public function makeStatements(){
+    public function getUnparsedText(){
+        $unParsedText = TextForStatements::where('is_parsed', 0)->first();
 
-        $notParsedText = $this->textForStatements->select('*')->where(
-            [
-                ['is_parsed', '=', '0']
-            ]
-        )->first()['text'];
-
-        if($notParsedText == null){
+        if($unParsedText == null){
             throw new TextForStatementsIsNullException();
         }
 
-        $statements = explode(".", $notParsedText);
+        return $unParsedText;
+    }
+
+    /**
+     * Функуия возвращает массив высказываний, которые получаются после парсинга текста
+     *
+     * @return bool
+     * @throws TextForStatementsIsNullException
+     */
+    public function makeStatements(StatementService $statementService){
+
+        $unParsedText = $this->getUnparsedText();
+
+        $statements = $this->parseTextIntoStatements($unParsedText['text']);
+
+        $resultOfMarkTextAsParsed = $this->markTextAsParsed($unParsedText['id']);
+
+        $resultOfSaveStatements = $statementService->saveStatements($statements);
+
+        return $resultOfSaveStatements;
+    }
+
+    /**
+     * Функция разбиения текста на высказывания
+     * @param string $text
+     * @return string[]
+     */
+    private function parseTextIntoStatements(string $text){
+
+        $statements = explode(".", $text);
 
         return $statements;
     }
 
     /**
-     * Для добавления нового текста в БД
-     * @param $text
+     * Функция для того чтобы отметить что текст был распарсен
+     * @param int $id
      * @return bool
      */
-    public function addText(string $text): bool{
-        $this->textForStatements->text = $text;
+    public function markTextAsParsed(int $id){
 
-        $saveTextResult = $this->textForStatements->save();
+        $markTextResult = TextForStatements::where('id', $id)->update(['is_parsed' => 1]);
 
-        return $saveTextResult;
+        return $markTextResult;
+    }
+
+
+    /**
+     * Для добавления нового текста в БД
+     * @param string $text
+     * @return TextForStatements
+     */
+    public function addText(string $text, int $userId){
+        $text = TextForStatements::create([
+            'text' => $text,
+            'user_id' => $userId
+        ]);
+
+        return $text;
     }
 
 }

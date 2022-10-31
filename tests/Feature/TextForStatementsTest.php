@@ -65,5 +65,18 @@ class TextForStatementsTest extends TestCase
     }
 
 
+    public function test_whether_parsed_texts_were_marked(){
+        $this->artisan('migrate:fresh');
+
+        $this->post('/api/statements/text',
+            ['text' => "Sentence1.Sentence2.Sentence3"]);
+
+        $result = $this->post('/api/statements/make_statements_from_text');
+
+        $parsedText = TextForStatements::where('is_parsed', 1)->first();
+
+        $this->assertNotNull($parsedText);
+
+    }
 
 }

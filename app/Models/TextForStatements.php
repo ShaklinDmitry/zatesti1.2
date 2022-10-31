@@ -9,5 +9,12 @@ class TextForStatements extends Model
 {
     use HasFactory;
 
-    protected $table = 'table_for_the_text_that_will_be_parsed_into_statements';
+    protected $table = 'text';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['text','user_id'];
 }
