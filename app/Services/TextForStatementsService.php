@@ -29,7 +29,7 @@ class TextForStatementsService
     }
 
     /**
-     * Функуия возвращает массив высказываний, которые получаются после парсинга текста
+     * Функуия сохраняет массив высказываний, которые получаются после парсинга текста
      *
      * @return bool
      * @throws TextForStatementsIsNullException
@@ -42,7 +42,7 @@ class TextForStatementsService
 
         $resultOfMarkTextAsParsed = $this->markTextAsParsed($unParsedText['id']);
 
-        $resultOfSaveStatements = $statementService->saveStatements($statements);
+        $resultOfSaveStatements = $statementService->saveStatements($statements, $unParsedText['user_id']);
 
         return $resultOfSaveStatements;
     }

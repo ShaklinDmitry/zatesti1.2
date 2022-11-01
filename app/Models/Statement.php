@@ -18,8 +18,9 @@ class Statement extends Model
      * @param Request $request
      * @return bool
      */
-    public function add(string $text){
+    public function add(string $text, int $user_id){
         $this->text = $text;
+        $this->user_id = $user_id;
         $result = $this->save();
         return $result;
     }

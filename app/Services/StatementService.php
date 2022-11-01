@@ -11,10 +11,10 @@ class StatementService
      * Функция сохранения высказываний в БД
      * @param array $statements
      */
-    public function saveStatements(array $statements){
+    public function saveStatements(array $statements, int $user_id){
         foreach ($statements as $statementText){
             $statement = new Statement();
-            $statement->add($statementText);
+            $statement->add($statementText, $user_id);
         }
     }
 

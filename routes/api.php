@@ -28,7 +28,7 @@ Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'ge
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 //Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('cors');
 Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('auth:sanctum');
-Route::post('/statements/make_statements_from_text', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText'])->middleware('auth:sanctum');
+Route::post('/statements/make_statements_from_text', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText']);
 
 
 Route::get('/saveUserResponse', [\App\Http\Controllers\ResponsesFromUserController::class, 'saveResponse']);
