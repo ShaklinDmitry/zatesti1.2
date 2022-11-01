@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\TextForStatementsIsNullException;
+use App\Jobs\MakeStatements;
 use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Services\StatementService;
@@ -22,6 +23,8 @@ class TextForStatementsController extends Controller
         $userAttributes = $user->getAttributes();
 
         $text = $textService->addText($request->text, $userAttributes['id']);
+
+        MakeStatements::dispatch();
 
         if($text != null){
             $responseData = [

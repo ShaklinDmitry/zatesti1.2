@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class TextForStatementsService
 {
 
-    public function __construct(private TextForStatements $textForStatements){}
+    public function __construct(){}
 
 
     /**
@@ -34,13 +34,15 @@ class TextForStatementsService
      * @return bool
      * @throws TextForStatementsIsNullException
      */
-    public function makeStatements(StatementService $statementService){
+    public function makeStatements(){
 
         $unParsedText = $this->getUnparsedText();
 
         $statements = $this->parseTextIntoStatements($unParsedText['text']);
 
         $resultOfMarkTextAsParsed = $this->markTextAsParsed($unParsedText['id']);
+
+        $statementService = new StatementService();
 
         $resultOfSaveStatements = $statementService->saveStatements($statements, $unParsedText['user_id']);
 
