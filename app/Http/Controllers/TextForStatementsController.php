@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\TextForStatementsIsNullException;
+use App\Http\Requests\TextForStatementsRequest;
 use App\Jobs\MakeStatements;
 use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Services\StatementService;
 use App\Services\TextForStatementsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TextForStatementsController extends Controller
 {
@@ -17,19 +19,15 @@ class TextForStatementsController extends Controller
      *
      * @return json
      */
-    public function createText(Request $request, TextForStatementsService $textService){
+    public function createText(TextForStatementsRequest $request, TextForStatementsService $textService){
 
-        $user = auth('sanctum')->user();
-        $userAttributes = $user->getAttributes();
-
-        $text = $textService->addText($request->text, $userAttributes['id']);
-
-        MakeStatements::dispatch();
+        $text = $textService->addText($request->text, Auth::id());
 
         if($text != null){
             $responseData = [
                 "data" => [
                     "message" => "Text was added.",
+                    "text_id" => $text->id
                 ]
             ];
         }else{
@@ -52,7 +50,7 @@ class TextForStatementsController extends Controller
     public function makeStatementsFromText(TextForStatementsService $textForStatementsService, StatementService $statementService){
 
         try{
-            $makeStatementsResult = $textForStatementsService->makeStatements($statementService);
+            MakeStatements::dispatch(Auth::id());
 
             $responseData = [
                 "data" => [

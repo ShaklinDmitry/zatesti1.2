@@ -18,8 +18,8 @@ class TextForStatementsService
      * @return TextForStatements|null
      * @throws TextForStatementsIsNullException
      */
-    public function getUnparsedText(){
-        $unParsedText = TextForStatements::where('is_parsed', 0)->first();
+    public function getUnparsedText(int $userId){
+        $unParsedText = TextForStatements::where(['is_parsed' => 0], ['user_id' => $userId])->first();
 
         if($unParsedText == null){
             throw new TextForStatementsIsNullException();
@@ -34,9 +34,9 @@ class TextForStatementsService
      * @return bool
      * @throws TextForStatementsIsNullException
      */
-    public function makeStatements(){
+    public function makeStatements(int $userId){
 
-        $unParsedText = $this->getUnparsedText();
+        $unParsedText = $this->getUnparsedText($userId);
 
         $statements = $this->parseTextIntoStatements($unParsedText['text']);
 

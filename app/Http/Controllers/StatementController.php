@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetStatementsRequest;
 use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Services\StatementService;
 use App\Services\TextForStatementsService;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStatementRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StatementController extends Controller
 {
@@ -18,7 +20,7 @@ class StatementController extends Controller
      */
     public function createStatement(CreateStatementRequest $request, StatementService $statementService){
 
-        $createStatementResult = $statementService->addStatement($request->text);
+        $createStatementResult = $statementService->addStatement($request->text, Auth::id());
 
         $responseData = [
             "data" => [
@@ -31,21 +33,20 @@ class StatementController extends Controller
 
 
     /**
-     * получить все высказывания
+     * Получить все высказывания у конкретного пользователя
      * @return json
      */
-    public function getStatements(){
-        $statement = new Statement();
+    public function getStatements(GetStatementsRequest $request, StatementService $statementService){
 
-        $statements = $statement->getAll();
+        $statements = $statementService->getStatements(Auth::id());
 
-        $response = [
+        $responseData = [
             "data" => [
                 "statements" => $statements
             ]
         ];
 
-        return $response;
+        return response() -> json($responseData,200);
     }
 
 

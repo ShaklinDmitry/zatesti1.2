@@ -15,14 +15,15 @@ class MakeStatements implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private int $userId = 0;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($userId)
     {
-        //
+        $this->userId = $userId;
     }
 
     /**
@@ -33,6 +34,6 @@ class MakeStatements implements ShouldQueue
     public function handle()
     {
         $textForStatementsService = new TextForStatementsService();
-        $textForStatementsService->makeStatements();
+        $textForStatementsService->makeStatements($this->userId);
     }
 }

@@ -24,9 +24,8 @@ class StatementService
      * @param Statement $statement
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getStatements(){
-        $statement = new Statement();
-        $statements = $statement->getAll();
+    public function getStatements(int $userId){
+        $statements = Statement::where('user_id', $userId)->get();
         return $statements;
     }
 
@@ -34,10 +33,10 @@ class StatementService
      * Добавить высказывание в БД
      * @param $text
      * @return bool
-     */
-    public function addStatement($text){
+     */ 
+    public function addStatement($text, int $userId){
         $statement = new Statement();
-        $addStatementResult = $statement->add($text);
+        $addStatementResult = $statement->add($text, $userId);
         return $addStatementResult;
     }
 }

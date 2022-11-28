@@ -13,10 +13,10 @@ class ResponsesFromUserController extends Controller
     private UserResponseDTO $userResponseData;
 
     public function __construct(){
-            $responseSource = TelegramUpdates::create()->latest()->options(['timeout' => 0,])->get();
-            $responseText = $responseSource['result'][0]['message']['text'];
-            $responseMessageId = $responseSource['result'][0]['message']['message_id'];
-            $this->userResponseData = new UserResponseDTO($responseText, $responseMessageId);
+//            $responseSource = TelegramUpdates::create()->latest()->options(['timeout' => 0,])->get();
+//            $responseText = $responseSource['result'][0]['message']['text'];
+//            $responseMessageId = $responseSource['result'][0]['message']['message_id'];
+//            $this->userResponseData = new UserResponseDTO($responseText, $responseMessageId);
     }
 
     /**
