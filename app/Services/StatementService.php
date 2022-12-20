@@ -33,10 +33,24 @@ class StatementService
      * Добавить высказывание в БД
      * @param $text
      * @return bool
-     */ 
+     */
     public function addStatement($text, int $userId){
         $statement = new Statement();
         $addStatementResult = $statement->add($text, $userId);
         return $addStatementResult;
+    }
+
+
+    /**
+     * Функция для получения высказываний для отправки пользователю
+     * @param int $userId
+     * @return mixed
+     */
+    public function getStatementForSending(int $userId){
+        $statement = Statement::where('user_id', $userId)
+                                ->where('send_date_time', '1970-01-01 00:00:00')
+                                ->first();
+
+        return $statement;
     }
 }

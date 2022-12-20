@@ -28,7 +28,7 @@ Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'ge
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 //Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('cors');
 Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('auth:sanctum');
-Route::post('/statements/make_statements_from_text', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText'])->middleware('auth:sanctum');
+Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText'])->middleware('auth:sanctum');
 
 
 Route::get('/saveUserResponse', [\App\Http\Controllers\ResponsesFromUserController::class, 'saveResponse']);
@@ -38,7 +38,7 @@ Route::get('/notification', [\App\Http\Controllers\StatementNotificationControll
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 
-Route::post('/statements-schedule',[\App\Http\Controllers\StatementScheduleController::class, 'setSendTime']);
+Route::post('/statements-schedule',[\App\Http\Controllers\StatementScheduleController::class, 'setSendTime'])->middleware('auth:sanctum');
 
 
 Route::post('/startRMQ',[\App\Http\Controllers\TestControllerForRabbitMQ::class, 'createTask']);
@@ -58,7 +58,7 @@ Route::get('telegram', function () {
         ])
         ->get();
 
-    return $updates['result'][0]['message'];
+    return $updates['result'];
 
 //    if($updates['ok']) {
 //        // Chat ID
