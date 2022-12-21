@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Services\StatementScheduleService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

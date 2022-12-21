@@ -40,6 +40,7 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 
 Route::post('/statements-schedule',[\App\Http\Controllers\StatementScheduleController::class, 'setSendTime'])->middleware('auth:sanctum');
 
+Route::post('/telegram-webhook',[\App\Http\Controllers\TelegramWebhookController::class, 'sendAnswer']);
 
 Route::post('/startRMQ',[\App\Http\Controllers\TestControllerForRabbitMQ::class, 'createTask']);
 Route::post('/getRMQ',[\App\Http\Controllers\TestControllerForRabbitMQ::class, 'receiveTask']);
