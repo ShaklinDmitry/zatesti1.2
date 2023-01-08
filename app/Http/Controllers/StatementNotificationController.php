@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Statement;
-use App\Services\StatementNotificationService;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
@@ -15,10 +15,10 @@ class StatementNotificationController extends Controller
      *
      * @return void
      */
-    public function sendStatementNotification(StatementNotificationService $statementNotificationService){
-
-        $notificationSendResult = $statementNotificationService->sendNotification();
-
-        return $notificationSendResult;
-    }
+//    public function sendStatementNotification(NotificationService $statementNotificationService){
+//
+//        $notificationSendResult = $statementNotificationService->sendNotification();
+//
+//        return $notificationSendResult;
+//    }
 }

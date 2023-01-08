@@ -6,7 +6,6 @@ use App\Models\StatementSendingSchedule;
 
 class StatementScheduleService
 {
-
     /**
      * Функция для сохранения конкретного времени, по которому будет осуществляться отправка высказываний
      * @param string $times
@@ -32,9 +31,15 @@ class StatementScheduleService
      * @param string $currentTime
      * @return mixed
      */
-    public function getUsersWhoAccordingToTheScheduleShouldSendMessage(string $currentTime){
+    public function getUserIdsWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime){
 
-        return StatementSendingSchedule::where('exact_time', $currentTime)->get('user_id')->toArray();
+        $userIds = StatementSendingSchedule::select('user_id')->where('exact_time', $currentTime)->get()->toArray();
+
+        if($userIds == null){
+            throw new \Exception('There are no users who are scheduled to receive a statement notification');
+        }
+
+        return $userIds;
 
     }
 

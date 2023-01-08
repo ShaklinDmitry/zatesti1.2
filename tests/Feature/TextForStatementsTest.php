@@ -5,8 +5,10 @@ namespace Tests\Feature;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\Statement;
 use App\Models\TextForStatements;
+use App\Models\User;
 use App\Services\StatementService;
 use App\Services\TextForStatementsService;
+use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -22,8 +24,11 @@ class TextForStatementsTest extends TestCase
     {
         $this->artisan('migrate:fresh');
 
-        $response = $this->post('/api/statements/text',
-            ['text' => "new statement"]);
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/api/statements/text',
+            ['text' => "new statement"],
+            ["Accept"=>"application/json"]);
 
         $response->assertJson(
             [
@@ -38,13 +43,16 @@ class TextForStatementsTest extends TestCase
     public function test_make_statements_from_text(){
         $this->artisan('migrate:fresh');
 
-        $this->post('/api/statements/text',
-            ['text' => "Sentence1.Sentence2.Sentence3"]);
+        $user = User::factory()->create();
 
-        $result = $this->post('/api/statements/make_statements_from_text');
+        $this->actingAs($user)->post('/api/statements/text',
+            ['text' => "Sentence1.Sentence2.Sentence3"],
+            ["Accept"=>"application/json"]);
+
+        $result = $this->actingAs($user)->post('/api/text/generate-statements');
 
         $statementService = new StatementService();
-        $statements = $statementService->getStatements()->pluck('text')->toArray();
+        $statements = $statementService->getStatements($user->id)->pluck('text')->toArray();
 
         $this->assertSame(
             [
@@ -68,10 +76,14 @@ class TextForStatementsTest extends TestCase
     public function test_whether_parsed_texts_were_marked(){
         $this->artisan('migrate:fresh');
 
-        $this->post('/api/statements/text',
-            ['text' => "Sentence1.Sentence2.Sentence3"]);
+        $user = User::factory()->create();
 
-        $result = $this->post('/api/statements/make_statements_from_text');
+       $result = $this->actingAs($user)->post('/api/statements/text',
+            ['text' => "Sentence1.Sentence2.Sentence3"],
+            ["Accept"=>"application/json"]);
+
+
+        $result = $this->actingAs($user)->post('/api/text/generate-statements',[],["Accept"=>"application/json"]);
 
         $parsedText = TextForStatements::where('is_parsed', 1)->first();
 

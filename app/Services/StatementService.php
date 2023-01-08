@@ -2,10 +2,24 @@
 
 namespace App\Services;
 
+use App\Jobs\SendStatements;
 use App\Models\Statement;
 
 class StatementService
 {
+
+    /**
+     * Функция для отправки высказываний(через job)
+     * @return void
+     */
+    public function sendStatements(){
+        $statementScheduleService = new StatementScheduleService();
+        $usersIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime(date("H:i"));
+
+        if($usersIds != null){
+            SendStatements::dispatch($usersIds);
+        }
+    }
 
     /**
      * Функция сохранения высказываний в БД
@@ -49,7 +63,13 @@ class StatementService
     public function getStatementForSending(int $userId){
         $statement = Statement::where('user_id', $userId)
                                 ->where('send_date_time', '1970-01-01 00:00:00')
+                                ->where('text','<>','')
                                 ->first();
+
+
+        if($statement == null){
+            throw new \Exception('There are no statements to send to the user');
+        }
 
         return $statement;
     }

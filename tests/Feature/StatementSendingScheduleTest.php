@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+
 class StatementSendingScheduleTest extends TestCase
 {
     /**
@@ -16,31 +17,53 @@ class StatementSendingScheduleTest extends TestCase
      *
      * @return void
      */
-    public function test_statement_send_schedule()
+    public function test_Get_User_Ids_Who_Should_Be_Notified_At_The_Current_Time()
     {
         $this->artisan('migrate:fresh');
 
+        $currentTime = date("H:i");
+
         StatementSendingSchedule::factory()->create([
-            'exact_time' => '14:00'
+            'user_id' => 1,
+            'exact_time' => $currentTime
         ]);
 
         StatementSendingSchedule::factory()->create([
-            'exact_time' => '14:00'
+            'user_id' => 2,
+            'exact_time' => $currentTime
         ]);
 
         $result = StatementSendingSchedule::factory()->create([
+            'user_id' => 8,
             'exact_time' => '15:50'
         ]);
 
-//        $t=time();
-//
-//        $currentTime = date("H:i",$t);
-        $currentTime = '14:00';
-
 
         $statementScheduleService = new StatementScheduleService();
-        $users = $statementScheduleService->getUsersWhoAccordingToTheScheduleShouldSendMessage($currentTime);
+        $userIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
 
-        $this->assertCount(2, $users);
+        $userIdsSame = [
+            0 => [
+                "user_id" => 1
+            ],
+            1 => [
+                "user_id" => 2
+            ]
+        ];
+
+        $this->assertEquals($userIds, $userIdsSame);
+
+    }
+
+
+    public function test_Get_User_Ids_Who_Should_Be_Notified_At_The_Current_Time_When_Users_Is_Null(){
+        $this->expectExceptionMessage('There are no users who are scheduled to receive a statement notification');
+
+        $this->artisan('migrate:fresh');
+
+        $currentTime = date("H:i");
+
+        $statementScheduleService = new StatementScheduleService();
+        $userIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
     }
 }

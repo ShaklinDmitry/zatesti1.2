@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
+use App\Jobs\SendStatements;
 use App\Services\StatementScheduleService;
+use App\Services\StatementService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -19,11 +21,8 @@ class Kernel extends ConsoleKernel
     {
 
         $schedule->call(function () {
-
-//            $statementScheduleService = new StatementScheduleService();
-//
-//            $users = $statementScheduleService->getUsersWhoAccordingToTheScheduleShouldSendMessage();
-
+            $statementService = new StatementService();
+            $statementService->sendStatements();
 
         })->everyMinute();
 

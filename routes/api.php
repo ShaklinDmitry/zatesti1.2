@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement'])->middleware('auth:sanctum');;
+Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement'])->middleware('auth:sanctum');
 Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements'])->middleware('auth:sanctum');
 Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 //Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('cors');
@@ -33,7 +33,7 @@ Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatement
 
 Route::get('/saveUserResponse', [\App\Http\Controllers\ResponsesFromUserController::class, 'saveResponse']);
 
-Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);
+//Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
