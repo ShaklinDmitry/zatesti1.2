@@ -16,42 +16,24 @@ use Illuminate\Support\Facades\DB;
 class StatementNotificationTest extends TestCase
 {
 
-//    public function test_send_notification(){
-//        $this->artisan('migrate:fresh');
-//
-//        $user = User::factory()->create();
-//
-//        $this->actingAs($user)->post('/api/statements',
-//                                ['text' => "new statement for testing send statement"],
-//                                ["Accept"=>"application/json"]);
-//
-//        Notification::fake();
-//
-//        $response = $this->get('/api/notification');
-//
-//        $response->assertJson(
-//            [
-//                "data" => [
-//                    "message" => "Notification has been sended.",
-//                ]
-//            ]
-//        );
-//    }
-
-
     /**
      * Тестирование отправления уведомлений
      * @return void
      */
-//    public function test_send_notifications(){
-//        Notification::fake();
-//
-//        $user = User::factory()->create();
-//
-//        $user->notify(new TelegramNotification('test notification'));
-//
-//        Notification::assertSentTo($user, TelegramNotification::class);
-//    }
+    public function test_send_notifications(){
+        Notification::fake();
+
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/api/statements',
+            ['text' => "new statement for testing send statement"],
+            ["Accept"=>"application/json"]);
+
+        $notificationService = new NotificationService();
+        $notificationService->sendNotification($user->id);
+
+        Notification::assertSentTo($user, TelegramNotification::class);
+    }
 
 
 //    /**
@@ -84,9 +66,9 @@ class StatementNotificationTest extends TestCase
         $statementService = new StatementService();
         $statement = $statementService->getStatementForSending($user->id);
 
-        //если не пуст тогда все ОК
-        $this->assertNotNull(
-            $statement
+
+        $this->assertSame(
+            $statement->text, "new statement for testing send statement"
         );
     }
 
@@ -96,6 +78,7 @@ class StatementNotificationTest extends TestCase
      */
     public function test_get_statement_for_sending_false(){
         $this->expectExceptionMessage('There are no statements to send to the user');
+
         $this->artisan('migrate:fresh');
 
         $user = User::factory()->create();
@@ -103,6 +86,8 @@ class StatementNotificationTest extends TestCase
         $statementService = new StatementService();
         $statement = $statementService->getStatementForSending($user->id);
     }
+
+
 
     /**
      * Тестирование пометки отправленного высказывания(чтобы далее оно больше не отправлялось повторно)

@@ -36,14 +36,9 @@ class SendStatements implements ShouldQueue
      */
     public function handle()
     {
-            try{
-                $notificationService = new NotificationService();
-                foreach ($this->userIds as $userId){
-                    $notificationService->sendNotification($userId);
-                }
-            }catch (Exception $e){
-                return $e->getMessage();
-            }
-
+        $notificationService = new NotificationService();
+        foreach ($this->userIds as $userId){
+            $notificationService->sendNotification($userId);
+        }
     }
 }

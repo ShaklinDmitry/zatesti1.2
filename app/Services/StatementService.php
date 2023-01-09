@@ -10,11 +10,13 @@ class StatementService
 
     /**
      * Функция для отправки высказываний(через job)
+     * @param string $sendTime
      * @return void
+     * @throws \Exception
      */
-    public function sendStatements(){
+    public function sendStatements(string $sendTime){
         $statementScheduleService = new StatementScheduleService();
-        $usersIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime(date("H:i"));
+        $usersIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
 
         if($usersIds != null){
             SendStatements::dispatch($usersIds);
