@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Jobs\SendStatements;
 use App\Models\Statement;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\ErrorHandler\Debug;
 
 class StatementService
 {
@@ -15,11 +17,15 @@ class StatementService
      * @throws \Exception
      */
     public function sendStatements(string $sendTime){
-        $statementScheduleService = new StatementScheduleService();
-        $usersIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
+        try{
+            $statementScheduleService = new StatementScheduleService();
+            $usersIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
 
-        if($usersIds != null){
+
+
             SendStatements::dispatch($usersIds);
+        }catch(\Exception $e){
+            return $e->getMessage();
         }
     }
 
@@ -74,5 +80,16 @@ class StatementService
         }
 
         return $statement;
+    }
+
+    /**
+     * Отметить время отправки высказывания
+     * @param int $statementId
+     * @return mixed
+     */
+    public function markStatementHasBeenSent(int $statementId){
+
+        return Statement::where('id',$statementId)->update(['send_date_time' => NOW()]);
+
     }
 }

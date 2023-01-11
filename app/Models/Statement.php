@@ -47,32 +47,4 @@ class Statement extends Model
 
     }
 
-
-    /**
-     * Получить высказывание, которое еще не было отправлено
-     * @return model
-     */
-    public function getStatementForSending(){
-        return $this->select('*')->where(
-            [
-                ['send_date_time', '=', '1970-01-01 00:00:00']
-            ]
-        )->first();
-    }
-
-
-    /**
-     *  Отметить время отправки высказывания
-     *
-     * @param $id
-     * @return mixed
-     */
-    public function markStatementHasBeenSent($id){
-        return $this->where(
-            [
-                ['id', '=', $id]
-            ]
-        )->update(['send_date_time' => NOW()]);
-    }
-
 }

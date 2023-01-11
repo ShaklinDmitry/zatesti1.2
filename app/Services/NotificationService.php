@@ -27,7 +27,7 @@ class NotificationService
             $user = User::find($userId);
             $user->notify($telegramNotification);
 
-            $statement->markStatementHasBeenSent($statement->id);
+        //    $statementService->markStatementHasBeenSent($statement->id);
 
             return true;
 

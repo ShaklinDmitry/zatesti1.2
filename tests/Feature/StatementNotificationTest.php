@@ -129,7 +129,7 @@ class StatementNotificationTest extends TestCase
         $statementService = new StatementService();
         $statement = $statementService->getStatementForSending($user->id);
 
-        $statement->markStatementHasBeenSent($statement->id);
+        $statementService->markStatementHasBeenSent($statement->id);
 
         $markedStatement = DB::table('statement')->where('send_date_time','<>', '1970-01-01 00:00:00')
                                                         ->where('user_id', $user->id)->first();

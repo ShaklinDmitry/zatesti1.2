@@ -21,8 +21,6 @@ class Kernel extends ConsoleKernel
     {
 
         $schedule->call(function () {
-            $statementService = new StatementService();
-            $statementService->sendStatements(date("H:i"));
 
         })->everyMinute();
 

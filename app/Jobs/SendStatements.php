@@ -38,7 +38,7 @@ class SendStatements implements ShouldQueue
     {
         $notificationService = new NotificationService();
         foreach ($this->userIds as $userId){
-            $notificationService->sendNotification($userId);
+            $notificationService->sendNotification($userId['user_id']);
         }
     }
 }
