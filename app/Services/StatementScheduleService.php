@@ -37,7 +37,7 @@ class StatementScheduleService
 
         $statementSendingSchedule = StatementSendingSchedule::where('exact_time', $currentTime)->get();
 
-        if($statementSendingSchedule == null){
+        if($statementSendingSchedule->isEmpty()){
             throw new \Exception('There are no users who are scheduled to receive a statement notification');
         }
 

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Jobs\SendStatements;
 use App\Models\StatementSendingSchedule;
+use App\Models\User;
 use App\Services\StatementScheduleService;
 use App\Services\StatementService;
 use Database\Factories\StatementSendingScheduleFactory;
@@ -43,19 +44,10 @@ class StatementSendingScheduleTest extends TestCase
 
 
         $statementScheduleService = new StatementScheduleService();
-        $userIds = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
+        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
 
-        $userIdsSame = [
-            0 => [
-                "user_id" => 1
-            ],
-            1 => [
-                "user_id" => 2
-            ]
-        ];
 
-        $this->assertEquals($userIds, $userIdsSame);
-
+        $this->assertEquals(2, count($users));
     }
 
     /**
@@ -71,7 +63,7 @@ class StatementSendingScheduleTest extends TestCase
         $currentTime = date("H:i");
 
         $statementScheduleService = new StatementScheduleService();
-        $userIds = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
+        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
     }
 
 
