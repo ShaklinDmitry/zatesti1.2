@@ -31,8 +31,6 @@ Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsControll
 Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText'])->middleware('auth:sanctum');
 
 
-Route::get('/saveUserResponse', [\App\Http\Controllers\ResponsesFromUserController::class, 'saveResponse']);
-
 //Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);

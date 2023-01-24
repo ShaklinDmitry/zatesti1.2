@@ -3,8 +3,10 @@
 namespace App\Jobs;
 
 use App\Models\StatementSendingSchedule;
+use App\Models\User;
 use App\Services\NotificationService;
 use App\Services\StatementScheduleService;
+use App\Services\StatementService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,16 +19,16 @@ class SendStatements implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $userIds;
+    private $users;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(array $usersIds)
+    public function __construct(array $users)
     {
-        $this->userIds = $usersIds;
+        $this->users = $users;
     }
 
     /**
@@ -37,8 +39,11 @@ class SendStatements implements ShouldQueue
     public function handle()
     {
         $notificationService = new NotificationService();
-        foreach ($this->userIds as $userId){
-            $notificationService->sendNotification($userId['user_id']);
+        foreach ($this->users as $user){
+            $statementService = new StatementService();
+            $statement = $statementService->getStatementForSending($user->id);
+
+            $notificationService->sendNotification($user->id, $statement);
         }
     }
 }

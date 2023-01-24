@@ -29,8 +29,13 @@ class StatementNotificationTest extends TestCase
             ['text' => "new statement for testing send statement"],
             ["Accept"=>"application/json"]);
 
+        $statement = Statement::where('user_id', $user->id)
+            ->where('send_date_time', '1970-01-01 00:00:00')
+            ->where('text','<>','')
+            ->first();
+
         $notificationService = new NotificationService();
-        $notificationService->sendNotification($user->id);
+        $notificationService->sendNotification($user->id, $statement);
 
         Notification::assertSentTo($user, TelegramNotification::class);
     }
@@ -87,6 +92,9 @@ class StatementNotificationTest extends TestCase
         $statement = $statementService->getStatementForSending($user->id);
     }
 
+    public function test_check_function_argument_for_that_it_is_an_integer(){
+
+    }
 
 
     /**

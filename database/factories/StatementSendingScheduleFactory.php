@@ -21,7 +21,7 @@ class StatementSendingScheduleFactory extends Factory
     {
         return [
             'user_id' => $this->faker->randomDigit(),
-            'exact_time' => ''
+            'exact_time' => 'exact_time'
         ];
     }
 }

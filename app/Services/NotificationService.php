@@ -18,18 +18,15 @@ class NotificationService
      * @return bool|string
      * @throws \Exception
      */
-    public function sendNotification(int $userId){
+    public function sendNotification(int $userId, Statement $statement){
         try{
-            $statementService = new StatementService();
-            $statement = $statementService->getStatementForSending($userId);
-
             $telegramNotification = new TelegramNotification($statement->text);
+
             $user = User::find($userId);
+            $user->last_statement_id_sent = $statement->id;
+            $user->save();
+
             $user->notify($telegramNotification);
-
-        //    $statementService->markStatementHasBeenSent($statement->id);
-
-            return true;
 
         }catch(Exception $e) {
 

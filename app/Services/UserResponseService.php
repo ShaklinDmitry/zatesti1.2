@@ -3,25 +3,32 @@
 namespace App\Services;
 
 use App\DTO\UserResponseDTO;
+use http\Env\Request;
 use NotificationChannels\Telegram\TelegramUpdates;
 use App\Models\UserResponse;
 
 class UserResponseService
 {
 
-    public function __construct(private UserResponse $userResponse){}
+    public function __construct(){}
 
     /**
      * Функция для сохранения ответа пользователя
-     * @return bool
+     * @param UserResponseRequest $request
+     * @return mixed
      */
-    public function saveUserResponse(UserResponseDTO $userResponseData){
-        $this->userResponse->text = $userResponseData->responseText;
-        $this->userResponse->message_id = $userResponseData->responseMessageId;
+    public function saveUserResponse(UserResponseRequest $request){
 
-        $saveResponseResult = $this->userResponse->save();
+        $userResponse = UserResponse::create(
+            [
+                "telegram_chat_id" => $request['message']['chat']['id'],
+                "text" => $request['message']['text']
+            ]
+        );
 
-        return $saveResponseResult;
+
+
+        return $userResponse;
     }
 
 }

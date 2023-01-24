@@ -15,4 +15,5 @@ class StatementSendingSchedule extends Model
         'user_id',
         'exact_time'
     ];
+
 }

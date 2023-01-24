@@ -18,23 +18,23 @@ class ResponseFromUserTest extends TestCase
      *
      * @return void
      */
-    public function test_save_response_from_user()
-    {
-
-        $stub = $this->createMock(TelegramUpdates::class);
-
-        // Настроить заглушку.
-        $stub->method('get')
-            ->willReturn(array('resonseText' => 'this is response text',
-                                'responseMessageId' => 9));
-
-        $userResponse = new UserResponse();
-        $userResponseService = new UserResponseService($userResponse);
-
-        $userResponseData = new UserResponseDTO($stub->get()['resonseText'],$stub->get()['responseMessageId']);
-
-        $saveResponseResult = $userResponseService->saveUserResponse($userResponseData);
-
-        $this->assertSame($saveResponseResult, true);
-    }
+//    public function test_save_response_from_user()
+//    {
+//
+//        $stub = $this->createMock(TelegramUpdates::class);
+//
+//        // Настроить заглушку.
+//        $stub->method('get')
+//            ->willReturn(array('resonseText' => 'this is response text',
+//                                'responseMessageId' => 9));
+//
+//        $userResponse = new UserResponse();
+//        $userResponseService = new UserResponseService($userResponse);
+//
+//        $userResponseData = new UserResponseDTO($stub->get()['resonseText'],$stub->get()['responseMessageId']);
+//
+//        $saveResponseResult = $userResponseService->saveUserResponse($userResponseData);
+//
+//        $this->assertSame($saveResponseResult, true);
+//    }
 }

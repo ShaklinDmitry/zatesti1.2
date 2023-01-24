@@ -19,11 +19,9 @@ class StatementService
     public function sendStatements(string $sendTime){
         try{
             $statementScheduleService = new StatementScheduleService();
-            $usersIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
+            $users = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
 
-
-
-            SendStatements::dispatch($usersIds);
+            SendStatements::dispatch($users);
         }catch(\Exception $e){
             return $e->getMessage();
         }

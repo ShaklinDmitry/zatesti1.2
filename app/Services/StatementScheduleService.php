@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\StatementSendingSchedule;
+use App\Models\User;
 
 class StatementScheduleService
 {
@@ -29,18 +30,23 @@ class StatementScheduleService
     /**
      * Функция для получения списка пользователей которым нужно отправить высказывание
      * @param string $currentTime
-     * @return mixed
+     * @return array
+     * @throws \Exception
      */
-    public function getUserIdsWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime){
+    public function getUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime){
 
-        $userIds = StatementSendingSchedule::select('user_id')->where('exact_time', $currentTime)->get()->toArray();
+        $statementSendingSchedule = StatementSendingSchedule::where('exact_time', $currentTime)->get();
 
-        if($userIds == null){
+        if($statementSendingSchedule == null){
             throw new \Exception('There are no users who are scheduled to receive a statement notification');
         }
 
-        return $userIds;
+        $users = [];
+        foreach ($statementSendingSchedule as $scheduleRow){
+            $users[] = User::find($scheduleRow->user_id);
+        }
 
+        return $users;
     }
 
 }

@@ -43,7 +43,7 @@ class StatementSendingScheduleTest extends TestCase
 
 
         $statementScheduleService = new StatementScheduleService();
-        $userIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
+        $userIds = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
 
         $userIdsSame = [
             0 => [
@@ -71,11 +71,15 @@ class StatementSendingScheduleTest extends TestCase
         $currentTime = date("H:i");
 
         $statementScheduleService = new StatementScheduleService();
-        $userIds = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
+        $userIds = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
     }
 
 
-
+    /**
+     * Тест для отправки в очередь для отправки уведомления
+     * @return void
+     * @throws \Exception
+     */
     public function test_send_statement_job_dispatched(){
         Bus::fake();
 
