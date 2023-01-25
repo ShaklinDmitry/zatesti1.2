@@ -11,4 +11,9 @@ class UserResponse extends Model
 
     protected $table = 'user_response';
 
+    protected $fillable = [
+        'telegram_chat_id',
+        'text'
+    ];
+
 }

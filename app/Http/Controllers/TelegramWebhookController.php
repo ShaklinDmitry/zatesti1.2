@@ -12,22 +12,16 @@ use Illuminate\Support\Facades\Log;
 class TelegramWebhookController extends Controller
 {
 
-    public function sendAnswer(UserResponseRequest $request, UserResponseService $userResponseService){
+    /**
+     * Здесь происходит обработка ответа который пришел через телеграмм
+     * @param Request $request
+     * @param UserResponseService $userResponseService
+     * @return void
+     */
+    public function sendAnswer(Request $request, UserResponseService $userResponseService){
+        $userResponseService->saveUserResponse($request['message']['chat']['id'], $request['message']['text']);
 
-        $user = User::find(3);
-        $telegramNotification = new TelegramNotification("this is answer");
-        $user->notify($telegramNotification);
-
-        Log::debug('jjjbbb');
-        $userResponseService->saveUserResponse();
-
-        $responseData = [
-            "data" => [
-                "message" => "Statement was create successfull.",
-            ]
-        ];
-
-        return response() -> json($responseData,200);
     }
+
 
 }

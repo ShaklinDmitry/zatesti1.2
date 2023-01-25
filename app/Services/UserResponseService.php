@@ -17,16 +17,14 @@ class UserResponseService
      * @param UserResponseRequest $request
      * @return mixed
      */
-    public function saveUserResponse(UserResponseRequest $request){
+    public function saveUserResponse(string $chatId, string $text){
 
         $userResponse = UserResponse::create(
             [
-                "telegram_chat_id" => $request['message']['chat']['id'],
-                "text" => $request['message']['text']
+                "telegram_chat_id" => $chatId,
+                "text" => $text
             ]
         );
-
-
 
         return $userResponse;
     }
