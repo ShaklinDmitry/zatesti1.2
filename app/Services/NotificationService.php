@@ -39,9 +39,14 @@ class NotificationService
 
 
     public function sendWeeklyReport(){
-        $userResponseService = new UserResponseService();
-        $userResponses = $userResponseService->getUserResponsesForThisWeek();
+        try{
+            $userResponseService = new UserResponseService();
+            $userResponses = $userResponseService->getUserResponsesForThisWeek();
 
- 
+
+        }catch(\Exception $e){
+            Log::info($e->getMessage());
+        }
+
     }
 }
