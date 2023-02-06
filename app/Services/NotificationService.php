@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Models\Statement;
 use App\Models\User;
+use App\Models\UserResponse;
 use App\Notifications\TelegramNotification;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\ErrorHandler\Debug;
@@ -33,5 +35,13 @@ class NotificationService
             return $e->getMessage();
 
         }
+    }
+
+
+    public function sendWeeklyReport(){
+        $userResponseService = new UserResponseService();
+        $userResponses = $userResponseService->getUserResponsesForThisWeek();
+
+ 
     }
 }

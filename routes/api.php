@@ -62,18 +62,13 @@ Route::get('telegram', function () {
 
     return $updates['result'];
 
-//    if($updates['ok']) {
-//        // Chat ID
-//        $chatId = $updates['result'][0]['message']['chat']['id'];
-//
-//       // dd($chatId);
-//
-//        return TelegramMessage::create()
-//            // Optional recipient user id.
-//            ->to($chatId)
-//            // Markdown supported.
-//            ->content("Hello there!");
-//
-//        //     return $chatId;
-//    }
+});
+
+Route::post('/testFeature', function (){
+//    $notificationService = new \App\Services\NotificationService();
+//    $notificationService->sendWeeklyReport();
+
+
+    \Illuminate\Support\Facades\Mail::to(\App\Models\User::find(3))->send(new \App\Mail\WeeklyReport());
+
 });
