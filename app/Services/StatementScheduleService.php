@@ -49,4 +49,26 @@ class StatementScheduleService
         return $users;
     }
 
+
+    /**
+     * Функция для того чтобы получить список пользователей, которым будет проводиться результирующая рассылка на этой неделе
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getUsersWhoShouldBeNotifiedThisWeek(){
+
+        $listOfUsersInSchedule = StatementSendingSchedule::distinct()->get(['user_id']);
+
+        if($listOfUsersInSchedule->isEmpty()){
+            throw new \Exception('No users for weekly notifications');
+        }
+
+        $users = [];
+        foreach ($listOfUsersInSchedule as $userRow){
+            $users[] = User::find($userRow->user_id);
+        }
+
+        return $users;
+    }
+
 }

@@ -38,11 +38,28 @@ class NotificationService
     }
 
 
+    /**
+     * Для рассылки недельного отчета. Здесь рассылаются обратно пользователю те высказывания, которые он отправил приложению
+     * @return void
+     */
     public function sendWeeklyReport(){
         try{
-            $userResponseService = new UserResponseService();
-            $userResponses = $userResponseService->getUserResponsesForThisWeek();
+            $statementScheduleService = new StatementScheduleService();
+            $users = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
 
+            $userResponseService = new UserResponseService();
+            foreach ($users as $user){
+                $userResponses = $userResponseService->getUserResponsesForThisWeek($user);
+
+                $weeklyNotificationText = '';
+
+                for($i=0; $i<count($userResponses); $i++){
+                    $weeklyNotificationText .= $i . '. ' . $userResponses[$i]->text . PHP_EOL;
+                }
+
+                $telegramWeeklyNotification = new TelegramNotification($weeklyNotificationText);
+                $user->notify($telegramWeeklyNotification);
+            }
 
         }catch(\Exception $e){
             Log::info($e->getMessage());
