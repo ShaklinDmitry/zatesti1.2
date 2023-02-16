@@ -45,10 +45,10 @@ class NotificationService
     public function sendWeeklyReport(){
         try{
             $statementScheduleService = new StatementScheduleService();
-            $users = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
+            $usersWhoShouldBeNotifiedThisWeek = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
 
             $userResponseService = new UserResponseService();
-            foreach ($users as $user){
+            foreach ($usersWhoShouldBeNotifiedThisWeek as $user){
                 $userResponses = $userResponseService->getUserResponsesForThisWeek($user);
 
                 $weeklyNotificationText = '';
