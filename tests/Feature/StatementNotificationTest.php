@@ -3,7 +3,9 @@
 namespace Tests\Feature;
 
 use App\Models\Statement;
+use App\Models\StatementSendingSchedule;
 use App\Models\User;
+use App\Models\UserResponse;
 use App\Notifications\TelegramNotification;
 use App\Services\NotificationService;
 use App\Services\StatementService;
@@ -145,6 +147,43 @@ class StatementNotificationTest extends TestCase
         $this->assertNotNull(
             $markedStatement
         );
+    }
+
+    /**
+     * тест на факт отправки еженедельного сообщения пользователю
+     * @return void
+     */
+    public function test_send_weekly_report(){
+        $this->artisan('migrate:fresh');
+
+        Notification::fake();
+
+        $currentTime = date("H:i");
+
+        StatementSendingSchedule::factory()->create([
+            'user_id' => 1,
+            'exact_time' => $currentTime
+        ]);
+
+        $telegram_chat_id = 1111;
+
+        $user = User::factory()->create([
+            'id' => 1,
+            'telegram_chat_id' => $telegram_chat_id
+        ]);
+
+        $yesterdayDate = date('Y-m-d H:i',strtotime("-1 days"));
+
+        UserResponse::factory()->create([
+            'telegram_chat_id' => $telegram_chat_id,
+            'text' => 'default text',
+            'created_at' => $yesterdayDate
+        ]);
+
+        $notificationService = new NotificationService();
+        $notificationService->sendWeeklyReport();
+
+        Notification::assertSentTo($user, TelegramNotification::class);
     }
 
 
