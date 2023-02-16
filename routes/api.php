@@ -39,6 +39,7 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 Route::post('/statements-schedule',[\App\Http\Controllers\StatementScheduleController::class, 'setSendTime'])->middleware('auth:sanctum');
 
 Route::get('/check-schedule-every-minute',[\App\Http\Controllers\StatementScheduleController::class, 'executeEveryMinute']);
+Route::get('/check-schedule-every-sunday',[\App\Http\Controllers\StatementScheduleController::class, 'executeEverySunday']);
 
 
 Route::post('/telegram-webhook',[\App\Http\Controllers\TelegramWebhookController::class, 'sendAnswer']);
@@ -65,10 +66,7 @@ Route::get('telegram', function () {
 });
 
 Route::post('/testFeature', function (){
-//    $notificationService = new \App\Services\NotificationService();
-//    $notificationService->sendWeeklyReport();
 
-
-    \Illuminate\Support\Facades\Mail::to(\App\Models\User::find(3))->send(new \App\Mail\WeeklyReport());
-
+    $notificationService = new \App\Services\NotificationService();
+    $notificationService->sendWeeklyReport();
 });

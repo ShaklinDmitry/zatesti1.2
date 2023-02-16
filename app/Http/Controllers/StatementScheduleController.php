@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Services\NotificationService;
 use App\Services\StatementScheduleService;
 use App\Services\StatementService;
 use Illuminate\Http\Request;
@@ -19,6 +20,15 @@ class StatementScheduleController extends Controller
     public function executeEveryMinute(){
         $statementService = new StatementService();
         $statementService->sendStatements(date("H:i"));
+    }
+
+    /**
+     * Для вызова в кроне раз в неделю в воскресенье
+     * @return void
+     */
+    public function executeEverySunday(){
+        $notificationService = new NotificationService();
+        $notificationService->sendWeeklyReport();
     }
 
     /**
