@@ -51,14 +51,20 @@ class StatementService
     }
 
     /**
-     * Добавить высказывание в БД
-     * @param $text
-     * @return bool
+     * Добавить высказывание в базу
+     * @param string $text
+     * @param int $userId
+     * @return Statement
      */
-    public function addStatement($text, int $userId){
-        $statement = new Statement();
-        $addStatementResult = $statement->add($text, $userId);
-        return $addStatementResult;
+    public function addStatement(string $text, int $userId):Statement {
+
+            $statement = Statement::create([
+                'user_id' => $userId,
+                'text' => $text
+            ]);
+
+            return $statement;
+
     }
 
 

@@ -7,6 +7,7 @@ use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Services\StatementService;
 use App\Services\TextForStatementsService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateStatementRequest;
 use Illuminate\Support\Facades\Auth;
@@ -15,20 +16,24 @@ class StatementController extends Controller
 {
 
     /**
-     * создать новое высказывание
-     * @return json
+     * функция для создания высказывания
+     * @param CreateStatementRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function createStatement(CreateStatementRequest $request, StatementService $statementService){
+    public function createStatement(CreateStatementRequest $request):JsonResponse{
 
-        $createStatementResult = $statementService->addStatement($request->text, Auth::id());
+        try{
+            $statementService = new StatementService();
+            $statement = $statementService->addStatement($request->text, Auth::id());
 
-        $responseData = [
-            "data" => [
-                "message" => "Statement was create successfull.",
-            ]
-        ];
-
-        return response() -> json($responseData,200);
+            if($statement){
+                return response() -> json(["data" => ["message" => "Statement was create successfull.",
+                ]],200);
+            }
+        }catch(\Exception $exception){
+            return response() -> json(["error" => ["message" => $exception->getMessage(),
+            ]],$exception->getCode());
+        }
     }
 
 

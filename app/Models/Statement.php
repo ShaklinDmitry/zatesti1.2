@@ -13,6 +13,11 @@ class Statement extends Model
 
     protected $table = 'statement';
 
+    protected $fillable = [
+        'text',
+        'user_id',
+    ];
+
     /**
      * Сохранение в БД текста высказывания
      * @param Request $request
