@@ -14,7 +14,7 @@ class StatementTest extends TestCase
      *
      * @return void
      */
-    public function test_correct_create_statement()
+    public function test_successful_create_statement()
     {
         $user = User::factory()->create();
 
@@ -22,12 +22,10 @@ class StatementTest extends TestCase
                                     ['text' => "new statement"],
                                     ["Accept"=>"application/json"]);
 
-        $response->assertJson(
-            ["data" => [
-                "message" => "Statement was create successfull."
-                       ]
-                ]
-            );
+        $this->assertDatabaseHas('statement', [
+            'text' => "new statement",
+        ]);
+        
     }
 
     /**
