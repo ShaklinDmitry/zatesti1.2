@@ -11,6 +11,8 @@ use Tests\TestCase;
 
 class StatementTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Тестирование создания высказывания
      *
@@ -57,7 +59,6 @@ class StatementTest extends TestCase
      * @return void
      */
     public function test_get_statements_response_successful(){
-        $this->artisan('migrate:fresh');
 
         $user = User::factory()->create();
 
@@ -78,7 +79,7 @@ class StatementTest extends TestCase
             ]
         );
     }
- 
+
     /**
      * Тестирование выбрасывания исключения при отсутствии высказываний в БД
      * @return void
@@ -86,8 +87,6 @@ class StatementTest extends TestCase
      */
     public function test_get_statements_function_unsuccessful(){
         $this->expectException(NoStatementsException::class);
-
-        $this->artisan('migrate:fresh');
 
         $user = User::factory()->create();
 
@@ -100,8 +99,6 @@ class StatementTest extends TestCase
      * @return void
      */
     public function test_get_statements_api_response_unsuccessful(){
-
-        $this->artisan('migrate:fresh');
 
         $user = User::factory()->create();
 
@@ -153,7 +150,6 @@ class StatementTest extends TestCase
      * @return void
      */
     public function test_failed_delete_statement(){
-        $this->artisan('migrate:fresh');
 
         $deleteResponse = $this->delete('/api/statements',
             ['id' => -1]);
