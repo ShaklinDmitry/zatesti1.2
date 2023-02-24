@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GetStatementsRequest;
+use App\Exceptions\NoStatementsException;
 use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Services\StatementService;
@@ -39,19 +39,34 @@ class StatementController extends Controller
 
     /**
      * Получить все высказывания у конкретного пользователя
-     * @return json
+     * @return JsonResponse
      */
-    public function getStatements(GetStatementsRequest $request, StatementService $statementService){
+    public function getStatements():JsonResponse{
 
-        $statements = $statementService->getStatements(Auth::id());
+        try{
+            $statementService = new StatementService();
+            $statements = $statementService->getStatements(Auth::id());
 
-        $responseData = [
-            "data" => [
-                "statements" => $statements
-            ]
-        ];
+            $responseData = [
+                "data" => [
+                    "statements" => $statements
+                ]
+            ];
 
-        return response() -> json($responseData,200);
+            return response() -> json($responseData,200);
+
+        }catch(NoStatementsException $exception){
+
+            return response() -> json([
+                "error" => [
+                    "message" => $exception->getMessage()
+                ]
+            ], $exception->getCode());
+
+        }catch (\Exception $exception){
+            return response() -> json(["error" => ["message" => $exception->getMessage(),
+            ]], $exception->getCode());
+        }
     }
 
 

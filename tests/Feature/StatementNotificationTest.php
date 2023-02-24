@@ -94,10 +94,6 @@ class StatementNotificationTest extends TestCase
         $statement = $statementService->getStatementForSending($user->id);
     }
 
-    public function test_check_function_argument_for_that_it_is_an_integer(){
-
-    }
-
 
     /**
      * Тестирование пометки отправленного высказывания(чтобы далее оно больше не отправлялось повторно)

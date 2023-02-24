@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\NoStatementsException;
 use App\Models\User;
+use App\Services\StatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -25,7 +27,7 @@ class StatementTest extends TestCase
         $this->assertDatabaseHas('statement', [
             'text' => "new statement",
         ]);
-        
+
     }
 
     /**
@@ -54,7 +56,7 @@ class StatementTest extends TestCase
      *
      * @return void
      */
-    public function test_get_statements(){
+    public function test_get_statements_response_successful(){
         $this->artisan('migrate:fresh');
 
         $user = User::factory()->create();
@@ -63,7 +65,7 @@ class StatementTest extends TestCase
             ['text' => "test statement"],
             ["Accept"=>"application/json"]);
 
-        $response = $this->actingAs($user)->get('/api/statements?userId='.$user->id);
+        $response = $this->actingAs($user)->get('/api/statements');
 
         $response->assertJson(
             [
@@ -72,6 +74,43 @@ class StatementTest extends TestCase
                         array(
                             'text' => 'test statement',
                         )]
+                ]
+            ]
+        );
+    }
+ 
+    /**
+     * Тестирование выбрасывания исключения при отсутствии высказываний в БД
+     * @return void
+     * @throws NoStatementsException
+     */
+    public function test_get_statements_function_unsuccessful(){
+        $this->expectException(NoStatementsException::class);
+
+        $this->artisan('migrate:fresh');
+
+        $user = User::factory()->create();
+
+        $statementService = new StatementService();
+        $statementService->getStatements($user->id);
+    }
+
+    /**
+     * тестирование того как выглядит ответ при get запросе на получение высказываний, когда их в базе нет
+     * @return void
+     */
+    public function test_get_statements_api_response_unsuccessful(){
+
+        $this->artisan('migrate:fresh');
+
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/api/statements');
+
+        $response->assertJson(
+            [
+                "error" => [
+                            'message' => 'No statements'
                 ]
             ]
         );

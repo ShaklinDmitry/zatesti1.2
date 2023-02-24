@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Exceptions\NoStatementsException;
 use App\Services\StatementScheduleService;
 use App\Jobs\SendStatements;
 use App\Models\Statement;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\ErrorHandler\Debug;
 
@@ -42,11 +44,17 @@ class StatementService
 
     /**
      * Для получения высказываний
-     * @param Statement $statement
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @param int $userId
+     * @return Collection
+     * @throws NoStatementsException
      */
-    public function getStatements(int $userId){
+    public function getStatements(int $userId):Collection{
         $statements = Statement::where('user_id', $userId)->get();
+
+        if($statements->isEmpty()){
+            throw new NoStatementsException('No statements', 200);
+        }
+
         return $statements;
     }
 
