@@ -9,6 +9,7 @@ use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Services\StatementService;
 use App\Services\TextForStatementsService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,29 +17,30 @@ class TextForStatementsController extends Controller
 {
     /**
      * Функция, которая сохраняет текст
-     *
-     * @return json
+     * @param TextForStatementsRequest $request
+     * @return JsonResponse
      */
-    public function createText(TextForStatementsRequest $request, TextForStatementsService $textService){
+    public function createText(TextForStatementsRequest $request):JsonResponse{
 
-        $text = $textService->addText($request->text, Auth::id());
+        try{
+            $textForStatementsService = new TextForStatementsService();
+            $textForStatements = $textForStatementsService->addText($request->text, Auth::id());
 
-        if($text != null){
-            $responseData = [
-                "data" => [
-                    "message" => "Text was added.",
-                    "text_id" => $text->id
-                ]
-            ];
-        }else{
-            $responseData = [
-                "error" => [
-                    "message" => "Text was not added."
-                ]
-            ];
+            if($textForStatements){
+                $responseData = [
+                    "data" => [
+                        "message" => "Text was added.",
+                        "text_id" => $textForStatements->id
+                    ]
+                ];
+            }
+
+            return response() -> json($responseData,200);
+
+        }catch (\Exception $exception){
+            return response() -> json(["error" => ["message" => $exception->getMessage(),
+            ]], $exception->getCode());
         }
-
-        return response() -> json($responseData,200);
 
     }
 

@@ -1,7 +1,4 @@
 <?php
-//header('Access-Control-Allow-Origin: *');
-//header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
-//header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Origin, Authorization, Accept, X-Requested-With');
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,10 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement'])->middleware('auth:sanctum');
-Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements'])->middleware('auth:sanctum');
-Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
-//Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('cors');
+Route::middleware('auth:sanctum')->group(function (){
+        Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
+        Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
+    }
+);
+
+
+//Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
 Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('auth:sanctum');
 Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText'])->middleware('auth:sanctum');
 

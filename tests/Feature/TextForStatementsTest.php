@@ -15,20 +15,39 @@ use Tests\TestCase;
 
 class TextForStatementsTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Тестируем создание текста, который далее будет разбит на высказывания. Сценарий, когда текст создается
      *
      * @return void
      */
-    public function test_create_text_for_split_into_statements()
+    public function test_create_text_for_statements()
     {
-        $this->artisan('migrate:fresh');
-
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/api/statements/text',
-            ['text' => "new statement"],
+            ['text' => "new text"],
             ["Accept"=>"application/json"]);
+
+
+        $this->assertDatabaseHas('text', [
+            'text' => "new text",
+        ]);
+
+    }
+
+    /**
+     * Тест для проверки того как выглядит ответ api при запросе на создание текста
+     * @return void
+     */
+    public function test_create_text_for_statements_api_response(){
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->post('/api/statements/text',
+            ['text' => "new text"],
+            ["Accept"=>"application/json"]);
+
 
         $response->assertJson(
             [
@@ -41,7 +60,6 @@ class TextForStatementsTest extends TestCase
 
 
     public function test_make_statements_from_text(){
-        $this->artisan('migrate:fresh');
 
         $user = User::factory()->create();
 
@@ -74,7 +92,6 @@ class TextForStatementsTest extends TestCase
 
 
     public function test_whether_parsed_texts_were_marked(){
-        $this->artisan('migrate:fresh');
 
         $user = User::factory()->create();
 

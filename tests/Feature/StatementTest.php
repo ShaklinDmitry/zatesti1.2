@@ -149,19 +149,19 @@ class StatementTest extends TestCase
      *
      * @return void
      */
-    public function test_failed_delete_statement(){
-
-        $deleteResponse = $this->delete('/api/statements',
-            ['id' => -1]);
-
-        $deleteResponse->assertJson(
-            ["error" => [
-                "message" => "Statement not deleted."
-            ]
-            ]
-        );
-
-    }
+//    public function test_failed_delete_statement(){
+//
+//        $deleteResponse = $this->delete('/api/statements',
+//            ['id' => -1]);
+//
+//        $deleteResponse->assertJson(
+//            ["error" => [
+//                "message" => "Statement not deleted."
+//            ]
+//            ]
+//        );
+//
+//    }
 
 
 
