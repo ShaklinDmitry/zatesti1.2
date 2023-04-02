@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StatementScheduleService
 {
@@ -13,7 +14,7 @@ class StatementScheduleService
      * @param int $userId
      * @return bool
      */
-    public function saveExactTimeForSendingStatements(string $times,int $userId){
+    public function saveExactTimeForSendingStatements(string $times,int $userId): bool{
         $times = explode(";", $times);
 
         foreach ($times as $time){
@@ -33,7 +34,7 @@ class StatementScheduleService
      * @return array
      * @throws \Exception
      */
-    public function getUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime){
+    public function getUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime): array{
 
         $statementSendingSchedule = StatementSendingSchedule::where('exact_time', $currentTime)->get();
 

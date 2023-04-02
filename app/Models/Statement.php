@@ -30,26 +30,4 @@ class Statement extends Model
         return $result;
     }
 
-
-    /**
-     * Получить все высказывания
-     * @return Collection
-     */
-    public function getAll(){
-        return $this->all();
-    }
-
-
-    /**
-     * Удалить элемент по id
-     * @param $id
-     * @return bool|void|null
-     */
-    public function deleteItem($id){
-        return $this->select('*')->where([
-            ['id', '=', $id]
-        ])->delete();
-
-    }
-
 }

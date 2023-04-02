@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserResponse>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Statement>
  */
-class UserResponseFactory extends Factory
+class StatementFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,9 @@ class UserResponseFactory extends Factory
     public function definition()
     {
         return [
-            'telegram_chat_id' => fake()->randomNumber(9, true),
-            'text' => fake()->sentence(11)
+            'text' => fake()->sentence(11),
+            'send_date_time' => '1970-01-01 00:00:00',
+            'user_id' => ''
         ];
     }
 }

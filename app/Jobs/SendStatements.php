@@ -38,12 +38,17 @@ class SendStatements implements ShouldQueue
      */
     public function handle()
     {
-        $notificationService = new NotificationService();
-        foreach ($this->users as $user){
-            $statementService = new StatementService();
-            $statement = $statementService->getStatementForSending($user->id);
+        try{
+            $notificationService = new NotificationService();
+            foreach ($this->users as $user){
+                $statementService = new StatementService();
+                $statement = $statementService->getStatementForSending($user->id);
 
-            $notificationService->sendNotification($user->id, $statement);
+                $notificationService->sendNotification($user->id, $statement);
+            }
+        }catch(\Exception $exception){
+            Log::info($exception->getMessage());
         }
+
     }
 }

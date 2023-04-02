@@ -19,7 +19,11 @@ class TelegramWebhookController extends Controller
      * @return void
      */
     public function sendAnswer(Request $request, UserResponseService $userResponseService){
-        $userResponseService->saveUserResponse($request['message']['chat']['id'], $request['message']['text']);
+        try{
+            $userResponseService->saveUserResponse($request['message']['chat']['id'], $request['message']['text']);
+        }catch(\Exception $exception){
+            Log::info($exception->getMessage());
+        }
 
     }
 

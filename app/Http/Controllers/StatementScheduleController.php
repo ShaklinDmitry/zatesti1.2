@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Services\NotificationService;
 use App\Services\StatementScheduleService;
 use App\Services\StatementService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -18,17 +19,29 @@ class StatementScheduleController extends Controller
      * @throws \Exception
      */
     public function executeEveryMinute(){
-        $statementService = new StatementService();
-        $statementService->sendStatements(date("H:i"));
+
+        try{
+            $statementService = new StatementService();
+            $statementService->sendStatements(date("H:i"));
+        }catch(\Exception $exception){
+            return $exception->getMessage();
+        }
+
     }
 
     /**
      * Для вызова в кроне раз в неделю в воскресенье
-     * @return void
+     * @return string
      */
     public function executeEverySunday(){
-        $notificationService = new NotificationService();
-        $notificationService->sendWeeklyReport();
+
+        try{
+            $notificationService = new NotificationService();
+            $notificationService->sendWeeklyReport();
+        }catch(\Exception $exception){
+            Log::info($exception->getMessage());
+            return $exception->getMessage();
+        }
     }
 
     /**
@@ -37,7 +50,7 @@ class StatementScheduleController extends Controller
      * @param StatementScheduleService $statementScheduleService
      * @return \Illuminate\Http\JsonResponse
      */
-    public function setSendTime(Request $request, StatementScheduleService $statementScheduleService){
+    public function setSendTime(Request $request, StatementScheduleService $statementScheduleService): JsonResponse{
 
         $saveExactTime = $statementScheduleService->saveExactTimeForSendingStatements($request->exactTimes, Auth::id());
 

@@ -23,16 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function (){
         Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
         Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
+        Route::delete('/statements/{id}', [\App\Http\Controllers\StatementController::class, 'destroy']);
+
+        Route::get('/beststatements', [\App\Http\Controllers\ResponsesFromUserController::class, 'getBestStatements']);
+        Route::delete('/beststatements/{id}', [\App\Http\Controllers\ResponsesFromUserController::class, 'destroy']);
+
+        Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
+        Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText']);
     }
 );
-
-
-//Route::delete('/statements',[\App\Http\Controllers\StatementController::class, 'deleteStatement']);
-Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText'])->middleware('auth:sanctum');
-Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText'])->middleware('auth:sanctum');
-
-
-//Route::get('/notification', [\App\Http\Controllers\StatementNotificationController::class, 'sendStatementNotification']);
 
 Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
@@ -44,9 +43,6 @@ Route::get('/check-schedule-every-sunday',[\App\Http\Controllers\StatementSchedu
 
 
 Route::post('/telegram-webhook',[\App\Http\Controllers\TelegramWebhookController::class, 'sendAnswer']);
-
-Route::post('/startRMQ',[\App\Http\Controllers\TestControllerForRabbitMQ::class, 'createTask']);
-Route::post('/getRMQ',[\App\Http\Controllers\TestControllerForRabbitMQ::class, 'receiveTask']);
 
 Route::get('telegram', function () {
     $updates = TelegramUpdates::create()

@@ -6,6 +6,7 @@ use App\DTO\UserResponseDTO;
 use App\Models\User;
 use Carbon\Carbon;
 use http\Env\Request;
+use Illuminate\Support\Facades\Log;
 use NotificationChannels\Telegram\TelegramUpdates;
 use App\Models\UserResponse;
 
@@ -17,14 +18,22 @@ class UserResponseService
     /**
      * Функция для сохранения ответа пользователя
      * @param UserResponseRequest $request
-     * @return mixed
+     * @return UserResponse
      */
     public function saveUserResponse(string $chatId, string $text){
+
+        $user = User::where('telegram_chat_id', $chatId)->first();
+
+        if($user == null){
+            throw new \Exception('there is no user with telegram_chat_id =' . $chatId);
+        }
+
 
         $userResponse = UserResponse::create(
             [
                 "telegram_chat_id" => $chatId,
-                "text" => $text
+                "text" => $text,
+                "user_id" => $user->id
             ]
         );
 
@@ -33,8 +42,8 @@ class UserResponseService
 
     /**
      * Получить ответы пользователей за эту неделю
+     * @param User $user
      * @return mixed
-     * @throws \Exception
      */
     public function getUserResponsesForThisWeek(User $user){
         $now = Carbon::now();
@@ -44,11 +53,32 @@ class UserResponseService
 
         $userResponses = UserResponse::whereBetween('created_at',[$weekStartDate, $currentDate])->where('telegram_chat_id', $user->telegram_chat_id)->get();
 
-        if($userResponses->isEmpty()){
-            throw new \Exception("No user responses this week");
+        return $userResponses;
+    }
+
+    /**
+     * Функция для проучения лучших высказываний отправленных пользователем
+     * @param User $user
+     * @return UserResponse
+     * @throws \Exception
+     */
+    public function getBestStatements(int $userId){
+        $bestStatements = UserResponse::select('id', 'text')->where('user_id', $userId)->get();
+
+        if($bestStatements->isEmpty()){
+            throw new \Exception('there no best responses for this user');
         }
 
-        return $userResponses;
+        return $bestStatements;
+    }
+
+    /**
+     * Функция для удаления лучших высказываний
+     * @param Request $request
+     * @return mixed
+     */
+    public function deleteBestStatetement(int $id):bool {
+         return UserResponse::where('id', $id)->delete();
     }
 
 }

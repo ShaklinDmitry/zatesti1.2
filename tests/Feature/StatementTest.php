@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Exceptions\NoStatementsException;
+use App\Models\Statement;
 use App\Models\User;
 use App\Services\StatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -118,50 +119,20 @@ class StatementTest extends TestCase
      *
      * @return void
      */
-//    public function test_success_delete_statement(){
-//        $this->artisan('migrate:fresh');
-//
-//        $user = User::factory()->create();
-//
-//        $this->actingAs($user)->post('/api/statements',
-//            ['text' => "test statement"],
-//        ["Accept"=>"application/json"]);
-//
-//        $getStatementsResponse = $this->actingAs($user)->get('/api/statements');
-//
-//        $id  = $getStatementsResponse['data']['statements'][0]['id'];
-//
-//        $deleteResponse = $this->delete('/api/statements',
-//                            ['id' => $id]);
-//
-//        $deleteResponse->assertJson(
-//            ["data" => [
-//                "message" => "Statement was deleted."
-//                ]
-//            ]
-//        );
-//
-//    }
+    public function test_success_delete_statement(){
 
+        $user = User::factory()->create();
 
-    /**
-     * Тестирование неудачного удаления высказывания
-     *
-     * @return void
-     */
-//    public function test_failed_delete_statement(){
-//
-//        $deleteResponse = $this->delete('/api/statements',
-//            ['id' => -1]);
-//
-//        $deleteResponse->assertJson(
-//            ["error" => [
-//                "message" => "Statement not deleted."
-//            ]
-//            ]
-//        );
-//
-//    }
+        $statement = Statement::factory()->create(['user_id' => $user->id]);
+
+        $this->assertCount(1, Statement::all());
+
+        $this->actingAs($user)->delete('/api/statements',
+                            ['id' => $statement->id]);
+
+        $this->assertCount(0, Statement::all());
+
+    }
 
 
 

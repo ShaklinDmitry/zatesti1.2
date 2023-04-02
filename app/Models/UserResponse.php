@@ -13,6 +13,7 @@ class UserResponse extends Model
 
     protected $fillable = [
         'telegram_chat_id',
+        'user_id',
         'text'
     ];
 

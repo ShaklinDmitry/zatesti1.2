@@ -25,21 +25,21 @@ class StatementService
             $users = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
 
             SendStatements::dispatch($users);
-        }catch(\Exception $e){
-            return $e->getMessage();
+        }catch (\Exception $exception){
+          //  Log::info($exception->getMessage());
         }
     }
 
-    /**
-     * Функция сохранения высказываний в БД
-     * @param array $statements
-     */
-    public function saveStatements(array $statements, int $user_id){
-        foreach ($statements as $statementText){
-            $statement = new Statement();
-            $statement->add($statementText, $user_id);
-        }
-    }
+//    /**
+//     * Функция сохранения высказываний в БД
+//     * @param array $statements
+//     */
+//    public function saveStatements(array $statements, int $user_id){
+//        foreach ($statements as $statementText){
+//            $statement = new Statement();
+//            $statement->add($statementText, $user_id);
+//        }
+//    }
 
 
     /**
@@ -104,5 +104,15 @@ class StatementService
 
         return Statement::where('id',$statementId)->update(['send_date_time' => NOW()]);
 
+    }
+
+
+    /**
+     * Удалить высказывание
+     * @param int $id
+     * @return bool
+     */
+    public function deleteStatement(int $id):bool {
+        return Statement::where('id', $id)->delete();
     }
 }

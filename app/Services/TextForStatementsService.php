@@ -18,7 +18,7 @@ class TextForStatementsService
      * @return TextForStatements|null
      * @throws TextForStatementsIsNullException
      */
-    public function getUnparsedText(int $userId){
+    public function getUnparsedTextForUser(int $userId):TextForStatements{
         $unParsedText = TextForStatements::where(['is_parsed' => 0], ['user_id' => $userId])->first();
 
         if($unParsedText == null){
@@ -30,23 +30,22 @@ class TextForStatementsService
 
     /**
      * Функуия сохраняет массив высказываний, которые получаются после парсинга текста
-     *
-     * @return bool
+     * @param int $userId
+     * @return void
      * @throws TextForStatementsIsNullException
      */
-    public function makeStatements(int $userId){
+    public function makeStatementsForUser(int $userId): void {
 
-        $unParsedText = $this->getUnparsedText($userId);
+        $unParsedText = $this->getUnparsedTextForUser($userId);
 
         $statements = $this->parseTextIntoStatements($unParsedText['text']);
 
-        $resultOfMarkTextAsParsed = $this->markTextAsParsed($unParsedText['id']);
+        $this->markTextAsParsed($unParsedText['id']);
 
         $statementService = new StatementService();
-
-        $resultOfSaveStatements = $statementService->saveStatements($statements, $unParsedText['user_id']);
-
-        return $resultOfSaveStatements;
+        foreach ($statements as $text){
+            $statementService->addStatement($text, $userId);
+        }
     }
 
     /**
@@ -63,12 +62,12 @@ class TextForStatementsService
 
     /**
      * Функция для того чтобы отметить что текст был распарсен
-     * @param int $id
+     * @param int $textId
      * @return bool
      */
-    public function markTextAsParsed(int $id){
+    public function markTextAsParsed(int $textId){
 
-        $markTextResult = TextForStatements::where('id', $id)->update(['is_parsed' => 1]);
+        $markTextResult = TextForStatements::where('id', $textId)->update(['is_parsed' => 1]);
 
         return $markTextResult;
     }

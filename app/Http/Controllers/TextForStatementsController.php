@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Http\Requests\TextForStatementsRequest;
-use App\Jobs\MakeStatements;
+use App\Jobs\MakeStatementsFromTextForUser;
 use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Services\StatementService;
@@ -49,10 +49,10 @@ class TextForStatementsController extends Controller
      *
      * @return json
      */
-    public function makeStatementsFromText(TextForStatementsService $textForStatementsService, StatementService $statementService){
+    public function makeStatementsFromText(){
 
         try{
-            MakeStatements::dispatch(Auth::id());
+            MakeStatementsFromTextForUser::dispatch(Auth::id());
 
             $responseData = [
                 "data" => [
@@ -62,9 +62,10 @@ class TextForStatementsController extends Controller
 
             return response() -> json($responseData,200);
 
-        }catch (\TextForStatementsIsNullException $e){
+        }catch (TextForStatementsIsNullException $exception){
 
-            echo $e->getMessage();
+            return response() -> json(["error" => ["message" => $exception->getMessage(),
+            ]],$exception->getCode());
 
         }
     }

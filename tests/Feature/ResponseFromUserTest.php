@@ -73,18 +73,18 @@ class ResponseFromUserTest extends TestCase
      * @return void
      * @throws \Exception
      */
-        public function test_get_user_responses_for_this_week_if_there_is_no_responses(){
-            $this->expectExceptionMessage('No user responses this week');
-
-            $this->artisan('migrate:fresh');
-
-            $telegram_chat_id = 1111;
-
-            $user = User::factory()->create([
-                'telegram_chat_id' => $telegram_chat_id
-            ]);
-
-            $userResponseService = new UserResponseService();
-            $userResponses = $userResponseService->getUserResponsesForThisWeek($user);
-        }
+//        public function test_get_user_responses_for_this_week_if_there_is_no_responses(){
+//            $this->expectExceptionMessage('No user responses this week');
+//
+//            $this->artisan('migrate:fresh');
+//
+//            $telegram_chat_id = 1111;
+//
+//            $user = User::factory()->create([
+//                'telegram_chat_id' => $telegram_chat_id
+//            ]);
+//
+//            $userResponseService = new UserResponseService();
+//            $userResponses = $userResponseService->getUserResponsesForThisWeek($user);
+//        }
 }
