@@ -135,6 +135,19 @@ class StatementTest extends TestCase
     }
 
 
+    public function test_turn_statement_into_best_statement(){
+        $user = User::factory()->create();
+
+        $statement = Statement::factory()->create(['user_id' => $user->id]);
+
+        $this->patch('api/statement/'.$statement->id.'/make-beststatement');
+
+        $statement = Statement::find($statement->id)->get();
+
+        $this->assertSame(1, $statement->isBestStatement);
+
+    }
+
 
 
 }
