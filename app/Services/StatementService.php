@@ -112,7 +112,17 @@ class StatementService
      * @param int $id
      * @return bool
      */
-    public function deleteStatement(int $id):bool {
+    public function deleteStatement(int $id): bool {
         return Statement::where('id', $id)->delete();
+    }
+
+    /**
+     * Сделать обычное высказывание лучшим
+     * @param int $statementId
+     * @return bool
+     */
+    public function makeStatementBest(int $statementId):Statement {
+
+        return Statement::where('id', $statementId)->update(['is_best_statement' => 1]);
     }
 }

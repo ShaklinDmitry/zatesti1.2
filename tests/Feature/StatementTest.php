@@ -127,24 +127,29 @@ class StatementTest extends TestCase
 
         $this->assertCount(1, Statement::all());
 
-        $this->actingAs($user)->delete('/api/statements',
-                            ['id' => $statement->id]);
+        $this->actingAs($user)->delete('/api/statements/'.$statement->id);
 
         $this->assertCount(0, Statement::all());
 
     }
 
 
+    /**
+     * тест на преобразование обычного высказывания в лучшее
+     * @return void
+     */
     public function test_turn_statement_into_best_statement(){
         $user = User::factory()->create();
 
         $statement = Statement::factory()->create(['user_id' => $user->id]);
 
-        $this->patch('api/statement/'.$statement->id.'/make-beststatement');
+        $this->assertSame(0, $statement->is_best_statement);
 
-        $statement = Statement::find($statement->id)->get();
+        $this->actingAs($user)->patch('api/statement/'.$statement->id.'/make-beststatement');
 
-        $this->assertSame(1, $statement->isBestStatement);
+        $statement = Statement::find($statement->id)->first();
+
+        $this->assertSame(1, $statement->is_best_statement);
 
     }
 

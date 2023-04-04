@@ -19,7 +19,8 @@ class StatementFactory extends Factory
         return [
             'text' => fake()->sentence(11),
             'send_date_time' => '1970-01-01 00:00:00',
-            'user_id' => ''
+            'user_id' => '',
+            'is_best_statement' => 0
         ];
     }
 }
