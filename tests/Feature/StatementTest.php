@@ -143,15 +143,21 @@ class StatementTest extends TestCase
 
         $statement = Statement::factory()->create(['user_id' => $user->id]);
 
-        $this->assertSame(0, $statement->is_best_statement);
+        $response = $this->actingAs($user)->patch('api/statement/'.$statement->id.'/make-beststatement');
 
-        $this->actingAs($user)->patch('api/statement/'.$statement->id.'/make-beststatement');
+        $response->assertJson(
+            [
+                "data" => [
+                    "message" => "Statement now is best.",
+                ]
+            ]
+        );
 
         $statement = Statement::find($statement->id)->first();
 
         $this->assertSame(1, $statement->is_best_statement);
-
     }
+
 
 
 

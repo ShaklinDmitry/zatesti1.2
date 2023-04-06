@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\DTO\UserResponseDTO;
+use App\Services\BestStatementService;
 use App\Services\UserResponseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use NotificationChannels\Telegram\TelegramUpdates;
 
-class ResponsesFromUserController extends Controller
+class BestStatementController extends Controller
 {
 
     /**
@@ -18,8 +19,8 @@ class ResponsesFromUserController extends Controller
      */
     public function getBestStatements(){
         try{
-            $userResponseService = new UserResponseService();
-            $bestStatements = $userResponseService->getBestStatements(Auth::id());
+            $bestStatementService = new BestStatementService();
+            $bestStatements = $bestStatementService->getBestStatements(Auth::id());
 
             $responseData = [
                 "data" => [
@@ -46,8 +47,8 @@ class ResponsesFromUserController extends Controller
      * @return \Illuminate\Http\JsonResponse|void
      */
     public function destroy(Request $request){
-        $userResponseService = new UserResponseService();
-        $destroy = $userResponseService->deleteBestStatetement($request->id);
+        $bestStatementService = new BestStatementService();
+        $destroy = $bestStatementService->deleteBestStatetement($request->id);
 
         if($destroy){
             return response() -> json(["data" => ["message" => "Statement was deleted successfull.",
@@ -55,6 +56,21 @@ class ResponsesFromUserController extends Controller
         }else{
             return response() -> json(["error" => ["message" => "Statement was not deleted.",
             ]],200);
+        }
+    }
+
+
+    /**
+     * Сделать лучшее высказывание обычным
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|void
+     */
+    public function makeBestStatementNormal(Request $request){
+        $bestStatementService = new BestStatementService();
+        $updateStatementToNormal = $bestStatementService->makeBestStatementNormal($request->id);
+
+        if($updateStatementToNormal == true){
+            return response() -> json(["data" => ["message" => "Statement now is normal."]], 200);
         }
     }
 

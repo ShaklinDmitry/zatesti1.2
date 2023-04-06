@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Http\Controllers\ResponsesFromUserController;
+use App\Http\Controllers\BestStatementController;
 use App\Models\User;
 use App\Models\UserResponse;
 use App\Services\UserResponseService;
