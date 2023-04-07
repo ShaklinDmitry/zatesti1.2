@@ -94,9 +94,9 @@ class StatementController extends Controller
      */
     public function makeStatementTheBest(Request $request){
         $statementService = new StatementService();
-        $bestStatement = $statementService->makeStatementBest($request->id);
+        $updateBestStatement = $statementService->makeStatementBest($request->id);
 
-        if($bestStatement->isNotEmpty()){
+        if($updateBestStatement == true){
             return response() -> json(["data" => ["message" => "Statement now is best."]], 200);
         }
     }

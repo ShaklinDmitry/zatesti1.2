@@ -56,29 +56,6 @@ class UserResponseService
         return $userResponses;
     }
 
-    /**
-     * Функция для проучения лучших высказываний отправленных пользователем
-     * @param User $user
-     * @return UserResponse
-     * @throws \Exception
-     */
-    public function getBestStatements(int $userId){
-        $bestStatements = UserResponse::select('id', 'text')->where('user_id', $userId)->get();
 
-        if($bestStatements->isEmpty()){
-            throw new \Exception('there no best responses for this user');
-        }
-
-        return $bestStatements;
-    }
-
-    /**
-     * Функция для удаления лучших высказываний
-     * @param Request $request
-     * @return mixed
-     */
-    public function deleteBestStatetement(int $id):bool {
-         return UserResponse::where('id', $id)->delete();
-    }
 
 }

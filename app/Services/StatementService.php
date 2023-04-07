@@ -121,7 +121,7 @@ class StatementService
      * @param int $statementId
      * @return bool
      */
-    public function makeStatementBest(int $statementId):Statement {
+    public function makeStatementBest(int $statementId):bool {
 
         return Statement::where('id', $statementId)->update(['is_best_statement' => 1]);
     }
