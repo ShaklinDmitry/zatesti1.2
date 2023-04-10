@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\DTO\UserResponseDTO;
 use App\Models\User;
-use Carbon\Carbon;
 use http\Env\Request;
 use Illuminate\Support\Facades\Log;
 use NotificationChannels\Telegram\TelegramUpdates;
@@ -46,10 +45,8 @@ class UserResponseService
      * @return mixed
      */
     public function getUserResponsesForThisWeek(User $user){
-        $now = Carbon::now();
-
-        $currentDate = $now->format('Y-m-d H:i');
-        $weekStartDate = $now->startOfWeek()->format('Y-m-d H:i');
+        $currentDate = now()->format('Y-m-d H:i');
+        $weekStartDate = now()->startOfWeek()->format('Y-m-d H:i');
 
         $userResponses = UserResponse::whereBetween('created_at',[$weekStartDate, $currentDate])->where('telegram_chat_id', $user->telegram_chat_id)->get();
 

@@ -15,6 +15,8 @@ use App\DTO\UserResponseDTO;
 
 class ResponseFromUserTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
@@ -46,20 +48,19 @@ class ResponseFromUserTest extends TestCase
      * @throws \Exception
      */
         public function test_get_user_responses_for_this_week(){
-            $this->artisan('migrate:fresh');
 
-            $telegram_chat_id = 1111;
+            $telegram_chat_id = 1;
 
             $user = User::factory()->create([
                 'telegram_chat_id' => $telegram_chat_id
             ]);
 
-            $yesterdayDate = date('Y-m-d H:i',strtotime("-1 days"));
+            $startOfWeek = now()->startOfWeek()->format('Y-m-d H:i');
 
             UserResponse::factory()->count(3)->create([
                 'telegram_chat_id' => $telegram_chat_id,
                 'text' => 'default text',
-                'created_at' => $yesterdayDate
+                'created_at' => $startOfWeek
             ]);
 
             $userResponseService = new UserResponseService();
