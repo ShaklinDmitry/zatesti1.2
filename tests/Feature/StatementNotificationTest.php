@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class StatementNotificationTest extends TestCase
 {
+    use RefreshDatabase;
 
     /**
      * Тестирование отправления уведомлений
@@ -62,8 +63,6 @@ class StatementNotificationTest extends TestCase
      * @return void
      */
     public function test_get_statement_for_sending_true(){
-        $this->artisan('migrate:fresh');
-
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/api/statements',
@@ -86,8 +85,6 @@ class StatementNotificationTest extends TestCase
     public function test_get_statement_for_sending_false(){
         $this->expectExceptionMessage('There are no statements to send to the user');
 
-        $this->artisan('migrate:fresh');
-
         $user = User::factory()->create();
 
         $statementService = new StatementService();
@@ -100,8 +97,6 @@ class StatementNotificationTest extends TestCase
      * @return void
      */
     public function test_mark_sended_statement_false(){
-        $this->artisan('migrate:fresh');
-
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/api/statements',
@@ -124,8 +119,6 @@ class StatementNotificationTest extends TestCase
      * @return void
      */
     public function test_mark_sended_statement_true(){
-        $this->artisan('migrate:fresh');
-
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post('/api/statements',
@@ -150,8 +143,6 @@ class StatementNotificationTest extends TestCase
      * @return void
      */
     public function test_send_weekly_report(){
-        $this->artisan('migrate:fresh');
-
         Notification::fake();
 
         $currentTime = date("H:i");
