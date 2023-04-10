@@ -152,19 +152,19 @@ class StatementNotificationTest extends TestCase
             'exact_time' => $currentTime
         ]);
 
-        $telegram_chat_id = 1111;
+        $telegram_chat_id = 1;
 
         $user = User::factory()->create([
             'id' => 1,
             'telegram_chat_id' => $telegram_chat_id
         ]);
 
-        $yesterdayDate = date('Y-m-d H:i',strtotime("-1 days"));
+        $startOfWeek = now()->startOfWeek()->format('Y-m-d H:i');
 
         UserResponse::factory()->create([
             'telegram_chat_id' => $telegram_chat_id,
             'text' => 'default text',
-            'created_at' => $yesterdayDate
+            'created_at' => $startOfWeek
         ]);
 
         $notificationService = new NotificationService();
