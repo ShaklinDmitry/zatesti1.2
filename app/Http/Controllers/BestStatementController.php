@@ -59,20 +59,4 @@ class BestStatementController extends Controller
         }
     }
 
-
-    /**
-     * Сделать лучшее высказывание обычным
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|void
-     */
-    public function makeBestStatementNormal(Request $request){
-        $bestStatementService = new BestStatementService();
-        $updateStatementToNormal = $bestStatementService->makeBestStatementNormal($request->id);
-
-        if($updateStatementToNormal == true){
-            return response() -> json(["data" => ["message" => "Statement now is normal."]], 200);
-        }
-    }
-
-
 }

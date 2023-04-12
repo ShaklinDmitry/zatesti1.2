@@ -87,18 +87,4 @@ class StatementController extends Controller
         }
     }
 
-    /**
-     * Функция для того чтобы сделать обычное высказывание лучшим
-     * @param Request $request
-     * @return JsonResponse|void
-     */
-    public function makeStatementTheBest(Request $request){
-        $statementService = new StatementService();
-        $updateBestStatement = $statementService->makeStatementBest($request->id);
-
-        if($updateBestStatement == true){
-            return response() -> json(["data" => ["message" => "Statement now is best."]], 200);
-        }
-    }
-
 }

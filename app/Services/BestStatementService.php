@@ -10,15 +10,19 @@ use http\Env\Request;
 class BestStatementService
 {
     /**
-     * Функция для проучения лучших высказываний отправленных пользователем
-     * @param User $user
-     * @return UserResponse
+     * Функция для проучения лучших высказываний. Лучшие высказывания могут хранится в двух мечтах
+     * @param int $userId
+     * @return array
      * @throws \Exception
      */
     public function getBestStatements(int $userId){
-        $bestStatements = UserResponse::select('id', 'text')->where('user_id', $userId)->get();
+        $userResponses = UserResponse::select('id', 'text')->where('user_id', $userId)->get()->toArray();
+        $statements = Statement::select('id','text')->where('user_id', $userId)->where('is_best_statement', 1)->get()->toArray();
 
-        if($bestStatements->isEmpty()){
+        $bestStatements[] = $userResponses;
+        $bestStatements[] = $statements;
+
+        if(empty($bestStatements)){
             throw new \Exception('there no best responses for this user');
         }
 
@@ -34,13 +38,4 @@ class BestStatementService
         return UserResponse::where('id', $id)->delete();
     }
 
-
-    /**
-     * Сделать лучшее высказывание обычным
-     * @param int $statementId
-     * @return bool
-     */
-    public function makeBestStatementNormal(int $statementId):bool{
-        return Statement::where('id', $statementId)->update(['is_best_statement' => 0]);
-    }
 }

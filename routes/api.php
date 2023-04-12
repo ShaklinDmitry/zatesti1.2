@@ -24,11 +24,9 @@ Route::middleware('auth:sanctum')->group(function (){
         Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
         Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
         Route::delete('/statements/{id}', [\App\Http\Controllers\StatementController::class, 'destroy']);
-        Route::patch('/statement/{id}/make-beststatement', [\App\Http\Controllers\StatementController::class, 'makeStatementTheBest']);
 
         Route::get('/beststatements', [\App\Http\Controllers\BestStatementController::class, 'getBestStatements']);
         Route::delete('/beststatements/{id}', [\App\Http\Controllers\BestStatementController::class, 'destroy']);
-        Route::patch('/beststatements/{id}/make-normalstatement', [\App\Http\Controllers\BestStatementController::class, 'makeBestStatementNormal']);
 
         Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
         Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText']);
