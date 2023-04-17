@@ -87,4 +87,19 @@ class StatementController extends Controller
         }
     }
 
+    /**
+     * Функция для перевода высказываний в тип "лучших"
+     * @param Request $request
+     * @return JsonResponse|void
+     */
+    public function transferToBestStatements(Request $request){
+        $statementService = new StatementService();
+        $statement = Statement::find($request->statementId);
+        $transferStatement = $statementService->transferStatementToBestStatements($statement);
+
+        if($transferStatement){
+            return response() -> json(["data" => ["message" => 'Statement ' . $statement->id . ' was transfered to best statements']], 200);
+        }
+    }
+
 }
