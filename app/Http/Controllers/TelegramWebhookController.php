@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendUserResponse;
 use App\Http\Requests\UserResponseRequest;
 use App\Models\User;
 use App\Notifications\TelegramNotification;
@@ -18,9 +19,13 @@ class TelegramWebhookController extends Controller
      * @param UserResponseService $userResponseService
      * @return void
      */
-    public function sendAnswer(Request $request, UserResponseService $userResponseService){
+    public function sendUserAnswer(Request $request){
         try{
-            $userResponseService->saveUserResponse($request['message']['chat']['id'], $request['message']['text']);
+            $chatId = $request['message']['chat']['id'];
+            $text = $request['message']['text'];
+
+            SendUserResponse::dispatch($chatId, $text);
+
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
         }
