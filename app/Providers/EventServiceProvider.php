@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\SendUserResponse;
 use App\Listeners\MarkStatementHasBeenSent;
+use App\Listeners\SaveBestStatements;
+use App\Listeners\SaveUserResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,7 +25,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         NotificationSent::class => [
             MarkStatementHasBeenSent::class
+        ],
+        SendUserResponse::class => [
+            SaveUserResponse::class,
+            SaveBestStatements::class
         ]
+
     ];
 
     /**
