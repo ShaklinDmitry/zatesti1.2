@@ -20,7 +20,7 @@ class BestStatementService
         $bestStatements = BestStatement::select('id', 'text')->where('user_id', $userId)->get();
 
         if($bestStatements->isEmpty()){
-            throw new \Exception('there no best responses for this user');
+            throw new \Exception('there no best statements for this user');
         }
 
         return $bestStatements;
