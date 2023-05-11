@@ -17,13 +17,9 @@ class BestStatementService
      * @throws \Exception
      */
     public function getBestStatements(int $userId){
-        $userResponses = UserResponse::select('id', 'text')->where('user_id', $userId)->get()->toArray();
-        $statements = Statement::select('id','text')->where('user_id', $userId)->where('is_best_statement', 1)->get()->toArray();
+        $bestStatements = BestStatement::select('id', 'text')->where('user_id', $userId)->get();
 
-        $bestStatements[] = $userResponses;
-        $bestStatements[] = $statements;
-
-        if(empty($bestStatements)){
+        if($bestStatements->isEmpty()){
             throw new \Exception('there no best responses for this user');
         }
 
