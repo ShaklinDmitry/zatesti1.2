@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Events\SendUserResponse;
 use App\Listeners\SaveBestStatements;
 use App\Listeners\SaveUserResponse;
+use App\Models\BestStatement;
 use App\Models\Statement;
 use App\Models\User;
 use App\Models\UserResponse;
@@ -39,13 +40,11 @@ class BestStatementsTest extends TestCase
     public function test_delete_best_statement(){
         $user = User::factory()->create();
 
-        $userResponse = UserResponse::factory()->create(['user_id' => $user->id]);
+        $bestStatement = BestStatement::factory()->create(['user_id' => $user->id]);
 
-        $this->assertCount(1, UserResponse::all());
+        $this->actingAs($user)->delete('api/beststatements/'.$bestStatement->id);
 
-        $this->actingAs($user)->delete('api/beststatements/'.$userResponse->id);
-
-        $this->assertCount(0, UserResponse::all());
+        $this->assertCount(0, BestStatement::all());
     }
 
 

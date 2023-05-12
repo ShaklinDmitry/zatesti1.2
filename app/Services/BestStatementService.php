@@ -32,7 +32,7 @@ class BestStatementService
      * @return mixed
      */
     public function deleteBestStatetement(int $id):bool {
-        return UserResponse::where('id', $id)->delete();
+        return BestStatement::where('id', $id)->delete();
     }
 
 
