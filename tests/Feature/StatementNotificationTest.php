@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\DTOs\UsersWhoShouldBeNotifiedAtTheCurrentTimeDTO;
+use App\Exceptions\NoStatementsForSendingException;
+use App\Jobs\SendStatements;
 use App\Models\Statement;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
@@ -44,18 +47,34 @@ class StatementNotificationTest extends TestCase
     }
 
 
-//    /**
-//     * тестирование поиска пользователя для отправки высказывания
-//     * @return void
-//     */
-//    public function test_find_user_for_sending_statement(){
-//        $this->artisan('migrate:fresh');
-//        $user = User::factory()->create();
-//        $user = \App\Models\User::find(1);
-//        $this->assertNotNull(
-//            $user
-//        );
-//    }
+    /**
+     * Тестиорование на то какое сообщение будет отправляться при отсутсвии высказываний у пользователя
+     * @return void
+     * @throws \Illuminate\Validation\ValidationException
+     * @throws \WendellAdriel\ValidatedDTO\Exceptions\CastTargetException
+     * @throws \WendellAdriel\ValidatedDTO\Exceptions\MissingCastTypeException
+     */
+    public function test_send_notification_with_message_that_user_has_no_statements_for_sending(){
+
+       Notification::fake();
+
+        $userDTO1 = new UsersWhoShouldBeNotifiedAtTheCurrentTimeDTO(
+            ['id' => 1]
+        );
+
+        $UserDTOs = [$userDTO1];
+
+        $user = User::factory()->create(['id' => 1]);
+
+        $sendStatements = new SendStatements(...$UserDTOs);
+
+        $sendStatements->handle();
+
+        Notification::assertSentTo($user,TelegramNotification::class, function ($notification, $channels){
+            $this->assertSame('There is no statements for sending', $notification->getMessage());
+            return true;
+        });
+    }
 
 
     /**
