@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Exceptions\NoStatementsException;
+use App\Exceptions\NoStatementsForSendingException;
+use App\Models\BestStatement;
 use App\Services\StatementScheduleService;
 use App\Jobs\SendStatements;
 use App\Models\Statement;
@@ -22,7 +24,7 @@ class StatementService
     public function sendStatements(string $sendTime){
         try{
             $statementScheduleService = new StatementScheduleService();
-            $users = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
+            $users = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
 
             SendStatements::dispatch($users);
         }catch (\Exception $exception){
@@ -89,7 +91,7 @@ class StatementService
 
 
         if($statement == null){
-            throw new \Exception('There are no statements to send to the user');
+            throw new NoStatementsForSendingException('There are no statements to send to the user',0,null,['userId' => $userId]);
         }
 
         return $statement;
@@ -114,6 +116,20 @@ class StatementService
      */
     public function deleteStatement(int $id): bool {
         return Statement::where('id', $id)->delete();
+    }
+
+    /**
+     * сделать высказывание "лучшим"
+     * @param int $userId
+     * @return BestStatement
+     */
+    public function transferStatementToBestStatements(Statement $statement){
+        $newBestStatement = BestStatement::create([
+            'user_id' => $statement->user_id,
+            'text' => $statement->text
+        ]);
+
+        return $newBestStatement;
     }
 
 }
