@@ -44,7 +44,7 @@ class StatementSendingScheduleTest extends TestCase
 
 
         $statementScheduleService = new StatementScheduleService();
-        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
+        $users = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
 
 
         $this->assertEquals(2, count($users));
@@ -63,7 +63,7 @@ class StatementSendingScheduleTest extends TestCase
         $currentTime = date("H:i");
 
         $statementScheduleService = new StatementScheduleService();
-        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
+        $users = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
     }
 
     /**

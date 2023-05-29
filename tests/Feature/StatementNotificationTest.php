@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\DTOs\UsersWhoShouldBeNotifiedAtTheCurrentTimeDTO;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Jobs\SendStatements;
 use App\Models\Statement;

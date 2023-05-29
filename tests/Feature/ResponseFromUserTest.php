@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Events\SendUserResponse;
 use App\Http\Controllers\BestStatementController;
+use App\Listeners\SaveUserResponse;
 use App\Models\User;
 use App\Models\UserResponse;
 use App\Services\UserResponseService;
@@ -41,6 +43,32 @@ class ResponseFromUserTest extends TestCase
 //
 //        $this->assertSame($saveResponseResult, true);
 //    }
+
+    /**
+     * тест для сохранения ответа пользователя в телеграмме в таблицу user_response
+     * @return void
+     */
+        public function test_save_user_response(){
+            $telegram_chat_id = 1;
+            $text = 'test text';
+
+            //event
+            $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+
+            User::factory()->create([
+                'telegram_chat_id' => $telegram_chat_id
+            ]);
+
+            //listener
+            $saveUserResponse = new SaveUserResponse();
+            $saveUserResponse->handle($sendUserResponse);
+
+            $this->assertDatabaseHas('user_response', [
+               'text' => $text
+            ]);
+
+        }
+
 
     /**
      * тест на получение ответов пользователей на этой неделе
