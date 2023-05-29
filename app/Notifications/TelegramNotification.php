@@ -26,6 +26,14 @@ class TelegramNotification extends Notification
     }
 
     /**
+     *  Геттер для сообщения уведомления
+     * @return mixed
+     */
+    public function getMessage(){
+        return $this->message;
+    }
+
+    /**
      * Get the notification's delivery channels.
      *
      * @param  mixed  $notifiable
