@@ -21,7 +21,7 @@ class NotificationService
      * @throws \Exception
      */
     public function sendNotification(int $userId, Statement $statement){
-        try{
+
             $telegramNotification = new TelegramNotification($statement->text);
 
             $user = User::find($userId);
@@ -30,13 +30,18 @@ class NotificationService
 
             $user->notify($telegramNotification);
 
-        }catch(Exception $e) {
-
-            return $e->getMessage();
-
-        }
     }
 
+    /**
+     * Функция для отправлений сообщений, о том что у пользователя нет высказываний для отправки
+     * @param int $userId
+     * @return void
+     */
+    public function sendNotificationAboutNoStatementsForSending(int $userId){
+        $telegramNotification = new TelegramNotification('There is no statements for sending');
+        $user = User::find($userId);
+        $user->notify($telegramNotification);
+    }
 
     /**
      * Для рассылки недельного отчета. Здесь рассылаются обратно пользователю те высказывания, которые он отправил приложению
