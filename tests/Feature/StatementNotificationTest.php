@@ -58,15 +58,9 @@ class StatementNotificationTest extends TestCase
 
        Notification::fake();
 
-        $userDTO1 = new UsersWhoShouldBeNotifiedAtTheCurrentTimeDTO(
-            ['id' => 1]
-        );
-
-        $UserDTOs = [$userDTO1];
-
         $user = User::factory()->create(['id' => 1]);
 
-        $sendStatements = new SendStatements(...$UserDTOs);
+        $sendStatements = new SendStatements(array($user));
 
         $sendStatements->handle();
 
