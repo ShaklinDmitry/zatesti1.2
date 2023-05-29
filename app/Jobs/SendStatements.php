@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Exceptions\NoStatementsForSendingException;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use App\Services\NotificationService;
@@ -21,12 +22,8 @@ class SendStatements implements ShouldQueue
 
     private $users;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(array $users)
+
+    public function __construct($users)
     {
         $this->users = $users;
     }
@@ -38,15 +35,21 @@ class SendStatements implements ShouldQueue
      */
     public function handle()
     {
+        $notificationService = new NotificationService();
+
         try{
-            $notificationService = new NotificationService();
             foreach ($this->users as $user){
                 $statementService = new StatementService();
                 $statement = $statementService->getStatementForSending($user->id);
 
                 $notificationService->sendNotification($user->id, $statement);
             }
-        }catch(\Exception $exception){
+        }catch(NoStatementsForSendingException $exception){
+            $exceptionOptions = $exception->getOptions();
+            $notificationService->sendNotificationAboutNoStatementsForSending($exceptionOptions['userId']);
+            Log::info($exception->getMessage());
+        }
+        catch(\Exception $exception){
             Log::info($exception->getMessage());
         }
 
