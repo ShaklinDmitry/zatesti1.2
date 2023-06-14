@@ -2,12 +2,16 @@
 
 namespace App\Listeners;
 
+use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
+use App\Commands\GetTypeOfUserResponseCommand;
 use App\Events\SendUserResponse;
 use App\Services\BestStatementService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
+use Symfony\Component\ErrorHandler\Debug;
 
-class SaveBestStatements
+class SaveBestStatements implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -29,5 +33,19 @@ class SaveBestStatements
     {
         $bestStatementService = new BestStatementService();
         $bestStatementService->saveBestStatement($event->chatId, $event->text);
+    }
+
+    /**
+     * Функция для того чтобы добавлять в очередь только тех слушателей, у которых тип ответа пользователя "Добавить лучшее высказывание"
+     * @param $event
+     * @return bool|void
+     */
+    public function shouldQueue($event){
+        $getTypeOfUserResponse = new GetTypeOfUserResponseCommand();
+        $typeOfUserResponse = $getTypeOfUserResponse->execute($event->text);
+
+        if(is_a($typeOfUserResponse, AddBestStatementUserResponseType::class)){
+            return true;
+        }
     }
 }
