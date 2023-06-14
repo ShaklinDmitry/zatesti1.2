@@ -20,20 +20,6 @@ class BestStatementsTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * тест для случая когда у пользорвателя нет высказываний
-     * @return void
-     */
-//    public function test_throw_no_best_statements_exception(){
-//
-//        $user = User::factory()->create();
-//
-//        $response = $this->actingAs($user)->get('api/beststatements');
-//
-//        $this->assertSame($response['error']['message'], 'there no best responses for this user');
-//    }
-
-
-    /**
      * Тест для удаления лучших высказываний
      * @return void
      */
@@ -110,5 +96,24 @@ class BestStatementsTest extends TestCase
 
         $bestStatementService = new BestStatementService();
         $bestStatement = $bestStatementService->getBestStatements(0);
+    }
+
+
+    /**
+     * Тест для того чтобы перед добавлением в очередь слушателя сохрарнения лучшего высказывания проверить тип ответа пользователя на необходимый. В данном случае /addbest
+     * @return void
+     */
+    public function test_save_best_statement_listener_should_queue(){
+        $telegram_chat_id = 1;
+        $text = '/addbest test text';
+
+        //event
+        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+
+        //listener
+        $saveBestStatement = new SaveBestStatements();
+        $shouldQueueResult = $saveBestStatement->shouldQueue($sendUserResponse);
+
+        $this->assertSame(true, $shouldQueueResult);
     }
 }
