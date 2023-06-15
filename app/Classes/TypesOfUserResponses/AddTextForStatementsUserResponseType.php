@@ -2,7 +2,7 @@
 
 namespace App\Classes\TypesOfUserResponses;
 
-class AddTextOfStatementsUserResponseType
+class AddTextForStatementsUserResponseType
 {
 
 }
