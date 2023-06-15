@@ -2,8 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Commands\SaveTextForStatementsCommand;
+use App\Events\SendUserResponse;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Jobs\MakeStatementsFromTextForUser;
+use App\Listeners\SaveTextForStatements;
 use App\Models\Statement;
 use App\Models\TextForStatements;
 use App\Models\User;
@@ -23,7 +26,7 @@ class TextForStatementsTest extends TestCase
      *
      * @return void
      */
-    public function test_create_text_for_statements()
+    public function test_create_text_for_statements_by_specific_uri()
     {
         $user = User::factory()->create();
 
@@ -57,6 +60,29 @@ class TextForStatementsTest extends TestCase
                 ]
             ]
         );
+    }
+
+    /**
+     * Тест для создания текста через ответ пользователя
+     * @return void
+     */
+    public function test_create_text_by_user_response(){
+
+        $telegram_chat_id = 1;
+        $text = "this is test text";
+
+        $event = new SendUserResponse($telegram_chat_id, $text);
+
+        User::factory()->create(
+            ['telegram_chat_id' => $telegram_chat_id]
+        );
+
+        $saveTextForStatements = new SaveTextForStatements();
+        $saveTextForStatements->handle($event);
+
+        $this->assertDatabaseHas('text', [
+            'text' => $text,
+        ]);
     }
 
     /**
@@ -149,5 +175,25 @@ class TextForStatementsTest extends TestCase
         $this->assertSame("Sentence1.Sentence2.Sentence3", $parsedText->text);
 
     }
+
+    /**
+     * Тест для проверки функционала, который проверяет тип ответа пользователя и добавляет или не добавляет обработку слушателя в очередь
+     * @return void
+     */
+    public function test_adding_to_the_queue_create_text_for_statements_task(){
+        $telegram_chat_id = 1;
+        $text = '/addtext test text';
+
+        //event
+        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+
+        //listener
+        $saveTextForStatements = new SaveTextForStatements();
+        $shouldQueueResult = $saveTextForStatements->shouldQueue($sendUserResponse);
+
+        $this->assertSame(true, $shouldQueueResult);
+    }
+
+
 
 }
