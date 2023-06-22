@@ -2,7 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Commands\MakeStatementsFromTextCommand;
 use App\Models\TextForStatements;
+use App\Models\User;
 use App\Services\TextForStatementsService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -33,7 +35,11 @@ class MakeStatementsFromTextForUser implements ShouldQueue
      */
     public function handle()
     {
-        $textForStatementsService = new TextForStatementsService();
-        $textForStatementsService->makeStatementsForUser($this->userId);
+//        $textForStatementsService = new TextForStatementsService();
+//        $textForStatementsService->makeStatementsForUser($this->userId);
+
+        $makeStatementsFromTextCommand = new MakeStatementsFromTextCommand();
+        $makeStatementsFromTextCommand->execute($this->userId);
+
     }
 }

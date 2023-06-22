@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\NoStatementsException;
 use App\Exceptions\NoStatementsForSendingException;
+use App\Interfaces\StatementNotification;
 use App\Models\BestStatement;
 use App\Services\StatementScheduleService;
 use App\Jobs\SendStatements;
@@ -21,12 +22,12 @@ class StatementService
      * @return void
      * @throws \Exception
      */
-    public function sendStatements(string $sendTime){
+    public function sendStatements(string $sendTime, StatementNotification $statementNotification){
         try{
             $statementScheduleService = new StatementScheduleService();
             $users = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
 
-            SendStatements::dispatch($users);
+            SendStatements::dispatch($users, $statementNotification);
         }catch (\Exception $exception){
           //  Log::info($exception->getMessage());
         }

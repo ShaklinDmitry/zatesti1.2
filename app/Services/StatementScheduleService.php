@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\UsersWhoShouldBeNotifiedAtTheCurrentTimeDTO;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -34,7 +35,7 @@ class StatementScheduleService
      * @return array
      * @throws \Exception
      */
-    public function getUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime): array{
+    public function getUserIdsWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime): array{
 
         $statementSendingSchedule = StatementSendingSchedule::where('exact_time', $currentTime)->get();
 

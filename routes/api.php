@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\StatementSendingSchedule;
+use App\Services\StatementService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use NotificationChannels\Telegram\TelegramUpdates;
@@ -24,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function (){
         Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
         Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
         Route::delete('/statements/{id}', [\App\Http\Controllers\StatementController::class, 'destroy']);
+        Route::post('/statements/transfer-to-best-statements', [\App\Http\Controllers\StatementController::class, 'transferToBestStatements']);
 
         Route::get('/beststatements', [\App\Http\Controllers\BestStatementController::class, 'getBestStatements']);
         Route::delete('/beststatements/{id}', [\App\Http\Controllers\BestStatementController::class, 'destroy']);
@@ -42,7 +45,7 @@ Route::get('/check-schedule-every-minute',[\App\Http\Controllers\StatementSchedu
 Route::get('/check-schedule-every-sunday',[\App\Http\Controllers\StatementScheduleController::class, 'executeEverySunday']);
 
 
-Route::post('/telegram-webhook',[\App\Http\Controllers\TelegramWebhookController::class, 'sendAnswer']);
+Route::post('/telegram-webhook',[\App\Http\Controllers\TelegramWebhookController::class, 'sendUserAnswer']);
 
 Route::get('telegram', function () {
     $updates = TelegramUpdates::create()
@@ -63,7 +66,13 @@ Route::get('telegram', function () {
 });
 
 Route::post('/testFeature', function (){
+    $currentTime = date("H:i");
+    StatementSendingSchedule::factory()->create([
+        'user_id' => 3,
+        'exact_time' => $currentTime
+    ]);
 
-    $notificationService = new \App\Services\NotificationService();
-    $notificationService->sendWeeklyReport();
+    $statementService = new StatementService();
+    $statementService->sendStatements($currentTime);
+
 });

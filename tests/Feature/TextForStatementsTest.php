@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Commands\GetStatementsCommand;
 use App\Commands\SaveTextForStatementsCommand;
 use App\Events\SendUserResponse;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Jobs\MakeStatementsFromTextForUser;
+use App\Listeners\MakeStatementsFromText;
 use App\Listeners\SaveTextForStatements;
 use App\Models\Statement;
 use App\Models\TextForStatements;
@@ -154,27 +156,62 @@ class TextForStatementsTest extends TestCase
         );
     }
 
-
     /**
-     * Тест на то что текст, который был распарсен, был отмечен как распарсенный
+     * тест проверки корректности разбивики текста на высказывания
      * @return void
+     * @throws \App\Exceptions\NoStatementsException
      */
-    public function test_whether_parsed_texts_were_marked(){
+    public function test_make_statements_from_text_by_user_response(){
+        $telegram_chat_id = 1;
 
-        $user = User::factory()->create();
+        $user = User::factory()->create(
+            ['telegram_chat_id' => $telegram_chat_id]
+        );
 
         $this->actingAs($user)->post('/api/statements/text',
             ['text' => "Sentence1.Sentence2.Sentence3"],
             ["Accept"=>"application/json"]);
 
+        $text = "/splittext";
 
-        $this->actingAs($user)->post('/api/text/generate-statements');
+        $event = new SendUserResponse($telegram_chat_id, $text);
 
-        $parsedText = TextForStatements::where('is_parsed', 1)->first();
+        $makeStatementsFromText = new MakeStatementsFromText();
+        $makeStatementsFromText->handle($event);
 
-        $this->assertSame("Sentence1.Sentence2.Sentence3", $parsedText->text);
+        $getStatements = new GetStatementsCommand();
+        $statements = $getStatements->execute($user->id)->pluck('text')->toArray();
 
+        $this->assertSame(
+            [
+                0 => 'Sentence1',
+                1 => 'Sentence2',
+                2 => 'Sentence3'
+            ],
+            $statements
+        );
     }
+
+    /**
+     * Тест на то что текст, который был распарсен, был отмечен как распарсенный
+     * @return void
+     */
+//    public function test_whether_parsed_texts_were_marked(){
+//
+//        $user = User::factory()->create();
+//
+//        $this->actingAs($user)->post('/api/statements/text',
+//            ['text' => "Sentence1.Sentence2.Sentence3"],
+//            ["Accept"=>"application/json"]);
+//
+//
+//        $this->actingAs($user)->post('/api/text/generate-statements');
+//
+//        $parsedText = TextForStatements::where('is_parsed', 1)->first();
+//
+//        $this->assertSame("Sentence1.Sentence2.Sentence3", $parsedText->text);
+//
+//    }
 
     /**
      * Тест для проверки функционала, который проверяет тип ответа пользователя и добавляет или не добавляет обработку слушателя в очередь

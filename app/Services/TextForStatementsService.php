@@ -73,19 +73,19 @@ class TextForStatementsService
     }
 
 
-    /**
-     *  Для добавления нового текста в БД
-     * @param string $text
-     * @param int $userId
-     * @return TextForStatements
-     */
-    public function addText(string $text, int $userId):TextForStatements{
-        $text = TextForStatements::create([
-            'text' => $text,
-            'user_id' => $userId
-        ]);
-
-        return $text;
-    }
+//    /**
+//     *  Для добавления нового текста в БД
+//     * @param string $text
+//     * @param int $userId
+//     * @return TextForStatements
+//     */
+//    public function addText(string $text, int $userId):TextForStatements{
+//        $text = TextForStatements::create([
+//            'text' => $text,
+//            'user_id' => $userId
+//        ]);
+//
+//        return $text;
+//    }
 
 }

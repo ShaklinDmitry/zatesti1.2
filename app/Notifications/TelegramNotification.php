@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Interfaces\StatementNotification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -9,19 +10,18 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
-class TelegramNotification extends Notification
+class TelegramNotification extends Notification implements StatementNotification
 {
     use Queueable;
 
     protected $message;
 
     /**
-     * Create a new notification instance.
-     *
+     * добавить текст для уведомления
+     * @param string $message
      * @return void
      */
-    public function __construct($message)
-    {
+    public function setMessageText(string $message){
         $this->message = $message;
     }
 

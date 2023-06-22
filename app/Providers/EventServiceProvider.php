@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\SendUserResponse;
+use App\Listeners\MakeStatementsFromText;
 use App\Listeners\MarkStatementHasBeenSent;
 use App\Listeners\SaveBestStatements;
+use App\Listeners\SaveTextForStatements;
 use App\Listeners\SaveUserResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -28,7 +30,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SendUserResponse::class => [
             SaveUserResponse::class,
-            SaveBestStatements::class
+            SaveBestStatements::class,
+            SaveTextForStatements::class,
+            MakeStatementsFromText::class
         ]
 
     ];

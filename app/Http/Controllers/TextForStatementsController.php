@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Commands\SaveTextForStatementsCommand;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Http\Requests\TextForStatementsRequest;
 use App\Jobs\MakeStatementsFromTextForUser;
@@ -23,8 +24,8 @@ class TextForStatementsController extends Controller
     public function createText(TextForStatementsRequest $request):JsonResponse{
 
         try{
-            $textForStatementsService = new TextForStatementsService();
-            $textForStatements = $textForStatementsService->addText($request->text, Auth::id());
+            $saveTextForStatements = new SaveTextForStatementsCommand();
+            $textForStatements = $saveTextForStatements->execute(Auth::id(), $request->text);
 
             if($textForStatements){
                 $responseData = [

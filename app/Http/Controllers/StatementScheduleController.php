@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\StatementNotification;
 use App\Models\User;
 use App\Services\NotificationService;
 use App\Services\StatementScheduleService;
@@ -18,11 +19,11 @@ class StatementScheduleController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function executeEveryMinute(){
+    public function executeEveryMinute(StatementNotification $statementNotification){
 
         try{
             $statementService = new StatementService();
-            $statementService->sendStatements(date("H:i"));
+            $statementService->sendStatements(date("H:i"), $statementNotification);
         }catch(\Exception $exception){
             return $exception->getMessage();
         }

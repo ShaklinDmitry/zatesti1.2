@@ -7,7 +7,7 @@ use App\Services\UserResponseService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SaveUserResponse
+class  SaveUserResponse
 {
     /**
      * Create the event listener.

@@ -15,30 +15,13 @@ class NotificationService
 {
 
     /**
-     * Для отправки уведомлений с высказываниями
-     * @param int $userId
-     * @return bool|string
-     * @throws \Exception
-     */
-    public function sendNotification(int $userId, Statement $statement){
-
-            $telegramNotification = new TelegramNotification($statement->text);
-
-            $user = User::find($userId);
-            $user->last_statement_id_sent = $statement->id;
-            $user->save();
-
-            $user->notify($telegramNotification);
-
-    }
-
-    /**
      * Функция для отправлений сообщений, о том что у пользователя нет высказываний для отправки
      * @param int $userId
      * @return void
      */
     public function sendNotificationAboutNoStatementsForSending(int $userId){
-        $telegramNotification = new TelegramNotification('There is no statements for sending');
+        $telegramNotification = new TelegramNotification();
+        $telegramNotification->setMessageText('There is no statements for sending');
         $user = User::find($userId);
         $user->notify($telegramNotification);
     }
@@ -65,7 +48,8 @@ class NotificationService
                     $weeklyNotificationText .= $i . '. ' . $userResponses[$i]->text . PHP_EOL;
                 }
 
-                $telegramWeeklyNotification = new TelegramNotification($weeklyNotificationText);
+                $telegramWeeklyNotification = new TelegramNotification();
+                $telegramWeeklyNotification->setMessageText($weeklyNotificationText);
                 $user->notify($telegramWeeklyNotification);
             }
 

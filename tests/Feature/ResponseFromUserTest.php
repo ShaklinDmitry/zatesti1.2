@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Classes\TypesOfUserResponses\AddTextOfStatementsUserResponseType;
+use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
 use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
 use App\Classes\TypesOfUserResponses\UnknownUserResponseType;
 use App\Commands\GetTypeOfUserResponseCommand;
@@ -91,7 +91,7 @@ class ResponseFromUserTest extends TestCase
 
             $text2 = '/addtext this mean add text';
             $typeOfUserResponse = $getTypeOfUserResponse->execute($text2);
-            $this->assertInstanceOf(AddTextOfStatementsUserResponseType::class, $typeOfUserResponse);
+            $this->assertInstanceOf(AddTextForStatementsUserResponseType::class, $typeOfUserResponse);
 
 
             $text3 = '/splittext';

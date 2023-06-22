@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Commands\SaveIdOfLastSentStatementCommand;
+use App\Commands\SendNotificationCommand;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Jobs\SendStatements;
 use App\Models\Statement;
@@ -39,8 +41,8 @@ class StatementNotificationTest extends TestCase
             ->where('text','<>','')
             ->first();
 
-        $notificationService = new NotificationService();
-        $notificationService->sendNotification($user->id, $statement);
+        $sendNotificationCommand = new SendNotificationCommand(new TelegramNotification());
+        $sendNotificationCommand->execute($user->id, $statement);
 
         Notification::assertSentTo($user, TelegramNotification::class);
     }
@@ -185,5 +187,20 @@ class StatementNotificationTest extends TestCase
         Notification::assertSentTo($user, TelegramNotification::class);
     }
 
+    /**
+     * тест для сохранения id последнего отправленного уведомления
+     * @return void
+     */
+    public function test_save_id_of_last_sent_statement(){
+        $user = User::factory()->create();
+        $statementId = 1;
+
+        $saveIdOfLastSentStatement = new SaveIdOfLastSentStatementCommand();
+        $saveIdOfLastSentStatement->execute($user->id, $statementId);
+
+        $this->assertDatabaseHas('users',[
+            'last_statement_id_sent' => $statementId
+        ]);
+    }
 
 }
