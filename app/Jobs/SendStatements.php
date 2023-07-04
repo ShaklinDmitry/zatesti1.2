@@ -2,16 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Commands\SendNotificationCommand;
+use App\Domains\Notifications\Interfaces\StatementNotification;
+use App\Domains\Notifications\SendNotificationCommand;
 use App\Exceptions\NoStatementsForSendingException;
-use App\Interfaces\StatementNotification;
-use App\Models\StatementSendingSchedule;
-use App\Models\User;
 use App\Services\NotificationService;
-use App\Services\StatementScheduleService;
 use App\Services\StatementService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\Domains;
 
 use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
 use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;

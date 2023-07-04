@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Events\SendUserResponse;
-use App\Http\Requests\UserResponseRequest;
-use App\Models\User;
-use App\Notifications\TelegramNotification;
 use App\Services\UserResponseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;

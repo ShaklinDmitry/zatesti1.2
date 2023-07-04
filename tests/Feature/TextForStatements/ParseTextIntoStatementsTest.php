@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\TextForStatements;
 
-use App\Commands\ParseTextIntoStatementsCommand;
+use App\Domains\Text\ParseTextIntoStatementsCommand;
 use Tests\TestCase;
 
 class ParseTextIntoStatementsTest extends TestCase

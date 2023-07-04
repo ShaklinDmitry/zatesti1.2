@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Domains\BestStatements\DeleteBestStatementCommand;
+use App\Domains\BestStatements\Exceptions\NoBestStatementsToDeleteException;
+use App\Domains\BestStatements\GetBestStatementsCommand;
 use App\DTO\UserResponseDTO;
 use App\Services\BestStatementService;
 use App\Services\UserResponseService;
@@ -19,8 +22,8 @@ class BestStatementController extends Controller
      */
     public function getBestStatements(){
         try{
-            $bestStatementService = new BestStatementService();
-            $bestStatements = $bestStatementService->getBestStatements(Auth::id());
+            $getBestStatements = new GetBestStatementsCommand();
+            $bestStatements = $getBestStatements->execute(Auth::id());
 
             $responseData = [
                 "data" => [
@@ -47,13 +50,15 @@ class BestStatementController extends Controller
      * @return \Illuminate\Http\JsonResponse|void
      */
     public function destroy(Request $request){
-        $bestStatementService = new BestStatementService();
-        $destroy = $bestStatementService->deleteBestStatetement($request->id);
+        try{
+            $deleteBestStatement = new DeleteBestStatementCommand();
+            $destroy = $deleteBestStatement->execute($request->id);
 
-        if($destroy){
-            return response() -> json(["data" => ["message" => "Statement was deleted successfull.",
-            ]],200);
-        }else{
+            if($destroy){
+                return response() -> json(["data" => ["message" => "Statement was deleted successfull.",
+                ]],200);
+            }
+        }catch (NoBestStatementsToDeleteException $exception){
             return response() -> json(["error" => ["message" => "Statement was not deleted.",
             ]],200);
         }

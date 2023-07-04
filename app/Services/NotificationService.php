@@ -2,14 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Statement;
+use App\Domains\Notifications\TelegramNotification;
 use App\Models\User;
-use App\Models\UserResponse;
-use App\Notifications\TelegramNotification;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\ErrorHandler\Debug;
 
 class NotificationService
 {

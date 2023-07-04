@@ -2,21 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\Commands\GetStatementsCommand;
-use App\Commands\SaveTextForStatementsCommand;
+use App\Domains\Statements\GetStatementsCommand;
 use App\Events\SendUserResponse;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Jobs\MakeStatementsFromTextForUser;
 use App\Listeners\MakeStatementsFromText;
 use App\Listeners\SaveTextForStatements;
-use App\Models\Statement;
-use App\Models\TextForStatements;
 use App\Models\User;
 use App\Services\StatementService;
 use App\Services\TextForStatementsService;
-use Database\Factories\UserFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class TextForStatementsTest extends TestCase

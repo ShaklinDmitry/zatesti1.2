@@ -2,12 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Commands\MakeStatementsFromTextCommand;
-use App\Models\TextForStatements;
-use App\Models\User;
-use App\Services\TextForStatementsService;
+use App\Domains\Text\MakeStatementsFromTextCommand;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;

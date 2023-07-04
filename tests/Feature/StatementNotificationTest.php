@@ -2,22 +2,20 @@
 
 namespace Tests\Feature;
 
-use App\Commands\SaveIdOfLastSentStatementCommand;
-use App\Commands\SendNotificationCommand;
-use App\Exceptions\NoStatementsForSendingException;
+use App\Domains\Notifications\SaveIdOfLastSentStatementCommand;
+use App\Domains\Notifications\SendNotificationCommand;
+use App\Domains\Notifications\TelegramNotification;
 use App\Jobs\SendStatements;
 use App\Models\Statement;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use App\Models\UserResponse;
-use App\Notifications\TelegramNotification;
 use App\Services\NotificationService;
 use App\Services\StatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
-use Illuminate\Support\Facades\DB;
 
 class StatementNotificationTest extends TestCase
 {
@@ -61,7 +59,9 @@ class StatementNotificationTest extends TestCase
 
         $user = User::factory()->create(['id' => 1]);
 
-        $sendStatements = new SendStatements(array($user));
+        $telegramNotification = new TelegramNotification();
+
+        $sendStatements = new SendStatements(array($user), $telegramNotification);
 
         $sendStatements->handle();
 

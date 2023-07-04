@@ -6,7 +6,7 @@ use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
 use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
 use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
 use App\Classes\TypesOfUserResponses\UnknownUserResponseType;
-use App\Commands\GetTypeOfUserResponseCommand;
+use App\Domains\GetTypeOfUserResponseCommand;
 use App\Events\SendUserResponse;
 use App\Http\Controllers\BestStatementController;
 use App\Listeners\SaveUserResponse;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\Domains\Text;
 
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\TextForStatements;

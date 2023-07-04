@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Commands\SaveTextForStatementsCommand;
+use App\Domains\Text\SaveTextForStatementsCommand;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Http\Requests\TextForStatementsRequest;
 use App\Jobs\MakeStatementsFromTextForUser;
-use App\Models\Statement;
-use App\Models\TextForStatements;
-use App\Services\StatementService;
-use App\Services\TextForStatementsService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TextForStatementsController extends Controller

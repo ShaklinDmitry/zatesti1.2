@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\StatementNotification;
-use App\Models\User;
+use App\Domains\Notifications\Interfaces\StatementNotification;
+use App\Domains\Statements\SendStatementCommand;
+use App\Domains\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
 use App\Services\NotificationService;
 use App\Services\StatementScheduleService;
 use App\Services\StatementService;
@@ -22,10 +23,14 @@ class StatementScheduleController extends Controller
     public function executeEveryMinute(StatementNotification $statementNotification){
 
         try{
-            $statementService = new StatementService();
-            $statementService->sendStatements(date("H:i"), $statementNotification);
+            $sendStatements = new SendStatementCommand($statementNotification);
+
+            $getUsersWhoShouldBeNotifiedAtTheCurrentTime = new GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand(date("H:i"));
+            $users = $getUsersWhoShouldBeNotifiedAtTheCurrentTime->execute();
+
+            $sendStatements->execute($users);
         }catch(\Exception $exception){
-            return $exception->getMessage();
+            Log::info($exception->getMessage());
         }
 
     }

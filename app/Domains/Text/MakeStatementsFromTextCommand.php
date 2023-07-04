@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Commands;
+namespace App\Domains\Text;
 
-use App\Services\StatementService;
+use App\Domains\Statements\AddStatementCommand;
 
 class MakeStatementsFromTextCommand
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\Domains\Statements;
 
 use App\Models\Statement;
 

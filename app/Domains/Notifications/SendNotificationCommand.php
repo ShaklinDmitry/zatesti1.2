@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Commands;
+namespace App\Domains\Notifications;
 
-use App\Interfaces\StatementNotification;
+use App\Domains\Notifications\Interfaces\StatementNotification;
 use App\Models\Statement;
 use App\Models\User;
-use App\Notifications\TelegramNotification;
 
 class SendNotificationCommand
 {

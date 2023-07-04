@@ -3,12 +3,11 @@
 namespace App\Listeners;
 
 use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Commands\GetTypeOfUserResponseCommand;
-use App\Commands\MakeStatementsFromTextCommand;
+use App\Domains\GetTypeOfUserResponseCommand;
+use App\Domains\Text\MakeStatementsFromTextCommand;
 use App\Events\SendUserResponse;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class MakeStatementsFromText implements ShouldQueue
 {

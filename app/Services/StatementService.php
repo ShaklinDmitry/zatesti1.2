@@ -2,16 +2,13 @@
 
 namespace App\Services;
 
+use App\Domains\Notifications\Interfaces\StatementNotification;
 use App\Exceptions\NoStatementsException;
 use App\Exceptions\NoStatementsForSendingException;
-use App\Interfaces\StatementNotification;
-use App\Models\BestStatement;
-use App\Services\StatementScheduleService;
 use App\Jobs\SendStatements;
+use App\Models\BestStatement;
 use App\Models\Statement;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\ErrorHandler\Debug;
 
 class StatementService
 {
@@ -24,8 +21,7 @@ class StatementService
      */
     public function sendStatements(string $sendTime, StatementNotification $statementNotification){
         try{
-            $statementScheduleService = new StatementScheduleService();
-            $users = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($sendTime);
+
 
             SendStatements::dispatch($users, $statementNotification);
         }catch (\Exception $exception){

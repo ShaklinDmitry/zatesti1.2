@@ -2,14 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
 use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Commands\GetTypeOfUserResponseCommand;
-use App\Commands\SaveTextForStatementsCommand;
+use App\Domains\GetTypeOfUserResponseCommand;
+use App\Domains\Text\SaveTextForStatementsCommand;
 use App\Events\SendUserResponse;
 use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class SaveTextForStatements
 {
