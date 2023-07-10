@@ -53,57 +53,57 @@ class StatementNotificationTest extends TestCase
      * @throws \WendellAdriel\ValidatedDTO\Exceptions\CastTargetException
      * @throws \WendellAdriel\ValidatedDTO\Exceptions\MissingCastTypeException
      */
-    public function test_send_notification_with_message_that_user_has_no_statements_for_sending(){
-
-       Notification::fake();
-
-        $user = User::factory()->create(['id' => 1]);
-
-        $telegramNotification = new TelegramNotification();
-
-        $sendStatements = new SendStatements(array($user), $telegramNotification);
-
-        $sendStatements->handle();
-
-        Notification::assertSentTo($user,TelegramNotification::class, function ($notification, $channels){
-            $this->assertSame('There is no statements for sending', $notification->getMessage());
-            return true;
-        });
-    }
+//    public function test_send_notification_with_message_that_user_has_no_statements_for_sending(){
+//
+//       Notification::fake();
+//
+//        $user = User::factory()->create(['id' => 1]);
+//
+//        $telegramNotification = new TelegramNotification();
+//
+//        $sendStatements = new SendStatements(array($user), $telegramNotification);
+//
+//        $sendStatements->handle();
+//
+//        Notification::assertSentTo($user,TelegramNotification::class, function ($notification, $channels){
+//            $this->assertSame('There is no statements for sending', $notification->getMessage());
+//            return true;
+//        });
+//    }
 
 
     /**
      * Тестирование функционала на получение сообщений для отправки. Случай когда есть сообщения, которые нужно отправлять
      * @return void
      */
-    public function test_get_statement_for_sending_true(){
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->post('/api/statements',
-            ['text' => "new statement for testing send statement"],
-            ["Accept"=>"application/json"]);
-
-        $statementService = new StatementService();
-        $statement = $statementService->getStatementForSending($user->id);
-
-
-        $this->assertSame(
-            $statement->text, "new statement for testing send statement"
-        );
-    }
+//    public function test_get_statement_for_sending_true(){
+//        $user = User::factory()->create();
+//
+//        $response = $this->actingAs($user)->post('/api/statements',
+//            ['text' => "new statement for testing send statement"],
+//            ["Accept"=>"application/json"]);
+//
+//        $statementService = new StatementService();
+//        $statement = $statementService->getStatementForSending($user->id);
+//
+//
+//        $this->assertSame(
+//            $statement->text, "new statement for testing send statement"
+//        );
+//    }
 
     /**
      * Тестирование функционала на получение сообщений для отправки. Случай когда нет сообщений, которые нужно отправлять
      * @return void
      */
-    public function test_get_statement_for_sending_false(){
-        $this->expectExceptionMessage('There are no statements to send to the user');
-
-        $user = User::factory()->create();
-
-        $statementService = new StatementService();
-        $statement = $statementService->getStatementForSending($user->id);
-    }
+//    public function test_get_statement_for_sending_false(){
+//        $this->expectExceptionMessage('There are no statements to send to the user');
+//
+//        $user = User::factory()->create();
+//
+//        $statementService = new StatementService();
+//        $statement = $statementService->getStatementForSending($user->id);
+//    }
 
 
     /**

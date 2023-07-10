@@ -19,15 +19,15 @@ class StatementService
      * @return void
      * @throws \Exception
      */
-    public function sendStatements(string $sendTime, StatementNotification $statementNotification){
-        try{
-
-
-            SendStatements::dispatch($users, $statementNotification);
-        }catch (\Exception $exception){
-          //  Log::info($exception->getMessage());
-        }
-    }
+//    public function sendStatements(string $sendTime, StatementNotification $statementNotification){
+//        try{
+//
+//
+//            SendStatements::dispatch($users, $statementNotification);
+//        }catch (\Exception $exception){
+//          //  Log::info($exception->getMessage());
+//        }
+//    }
 
 //    /**
 //     * Функция сохранения высказываний в БД

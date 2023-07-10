@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Domains\Notifications\Interfaces\StatementNotification;
+use App\Domains\Notifications\SendNotificationAboutNoStatementsForSendingCommand;
 use App\Domains\Notifications\SendNotificationCommand;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Services\NotificationService;
@@ -34,8 +35,6 @@ class SendStatements implements ShouldQueue
      */
     public function handle()
     {
-        $notificationService = new NotificationService();
-
         try{
             foreach ($this->users as $user){
                 $statementService = new StatementService();
@@ -46,7 +45,8 @@ class SendStatements implements ShouldQueue
             }
         }catch(NoStatementsForSendingException $exception){
             $exceptionOptions = $exception->getOptions();
-            $notificationService->sendNotificationAboutNoStatementsForSending($exceptionOptions['userId']);
+            $sendNotificationAboutNoStatementsForSending = new SendNotificationAboutNoStatementsForSendingCommand();
+            $sendNotificationAboutNoStatementsForSending->execute($exceptionOptions['userId']);
             Log::info($exception->getMessage());
         }
         catch(\Exception $exception){
