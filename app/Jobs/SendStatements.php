@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Domains\Notifications\Interfaces\StatementNotification;
 use App\Domains\Notifications\SendNotificationAboutNoStatementsForSendingCommand;
 use App\Domains\Notifications\SendNotificationCommand;
+use App\Domains\Statements\GetStatementForSendingCommand;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Services\NotificationService;
 use App\Services\StatementService;
@@ -37,8 +38,8 @@ class SendStatements implements ShouldQueue
     {
         try{
             foreach ($this->users as $user){
-                $statementService = new StatementService();
-                $statement = $statementService->getStatementForSending($user->id);
+                $getStatementForSending = new GetStatementForSendingCommand($user->id);
+                $statement = $getStatementForSending->execute();
 
                 $sendNotificationCommand = new SendNotificationCommand($this->statementNotification);
                 $sendNotificationCommand->execute($user->id, $statement);

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Domains\Notifications\TelegramNotification;
+use App\Domains\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
 use App\Models\User;
 
 class NotificationService
@@ -13,25 +14,25 @@ class NotificationService
      * @param int $userId
      * @return void
      */
-    public function sendNotificationAboutNoStatementsForSending(int $userId){
-        $telegramNotification = new TelegramNotification();
-        $telegramNotification->setMessageText('There is no statements for sending');
-        $user = User::find($userId);
-        $user->notify($telegramNotification);
-    }
+//    public function sendNotificationAboutNoStatementsForSending(int $userId){
+//        $telegramNotification = new TelegramNotification();
+//        $telegramNotification->setMessageText('There is no statements for sending');
+//        $user = User::find($userId);
+//        $user->notify($telegramNotification);
+//    }
 
     /**
      * Для рассылки недельного отчета. Здесь рассылаются обратно пользователю те высказывания, которые он отправил приложению
      * @return string|void
      */
     public function sendWeeklyReport(){
-            $statementScheduleService = new StatementScheduleService();
-            $usersWhoShouldBeNotifiedThisWeek = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
+            $getUsersWhoShouldBeNotifiedThisWeek = new GetUsersWhoShouldBeNotifiedThisWeekCommand();
+            $usersWhoShouldBeNotifiedThisWeek = $getUsersWhoShouldBeNotifiedThisWeek->execute();
 
             $userResponseService = new UserResponseService();
             foreach ($usersWhoShouldBeNotifiedThisWeek as $user){
 
-                $userResponses = $userResponseService->getUserResponsesForThisWeek($user);
+                $userResponses = $userResponseService->getUserResponsesForThisWeek($user->telegram_chat_id);
 
                 if($userResponses->isEmpty())
                     continue;

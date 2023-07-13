@@ -44,11 +44,11 @@ class UserResponseService
      * @param User $user
      * @return mixed
      */
-    public function getUserResponsesForThisWeek(User $user){
+    public function getUserResponsesForThisWeek(int $telegram_chat_id){
         $currentDate = now()->format('Y-m-d H:i');
         $weekStartDate = now()->startOfWeek()->format('Y-m-d H:i');
 
-        $userResponses = UserResponse::whereBetween('created_at',[$weekStartDate, $currentDate])->where('telegram_chat_id', $user->telegram_chat_id)->get();
+        $userResponses = UserResponse::whereBetween('created_at',[$weekStartDate, $currentDate])->where('telegram_chat_id', $telegram_chat_id)->get();
 
         return $userResponses;
     }

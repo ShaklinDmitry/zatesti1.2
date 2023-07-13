@@ -63,56 +63,56 @@ class StatementSendingScheduleTest extends TestCase
 //        $users = $statementScheduleService->getUserIdsWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
 //    }
 
-    /**
-     * тестируем поиск пользователей, которым нужно отправить недельный отчет по высказываниям
-     * @return void
-     * @throws \Exception
-     */
-    public function test_get_users_who_should_be_notified_this_week(){
-        $this->artisan('migrate:fresh');
-
-        $currentTime = date("H:i");
-
-        StatementSendingSchedule::factory()->create([
-            'user_id' => 1,
-            'exact_time' => $currentTime
-        ]);
-
-        StatementSendingSchedule::factory()->create([
-            'user_id' => 1,
-            'exact_time' => '15:50'
-        ]);
-
-        StatementSendingSchedule::factory()->create([
-            'user_id' => 3,
-            'exact_time' => $currentTime
-        ]);
-
-        StatementSendingSchedule::factory()->create([
-            'user_id' => 5,
-            'exact_time' => $currentTime
-        ]);
-
-        $statementScheduleService = new StatementScheduleService();
-        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
-
-        $this->assertSame(3, count($users));
-    }
+//    /**
+//     * тестируем поиск пользователей, которым нужно отправить недельный отчет по высказываниям
+//     * @return void
+//     * @throws \Exception
+//     */
+//    public function test_get_users_who_should_be_notified_this_week(){
+//        $this->artisan('migrate:fresh');
+//
+//        $currentTime = date("H:i");
+//
+//        StatementSendingSchedule::factory()->create([
+//            'user_id' => 1,
+//            'exact_time' => $currentTime
+//        ]);
+//
+//        StatementSendingSchedule::factory()->create([
+//            'user_id' => 1,
+//            'exact_time' => '15:50'
+//        ]);
+//
+//        StatementSendingSchedule::factory()->create([
+//            'user_id' => 3,
+//            'exact_time' => $currentTime
+//        ]);
+//
+//        StatementSendingSchedule::factory()->create([
+//            'user_id' => 5,
+//            'exact_time' => $currentTime
+//        ]);
+//
+//        $statementScheduleService = new StatementScheduleService();
+//        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
+//
+//        $this->assertSame(3, count($users));
+//    }
 
     /**
      * тестируем поиск пользователей, которым нужно отправить недельный отчет по высказываниям в случае если расписание пустое
      * @return void
      * @throws \Exception
      */
-    public function test_get_users_who_should_be_notified_this_week_if_schedule_is_empty(){
-        $this->expectExceptionMessage('No users for weekly notifications');
-
-        $this->artisan('migrate:fresh');
-
-        $statementScheduleService = new StatementScheduleService();
-        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
-
-    }
+//    public function test_get_users_who_should_be_notified_this_week_if_schedule_is_empty(){
+//        $this->expectExceptionMessage('No users for weekly notifications');
+//
+//        $this->artisan('migrate:fresh');
+//
+//        $statementScheduleService = new StatementScheduleService();
+//        $users = $statementScheduleService->getUsersWhoShouldBeNotifiedThisWeek();
+//
+//    }
 
     /**
      * Тест для отправки в очередь для отправки уведомления

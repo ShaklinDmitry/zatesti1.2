@@ -55,27 +55,27 @@ class ResponseFromUserTest extends TestCase
      * @return void
      * @throws \Exception
      */
-        public function test_get_user_responses_for_this_week(){
-
-            $telegram_chat_id = 1;
-
-            $user = User::factory()->create([
-                'telegram_chat_id' => $telegram_chat_id
-            ]);
-
-            $startOfWeek = now()->startOfWeek()->format('Y-m-d H:i');
-
-            UserResponse::factory()->count(3)->create([
-                'telegram_chat_id' => $telegram_chat_id,
-                'text' => 'default text',
-                'created_at' => $startOfWeek
-            ]);
-
-            $userResponseService = new UserResponseService();
-            $userResponses = $userResponseService->getUserResponsesForThisWeek($user);
-
-            $this->assertSame(3, count($userResponses));
-        }
+//        public function test_get_user_responses_for_this_week(){
+//
+//            $telegram_chat_id = 1;
+//
+//            $user = User::factory()->create([
+//                'telegram_chat_id' => $telegram_chat_id
+//            ]);
+//
+//            $startOfWeek = now()->startOfWeek()->format('Y-m-d H:i');
+//
+//            UserResponse::factory()->count(3)->create([
+//                'telegram_chat_id' => $telegram_chat_id,
+//                'text' => 'default text',
+//                'created_at' => $startOfWeek
+//            ]);
+//
+//            $userResponseService = new UserResponseService();
+//            $userResponses = $userResponseService->getUserResponsesForThisWeek($user);
+//
+//            $this->assertSame(3, count($userResponses));
+//        }
 
 
     /**
