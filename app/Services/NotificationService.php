@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Domains\Notifications\TelegramNotification;
 use App\Domains\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
+use App\Domains\UserResponses\GetUserResponsesForThisWeekCommand;
 use App\Models\User;
 
 class NotificationService
@@ -29,10 +30,9 @@ class NotificationService
             $getUsersWhoShouldBeNotifiedThisWeek = new GetUsersWhoShouldBeNotifiedThisWeekCommand();
             $usersWhoShouldBeNotifiedThisWeek = $getUsersWhoShouldBeNotifiedThisWeek->execute();
 
-            $userResponseService = new UserResponseService();
+            $getUserResponsesForThisWeek = new GetUserResponsesForThisWeekCommand();
             foreach ($usersWhoShouldBeNotifiedThisWeek as $user){
-
-                $userResponses = $userResponseService->getUserResponsesForThisWeek($user->telegram_chat_id);
+                $userResponses = $getUserResponsesForThisWeek->execute($user->telegram_chat_id);
 
                 if($userResponses->isEmpty())
                     continue;
