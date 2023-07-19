@@ -3,6 +3,7 @@
 namespace Tests\Feature\WeeklyNotificationTest;
 
 use App\Domains\WeeklyNotification\CreateWeeklyNotificationTextCommand;
+use App\Domains\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
 use App\Models\UserResponse;
 use Tests\TestCase;
 
@@ -37,5 +38,18 @@ class CreateWeeklyNotificationTextTest extends TestCase
 
         $this->assertSame($expectedText, $weeklyNotificationText);
 
+    }
+
+    /**
+     * тест для проверки выбрасывания исключения при формировании текста за неделю в случае если овтетов пользователя не было
+     * @return void
+     */
+    public function test_create_weekly_notification_text_exception(){
+        $this->expectException(CreateWeeklyNotificationTextException::class);
+
+        $userResponses = collect([]);
+
+        $createWeeklyNotificationText = new CreateWeeklyNotificationTextCommand($userResponses);
+        $weeklyNotificationText = $createWeeklyNotificationText->execute();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Domains\WeeklyNotification;
 
+use App\Domains\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
 use Illuminate\Support\Collection;
 
 class CreateWeeklyNotificationTextCommand
@@ -15,6 +16,10 @@ class CreateWeeklyNotificationTextCommand
      * @return string
      */
     public function execute(){
+        if($this->userResponses->isEmpty()){
+            throw new CreateWeeklyNotificationTextException('There is no user responses');
+        }
+
         $weeklyNotificationText = '';
 
         for($i=0; $i<count($this->userResponses); $i++){
