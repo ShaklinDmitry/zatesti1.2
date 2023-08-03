@@ -2,15 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Domains\BestStatements\SaveBestStatementCommand;
-use App\Domains\GetTypeOfUserResponseCommand;
+use App\classes\BestStatements\SaveBestStatementCommand;
+use App\classes\GetTypeOfUserResponseCommand;
+use App\classes\TypesOfUserResponses\AddBestStatementUserResponseType;
 use App\Events\SendUserResponse;
 use App\Services\BestStatementService;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\ErrorHandler\Debug;
 
 class SaveBestStatements implements ShouldQueue
 {

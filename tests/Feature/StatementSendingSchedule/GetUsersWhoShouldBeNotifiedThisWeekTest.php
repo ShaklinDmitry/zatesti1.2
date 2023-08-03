@@ -2,11 +2,10 @@
 
 namespace Tests\Feature\StatementSendingSchedule;
 
-use App\Domains\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException;
-use App\Domains\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
-use App\Models\StatementSendingSchedule;
+use App\classes\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException;
+use App\classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
+use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
 use App\Models\User;
-use App\Services\StatementScheduleService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Domains\GetTypeOfUserResponseCommand;
-use App\Domains\Text\SaveTextForStatementsCommand;
+use App\classes\GetTypeOfUserResponseCommand;
+use App\classes\Text\SaveTextForStatementsCommand;
+use App\classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
 use App\Events\SendUserResponse;
 use App\Models\User;
 

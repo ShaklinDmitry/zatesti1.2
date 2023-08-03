@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\BestStatements\DeleteBestStatementCommand;
-use App\Domains\BestStatements\Exceptions\NoBestStatementsToDeleteException;
-use App\Domains\BestStatements\GetBestStatementsCommand;
+use App\classes\BestStatements\DeleteBestStatementCommand;
+use App\classes\BestStatements\Exceptions\NoBestStatementsToDeleteException;
+use App\classes\BestStatements\GetBestStatementsCommand;
 use App\DTO\UserResponseDTO;
 use App\Services\BestStatementService;
 use App\Services\UserResponseService;

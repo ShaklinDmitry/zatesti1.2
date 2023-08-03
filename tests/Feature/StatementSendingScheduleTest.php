@@ -2,12 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Notifications\TelegramNotification;
-use App\Jobs\SendStatements;
-use App\Models\StatementSendingSchedule;
-use App\Services\StatementScheduleService;
-use App\Services\StatementService;
-use Illuminate\Support\Facades\Bus;
 use Tests\TestCase;
 
 
@@ -130,7 +124,7 @@ class StatementSendingScheduleTest extends TestCase
 //            'exact_time' => $currentTime
 //        ]);
 //
-//        $telegramNotification = new TelegramNotification();
+//        $telegramNotification = new TelegramNotificationSystem();
 //
 //        $statementService = new StatementService();
 //        $statementService->sendStatements($currentTime, $telegramNotification);

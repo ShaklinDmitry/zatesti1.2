@@ -2,23 +2,17 @@
 
 namespace Tests\Feature;
 
-use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Classes\TypesOfUserResponses\UnknownUserResponseType;
-use App\Domains\GetTypeOfUserResponseCommand;
+use App\classes\GetTypeOfUserResponseCommand;
+use App\classes\TypesOfUserResponses\AddBestStatementUserResponseType;
+use App\classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
+use App\classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
+use App\classes\TypesOfUserResponses\UnknownUserResponseType;
+use App\DTO\UserResponseDTO;
 use App\Events\SendUserResponse;
-use App\Http\Controllers\BestStatementController;
 use App\Listeners\SaveUserResponse;
 use App\Models\User;
-use App\Models\UserResponse;
-use App\Services\UserResponseService;
-use Database\Factories\UserResponseFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use NotificationChannels\Telegram\TelegramUpdates;
 use Tests\TestCase;
-use App\DTO\UserResponseDTO;
 
 class ResponseFromUserTest extends TestCase
 {

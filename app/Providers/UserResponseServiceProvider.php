@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\UserResponse;
+use App\classes\UserResponses\Models\UserResponse;
 use App\Services\UserResponseService;
 use Illuminate\Support\ServiceProvider;
 

@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
+use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
 use App\DTOs\UsersWhoShouldBeNotifiedAtTheCurrentTimeDTO;
-use App\Models\StatementSendingSchedule;
-use App\Models\User;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StatementScheduleService
 {
@@ -15,18 +13,18 @@ class StatementScheduleService
      * @param int $userId
      * @return bool
      */
-    public function saveExactTimeForSendingStatements(string $times,int $userId): bool{
-        $times = explode(";", $times);
-
-        foreach ($times as $time){
-            StatementSendingSchedule::create([
-                'user_id' => $userId,
-                'exact_time' => $time
-            ]);
-        }
-
-        return true;
-    }
+//    public function saveExactTimeForSendingStatements(string $times,int $userId): bool{
+//        $times = explode(";", $times);
+//
+//        foreach ($times as $time){
+//            StatementSendingSchedule::create([
+//                'user_id' => $userId,
+//                'exact_time' => $time
+//            ]);
+//        }
+//
+//        return true;
+//    }
 
 
     /**
@@ -57,20 +55,20 @@ class StatementScheduleService
      * @return mixed
      * @throws \Exception
      */
-    public function getUsersWhoShouldBeNotifiedThisWeek(){
-
-        $listOfUsersInSchedule = StatementSendingSchedule::distinct()->get(['user_id']);
-
-        if($listOfUsersInSchedule->isEmpty()){
-            throw new \Exception('No users for weekly notifications');
-        }
-
-        $users = [];
-        foreach ($listOfUsersInSchedule as $userRow){
-            $users[] = User::find($userRow->user_id);
-        }
-
-        return $users;
-    }
+//    public function getUsersWhoShouldBeNotifiedThisWeek(){
+//
+//        $listOfUsersInSchedule = StatementSendingSchedule::distinct()->get(['user_id']);
+//
+//        if($listOfUsersInSchedule->isEmpty()){
+//            throw new \Exception('No users for weekly notifications');
+//        }
+//
+//        $users = [];
+//        foreach ($listOfUsersInSchedule as $userRow){
+//            $users[] = User::find($userRow->user_id);
+//        }
+//
+//        return $users;
+//    }
 
 }

@@ -2,9 +2,13 @@
 
 namespace App\Services;
 
-use App\Domains\Notifications\TelegramNotification;
-use App\Domains\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
-use App\Domains\UserResponses\GetUserResponsesForThisWeekCommand;
+use App\classes\Notifications\Interfaces\StatementNotificationSystem;
+use App\classes\Notifications\TelegramNotificationSystem;
+use App\classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
+use App\classes\UserResponses\GetUserResponsesForThisWeekCommand;
+use App\classes\WeeklyNotification\CreateWeeklyNotificationTextCommand;
+use App\classes\WeeklyNotification\SendWeeklyNotificationCommand;
+use App\classes\WeeklyNotification\UserWeeklyNotification;
 use App\Models\User;
 
 class NotificationService
@@ -16,7 +20,7 @@ class NotificationService
      * @return void
      */
 //    public function sendNotificationAboutNoStatementsForSending(int $userId){
-//        $telegramNotification = new TelegramNotification();
+//        $telegramNotification = new TelegramNotificationSystem();
 //        $telegramNotification->setMessageText('There is no statements for sending');
 //        $user = User::find($userId);
 //        $user->notify($telegramNotification);
@@ -26,27 +30,8 @@ class NotificationService
      * Для рассылки недельного отчета. Здесь рассылаются обратно пользователю те высказывания, которые он отправил приложению
      * @return string|void
      */
-    public function sendWeeklyReport(){
-            $getUsersWhoShouldBeNotifiedThisWeek = new GetUsersWhoShouldBeNotifiedThisWeekCommand();
-            $usersWhoShouldBeNotifiedThisWeek = $getUsersWhoShouldBeNotifiedThisWeek->execute();
-
-            $getUserResponsesForThisWeek = new GetUserResponsesForThisWeekCommand();
-            foreach ($usersWhoShouldBeNotifiedThisWeek as $user){
-                $userResponses = $getUserResponsesForThisWeek->execute($user->telegram_chat_id);
-
-                if($userResponses->isEmpty())
-                    continue;
-
-                $weeklyNotificationText = '';
-
-                for($i=0; $i<count($userResponses); $i++){
-                    $weeklyNotificationText .= $i . '. ' . $userResponses[$i]->text . PHP_EOL;
-                }
-
-                $telegramWeeklyNotification = new TelegramNotification();
-                $telegramWeeklyNotification->setMessageText($weeklyNotificationText);
-                $user->notify($telegramWeeklyNotification);
-            }
-
-    }
+//    public function sendWeeklyReport(StatementNotificationSystem $statementNotificationSystem, UserWeeklyNotification $userWeeklyNotification){
+//        $sendWeeklyNotification = new SendWeeklyNotificationCommand($statementNotificationSystem, $userWeeklyNotification->user, $userWeeklyNotification->text);
+//        $sendWeeklyNotification->execute();
+//    }
 }

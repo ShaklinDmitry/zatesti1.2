@@ -2,10 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Domains\Notifications\Interfaces\StatementNotification;
-use App\Domains\Notifications\SendNotificationAboutNoStatementsForSendingCommand;
-use App\Domains\Notifications\SendNotificationCommand;
-use App\Domains\Statements\GetStatementForSendingCommand;
+use App\classes\Notifications\Interfaces\StatementNotificationSystem;
+use App\classes\Notifications\SendNotificationAboutNoStatementsForSendingCommand;
+use App\classes\Notifications\SendNotificationCommand;
+use App\classes\Statements\GetStatementForSendingCommand;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Services\NotificationService;
 use App\Services\StatementService;
@@ -23,7 +23,7 @@ class SendStatements implements ShouldQueue
     private $users;
     private $statementNotification;
 
-    public function __construct($users, StatementNotification $statementNotification)
+    public function __construct($users, StatementNotificationSystem $statementNotification)
     {
         $this->users = $users;
         $this->statementNotification = $statementNotification;

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Text\SaveTextForStatementsCommand;
+use App\classes\Text\SaveTextForStatementsCommand;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Http\Requests\TextForStatementsRequest;
 use App\Jobs\MakeStatementsFromTextForUser;

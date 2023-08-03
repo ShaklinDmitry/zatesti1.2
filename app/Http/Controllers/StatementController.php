@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\classes\Statements\AddStatementCommand;
+use App\classes\Statements\GetStatementsCommand;
 use App\Exceptions\NoStatementsException;
 use App\Models\Statement;
 use App\Models\TextForStatements;
@@ -24,8 +26,8 @@ class StatementController extends Controller
     public function createStatement(CreateStatementRequest $request):JsonResponse{
 
         try{
-            $statementService = new StatementService();
-            $statement = $statementService->addStatement($request->text, Auth::id());
+            $addStatementCommand = new AddStatementCommand();
+            $statement = $addStatementCommand->execute($request->text, Auth::id());
 
             if($statement){
                 return response() -> json(["data" => ["message" => "Statement was create successfull.",
@@ -45,8 +47,8 @@ class StatementController extends Controller
     public function getStatements():JsonResponse{
 
         try{
-            $statementService = new StatementService();
-            $statements = $statementService->getStatements(Auth::id());
+            $getStatementsCommand = new GetStatementsCommand();
+            $statements = $getStatementsCommand->execute(Auth::id());
 
             $responseData = [
                 "data" => [

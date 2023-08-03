@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\Domains\BestStatements\SaveBestStatementCommand;
+use App\classes\BestStatements\SaveBestStatementCommand;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

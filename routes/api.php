@@ -1,12 +1,11 @@
 <?php
 
-use App\Models\StatementSendingSchedule;
+use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
 use App\Services\StatementService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use NotificationChannels\Telegram\TelegramUpdates;
-use NotificationChannels\Telegram\TelegramMessage;
-use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -74,7 +73,7 @@ Route::post('/testFeature', function (){
 
     $statementService = new StatementService();
 
-    $telegramNotification = new \App\Domains\Notifications\TelegramNotification();
+    $telegramNotification = new \App\classes\Notifications\TelegramNotificationSystem();
     $statementService->sendStatements($currentTime, $telegramNotification);
 
 });

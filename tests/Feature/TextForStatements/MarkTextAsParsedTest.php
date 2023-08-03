@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\TextForStatements;
 
-use App\Domains\Text\MarkTextAsParsedCommand;
+use App\classes\Text\MarkTextAsParsedCommand;
 use App\Models\TextForStatements;
 use App\Models\User;
 use Tests\TestCase;

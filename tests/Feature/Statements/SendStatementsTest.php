@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Statements;
 
-use App\Domains\Notifications\Interfaces\StatementNotification;
-use App\Domains\Notifications\TelegramNotification;
-use App\Domains\Statements\SendStatementCommand;
+use App\classes\Notifications\Interfaces\StatementNotificationSystem;
+use App\classes\Notifications\TelegramNotificationSystem;
+use App\classes\Statements\SendStatementCommand;
 use App\Jobs\SendStatements;
 use Tests\TestCase;
 
@@ -18,7 +18,7 @@ class SendStatementsTest extends TestCase
     {
         $this->expectsJobs(SendStatements::class);
 
-        $sendStatements = new SendStatementCommand(new TelegramNotification());
+        $sendStatements = new SendStatementCommand(new TelegramNotificationSystem());
         $sendStatements->execute(array());
     }
 }

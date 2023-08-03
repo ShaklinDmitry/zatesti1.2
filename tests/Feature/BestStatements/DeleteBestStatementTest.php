@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\Domains\BestStatements\DeleteBestStatementCommand;
-use App\Domains\BestStatements\Exceptions\NoBestStatementsForUserException;
-use App\Domains\BestStatements\Exceptions\NoBestStatementsToDeleteException;
+use App\classes\BestStatements\DeleteBestStatementCommand;
+use App\classes\BestStatements\Exceptions\NoBestStatementsForUserException;
+use App\classes\BestStatements\Exceptions\NoBestStatementsToDeleteException;
 use App\Models\BestStatement;
 use App\Models\User;
 use Database\Factories\BestStatementFactory;

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Domains\Statements\GetStatementsCommand;
+use App\classes\Statements\GetStatementsCommand;
 use App\Events\SendUserResponse;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Jobs\MakeStatementsFromTextForUser;
@@ -100,20 +100,20 @@ class TextForStatementsTest extends TestCase
      * @return void
      * @throws TextForStatementsIsNullException
      */
-    public function test_get_unparsed_text_for_user(){
-        $user = User::factory()->create();
-
-        $text = "Sentence1.Sentence2.Sentence3";
-
-        $this->actingAs($user)->post('/api/statements/text',
-            ['text' => $text],
-            ["Accept"=>"application/json"]);
-
-        $textForStatementsService = new TextForStatementsService();
-        $unparsedText = $textForStatementsService->getUnparsedTextForUser($user->id);
-
-        $this->assertSame($text, $unparsedText->text);
-    }
+//    public function test_get_unparsed_text_for_user(){
+//        $user = User::factory()->create();
+//
+//        $text = "Sentence1.Sentence2.Sentence3";
+//
+//        $this->actingAs($user)->post('/api/statements/text',
+//            ['text' => $text],
+//            ["Accept"=>"application/json"]);
+//
+//        $textForStatementsService = new TextForStatementsService();
+//        $unparsedText = $textForStatementsService->getUnparsedTextForUser($user->id);
+//
+//        $this->assertSame($text, $unparsedText->text);
+//    }
 
     /**
      * Тест ответа api на создание высказываний из текста

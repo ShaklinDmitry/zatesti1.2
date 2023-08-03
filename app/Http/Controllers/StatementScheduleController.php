@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Domains\Notifications\Interfaces\StatementNotification;
-use App\Domains\Statements\SendStatementCommand;
-use App\Domains\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
-use App\Services\NotificationService;
+use App\classes\Notifications\Interfaces\StatementNotificationSystem;
+use App\classes\Statements\SendStatementCommand;
+use App\classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
+use App\classes\WeeklyNotification\GetUserWeeklyNotifications;
+use App\classes\WeeklyNotification\SendWeeklyNotificationCommand;
 use App\Services\StatementScheduleService;
-use App\Services\StatementService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class StatementScheduleController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function executeEveryMinute(StatementNotification $statementNotification){
+    public function executeEveryMinute(StatementNotificationSystem $statementNotification){
 
         try{
             $sendStatements = new SendStatementCommand($statementNotification);
@@ -39,11 +40,16 @@ class StatementScheduleController extends Controller
      * Для вызова в кроне раз в неделю в воскресенье
      * @return string
      */
-    public function executeEverySunday(){
+    public function executeEverySunday(StatementNotificationSystem $statementNotificationSystem){
 
         try{
-            $notificationService = new NotificationService();
-            $notificationService->sendWeeklyReport();
+            $getUserWeeklyNotifications = new GetUserWeeklyNotifications();
+            $userWeeklyNotifications = $getUserWeeklyNotifications->execute();
+
+            foreach ($userWeeklyNotifications as $userWeeklyNotification){
+                $sendWeeklyNotification = new SendWeeklyNotificationCommand($statementNotificationSystem, $userWeeklyNotification);
+                $sendWeeklyNotification->execute();
+            }
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
             return $exception->getMessage();
@@ -56,9 +62,9 @@ class StatementScheduleController extends Controller
      * @param StatementScheduleService $statementScheduleService
      * @return \Illuminate\Http\JsonResponse
      */
-    public function setSendTime(Request $request, StatementScheduleService $statementScheduleService): JsonResponse{
+    public function setSendTime(Request $request, StatementSendingSchedule $statementSendingSchedule): JsonResponse{
 
-        $saveExactTime = $statementScheduleService->saveExactTimeForSendingStatements($request->exactTimes, Auth::id());
+        $saveExactTime = $statementSendingSchedule->fillWithTimeForSending($request->exactTimes, Auth::id());
 
         if($saveExactTime){
             $responseData = [

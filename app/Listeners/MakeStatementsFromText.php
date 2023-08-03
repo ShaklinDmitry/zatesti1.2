@@ -2,9 +2,9 @@
 
 namespace App\Listeners;
 
-use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Domains\GetTypeOfUserResponseCommand;
-use App\Domains\Text\MakeStatementsFromTextCommand;
+use App\classes\GetTypeOfUserResponseCommand;
+use App\classes\Text\MakeStatementsFromTextCommand;
+use App\classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
 use App\Events\SendUserResponse;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;

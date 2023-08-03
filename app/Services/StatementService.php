@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Domains\Notifications\Interfaces\StatementNotification;
+use App\classes\Notifications\Interfaces\StatementNotificationSystem;
 use App\Exceptions\NoStatementsException;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Jobs\SendStatements;
@@ -19,7 +19,7 @@ class StatementService
      * @return void
      * @throws \Exception
      */
-//    public function sendStatements(string $sendTime, StatementNotification $statementNotification){
+//    public function sendStatements(string $sendTime, StatementNotificationSystem $statementNotification){
 //        try{
 //
 //
@@ -47,15 +47,15 @@ class StatementService
      * @return Collection
      * @throws NoStatementsException
      */
-    public function getStatements(int $userId):Collection{
-        $statements = Statement::where('user_id', $userId)->get();
-
-        if($statements->isEmpty()){
-            throw new NoStatementsException('No statements', 200);
-        }
-
-        return $statements;
-    }
+//    public function getStatements(int $userId):Collection{
+//        $statements = Statement::where('user_id', $userId)->get();
+//
+//        if($statements->isEmpty()){
+//            throw new NoStatementsException('No statements', 200);
+//        }
+//
+//        return $statements;
+//    }
 
     /**
      * Добавить высказывание в базу
@@ -63,16 +63,16 @@ class StatementService
      * @param int $userId
      * @return Statement
      */
-    public function addStatement(string $text, int $userId):Statement {
-
-            $statement = Statement::create([
-                'user_id' => $userId,
-                'text' => $text
-            ]);
-
-            return $statement;
-
-    }
+//    public function addStatement(string $text, int $userId):Statement {
+//
+//            $statement = Statement::create([
+//                'user_id' => $userId,
+//                'text' => $text
+//            ]);
+//
+//            return $statement;
+//
+//    }
 
 
     /**
@@ -80,30 +80,30 @@ class StatementService
      * @param int $userId
      * @return mixed
      */
-    public function getStatementForSending(int $userId){
-        $statement = Statement::where('user_id', $userId)
-                                ->where('send_date_time', '1970-01-01 00:00:00')
-                                ->where('text','<>','')
-                                ->first();
-
-
-        if($statement == null){
-            throw new NoStatementsForSendingException('There are no statements to send to the user',0,null,['userId' => $userId]);
-        }
-
-        return $statement;
-    }
+//    public function getStatementForSending(int $userId){
+//        $statement = Statement::where('user_id', $userId)
+//                                ->where('send_date_time', '1970-01-01 00:00:00')
+//                                ->where('text','<>','')
+//                                ->first();
+//
+//
+//        if($statement == null){
+//            throw new NoStatementsForSendingException('There are no statements to send to the user',0,null,['userId' => $userId]);
+//        }
+//
+//        return $statement;
+//    }
 
     /**
      * Отметить время отправки высказывания
      * @param int $statementId
      * @return mixed
      */
-    public function markStatementHasBeenSent(int $statementId){
-
-        return Statement::where('id',$statementId)->update(['send_date_time' => NOW()]);
-
-    }
+//    public function markStatementHasBeenSent(int $statementId){
+//
+//        return Statement::where('id',$statementId)->update(['send_date_time' => NOW()]);
+//
+//    }
 
 
     /**

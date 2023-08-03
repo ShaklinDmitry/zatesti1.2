@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Domains\Notifications\TelegramNotification;
+use App\classes\Notifications\TelegramNotificationSystem;
 use App\Jobs\SendStatements;
 use App\Models\User;
 use Illuminate\Support\Facades\Notification;
@@ -20,11 +20,11 @@ class SendNotificationAboutNoStatementsForSendingTest extends TestCase
         Notification::fake();
         $user = User::factory()->create();
 
-        $telegramNotification = new TelegramNotification();
+        $telegramNotification = new TelegramNotificationSystem();
         $sendStatements = new SendStatements(array($user), $telegramNotification);
         $sendStatements->handle();
 
-        Notification::assertSentTo($user,TelegramNotification::class, function ($notification, $channels){
+        Notification::assertSentTo($user,TelegramNotificationSystem::class, function ($notification, $channels){
             $this->assertSame('There is no statements for sending', $notification->getMessage());
             return true;
         });

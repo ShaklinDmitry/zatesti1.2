@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\Domains\BestStatements\Exceptions\NoBestStatementsForUserException;
-use App\Domains\BestStatements\GetBestStatementsCommand;
+use App\classes\BestStatements\Exceptions\NoBestStatementsForUserException;
+use App\classes\BestStatements\GetBestStatementsCommand;
 use App\Events\SendUserResponse;
 use App\Listeners\SaveBestStatements;
 use App\Models\BestStatement;

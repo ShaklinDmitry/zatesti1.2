@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\WeeklyNotificationTest;
 
-use App\Domains\WeeklyNotification\CreateWeeklyNotificationTextCommand;
-use App\Domains\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
-use App\Models\UserResponse;
+use App\classes\UserResponses\Models\UserResponse;
+use App\classes\WeeklyNotification\CreateWeeklyNotificationTextCommand;
+use App\classes\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
 use Tests\TestCase;
 
 class CreateWeeklyNotificationTextTest extends TestCase

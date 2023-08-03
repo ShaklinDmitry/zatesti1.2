@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Domains\Text\MakeStatementsFromTextCommand;
+use App\classes\Text\MakeStatementsFromTextCommand;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

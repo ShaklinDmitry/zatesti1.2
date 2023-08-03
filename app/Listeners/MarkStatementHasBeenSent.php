@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\classes\Statements\StatementSentStatusUpdater;
 use App\Services\StatementService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -26,7 +27,8 @@ class MarkStatementHasBeenSent
      */
     public function handle($event)
     {
-        $statementService = new StatementService();
-        $statementService->markStatementHasBeenSent($event->notifiable['last_statement_id_sent']);
+        $statementSentStatusUpdater = new StatementSentStatusUpdater();
+        $statementSentStatusUpdater->setSentStatus($event->notifiable['last_statement_id_sent']);
+
     }
 }

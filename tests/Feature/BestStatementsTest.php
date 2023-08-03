@@ -2,18 +2,12 @@
 
 namespace Tests\Feature;
 
-use App\Domains\BestStatements\GetBestStatementsCommand;
 use App\Events\SendUserResponse;
 use App\Listeners\SaveBestStatements;
-use App\Listeners\SaveUserResponse;
 use App\Models\BestStatement;
-use App\Models\Statement;
 use App\Models\User;
-use App\Models\UserResponse;
 use App\Services\BestStatementService;
-use Database\Factories\UserResponseFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class BestStatementsTest extends TestCase
