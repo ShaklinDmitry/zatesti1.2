@@ -3,7 +3,7 @@
 namespace App\classes\BestStatements;
 
 use App\classes\BestStatements\Exceptions\NoBestStatementsForUserException;
-use App\Models\BestStatement;
+use App\classes\BestStatements\Models\BestStatement;
 use Illuminate\Database\Eloquent\Collection;
 
 class GetBestStatementsCommand

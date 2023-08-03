@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\classes\BestStatements\Models\BestStatement;
 use App\classes\Statements\AddStatementCommand;
 use App\classes\Statements\GetStatementsCommand;
 use App\Exceptions\NoStatementsException;
@@ -95,11 +96,14 @@ class StatementController extends Controller
      * @return JsonResponse|void
      */
     public function transferToBestStatements(Request $request){
-        $statementService = new StatementService();
         $statement = Statement::find($request->statementId);
-        $transferStatement = $statementService->transferStatementToBestStatements($statement);
 
-        if($transferStatement){
+        $bestStatement = BestStatement::create([
+            'user_id' => $statement->user_id,
+            'text' => $statement->text
+        ]);
+
+        if($bestStatement){
             return response() -> json(["data" => ["message" => 'Statement ' . $statement->id . ' was transfered to best statements']], 200);
         }
     }

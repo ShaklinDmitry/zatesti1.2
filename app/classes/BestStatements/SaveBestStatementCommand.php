@@ -2,7 +2,7 @@
 
 namespace App\classes\BestStatements;
 
-use App\Models\BestStatement;
+use App\classes\BestStatements\Models\BestStatement;
 use App\Models\User;
 
 class SaveBestStatementCommand

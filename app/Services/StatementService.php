@@ -2,11 +2,8 @@
 
 namespace App\Services;
 
-use App\classes\Notifications\Interfaces\StatementNotificationSystem;
+use App\classes\BestStatements\Models\BestStatement;
 use App\Exceptions\NoStatementsException;
-use App\Exceptions\NoStatementsForSendingException;
-use App\Jobs\SendStatements;
-use App\Models\BestStatement;
 use App\Models\Statement;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -120,13 +117,13 @@ class StatementService
      * @param int $userId
      * @return BestStatement
      */
-    public function transferStatementToBestStatements(Statement $statement){
-        $newBestStatement = BestStatement::create([
-            'user_id' => $statement->user_id,
-            'text' => $statement->text
-        ]);
-
-        return $newBestStatement;
-    }
-
+//    public function transferStatementToBestStatements(Statement $statement){
+//        $newBestStatement = BestStatement::create([
+//            'user_id' => $statement->user_id,
+//            'text' => $statement->text
+//        ]);
+//
+//        return $newBestStatement;
+//    }
+ 
 }

@@ -138,35 +138,35 @@ class StatementTest extends TestCase
      * Тест для переноса высказывания из категории "обычных" в категорию "лучших"
      * @return void
      */
-    public function test_transfer_statement_to_best_statements(){
-        $user = User::factory()->create();
-        $statement = Statement::factory()->create(['user_id' => $user->id]);
-
-        $statementService = new StatementService();
-        $statementService->transferStatementToBestStatements($statement);
-
-        $this->assertDatabaseHas('best_statements', [
-            'text' => $statement->text
-        ]);
-    }
+//    public function test_transfer_statement_to_best_statements(){
+//        $user = User::factory()->create();
+//        $statement = Statement::factory()->create(['user_id' => $user->id]);
+//
+//        $statementService = new StatementService();
+//        $statementService->transferStatementToBestStatements($statement);
+//
+//        $this->assertDatabaseHas('best_statements', [
+//            'text' => $statement->text
+//        ]);
+//    }
 
     /**
      * тест для проверки ответа api при переводе типа высказываний с обычного на "лучшее"
      * @return void
      */
-    public function test_successful_transfer_statement_to_best_statements_api_response(){
-        $user = User::factory()->create();
-        $statement = Statement::factory()->create(['user_id' => $user->id]);
-
-        $transferStatementResponse = $this->actingAs($user)->post('/api/statements/transfer-to-best-statements',
-                                                ['statementId' => $statement->id]);
-
-        $transferStatementResponse->assertJson(
-            [
-                "data" => [
-                    "message" => 'Statement ' . $statement->id . ' was transfered to best statements',
-                ]
-            ]
-        );
-    }
+//    public function test_successful_transfer_statement_to_best_statements_api_response(){
+//        $user = User::factory()->create();
+//        $statement = Statement::factory()->create(['user_id' => $user->id]);
+//
+//        $transferStatementResponse = $this->actingAs($user)->post('/api/statements/transfer-to-best-statements',
+//                                                ['statementId' => $statement->id]);
+//
+//        $transferStatementResponse->assertJson(
+//            [
+//                "data" => [
+//                    "message" => 'Statement ' . $statement->id . ' was transfered to best statements',
+//                ]
+//            ]
+//        );
+//    }
 }

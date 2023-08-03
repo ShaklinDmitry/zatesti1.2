@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\BestStatement>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\classes\BestStatements\Models\BestStatement>
  */
 class BestStatementFactory extends Factory
 {
