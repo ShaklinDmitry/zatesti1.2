@@ -4,7 +4,7 @@ namespace Tests\Feature\BestStatements;
 
 use App\classes\BestStatements\Exceptions\NoBestStatementsForUserException;
 use App\classes\BestStatements\GetBestStatementsCommand;
-use App\classes\BestStatements\Models\BestStatement;
+use App\Models\BestStatement;
 use App\Services\BestStatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

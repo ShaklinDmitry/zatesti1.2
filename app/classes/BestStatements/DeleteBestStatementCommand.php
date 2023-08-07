@@ -3,7 +3,7 @@
 namespace App\classes\BestStatements;
 
 use App\classes\BestStatements\Exceptions\NoBestStatementsToDeleteException;
-use App\classes\BestStatements\Models\BestStatement;
+use App\Models\BestStatement;
 
 class DeleteBestStatementCommand
 {

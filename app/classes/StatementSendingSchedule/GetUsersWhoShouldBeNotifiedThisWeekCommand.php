@@ -3,7 +3,7 @@
 namespace App\classes\StatementSendingSchedule;
 
 use App\classes\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException;
-use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
+use App\Models\StatementSendingSchedule;
 use App\Models\User;
 
 class GetUsersWhoShouldBeNotifiedThisWeekCommand

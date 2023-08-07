@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\classes\BestStatements\Models\BestStatement;
 use App\Exceptions\NoStatementsException;
+use App\Models\BestStatement;
 use App\Models\Statement;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -125,5 +125,5 @@ class StatementService
 //
 //        return $newBestStatement;
 //    }
- 
+
 }

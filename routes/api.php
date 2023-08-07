@@ -1,6 +1,6 @@
 <?php
 
-use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
+use App\Models\StatementSendingSchedule;
 use App\Services\StatementService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

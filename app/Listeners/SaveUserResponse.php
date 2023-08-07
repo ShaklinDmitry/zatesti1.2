@@ -2,12 +2,10 @@
 
 namespace App\Listeners;
 
-use App\classes\UserResponses\Models\UserResponse;
 use App\Events\SendUserResponse;
 use App\Models\User;
+use App\Models\UserResponse;
 use App\Services\UserResponseService;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class  SaveUserResponse
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\classes\StatementSendingSchedule\Models;
+namespace App\Models;
 
 use App\classes\StatementSendingSchedule\Interfaces\StatementSendingScheduleInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

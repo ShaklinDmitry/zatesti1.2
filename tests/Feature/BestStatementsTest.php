@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\classes\BestStatements\Models\BestStatement;
 use App\Events\SendUserResponse;
 use App\Listeners\SaveBestStatements;
+use App\Models\BestStatement;
 use App\Models\User;
 use App\Services\BestStatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;

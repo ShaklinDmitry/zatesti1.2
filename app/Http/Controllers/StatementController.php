@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\classes\BestStatements\Models\BestStatement;
 use App\classes\Statements\AddStatementCommand;
 use App\classes\Statements\GetStatementsCommand;
 use App\Exceptions\NoStatementsException;
+use App\Http\Requests\CreateStatementRequest;
+use App\Models\BestStatement;
 use App\Models\Statement;
-use App\Models\TextForStatements;
-use App\Services\StatementService;
 use App\Services\TextForStatementsService;
 use App\Services\UserResponseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateStatementRequest;
 use Illuminate\Support\Facades\Auth;
 
 class StatementController extends Controller
@@ -80,13 +78,10 @@ class StatementController extends Controller
      * @return json
      */
     public function destroy(Request $request){
-        $statementService = new StatementService();
-        $delete = $statementService->deleteStatement($request->id);
+        $delete = Statement::destroy($request->id);
 
         if($delete){
             return response() -> json(["data" => ["message" => "Statement was deleted."]], 200);
-        }else{
-            return response() -> json(["error" => ["message" => "Statement was not deleted."]], 200);
         }
     }
 

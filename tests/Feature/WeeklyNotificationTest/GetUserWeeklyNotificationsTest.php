@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\WeeklyNotificationTest;
 
-use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
-use App\classes\UserResponses\Models\UserResponse;
 use App\classes\WeeklyNotification\GetUserWeeklyNotifications;
+use App\Models\StatementSendingSchedule;
 use App\Models\User;
+use App\Models\UserResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

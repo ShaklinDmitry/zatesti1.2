@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Statement;
 use App\Services\NotificationService;
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
 
 class StatementNotificationController extends Controller
 {

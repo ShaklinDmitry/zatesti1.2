@@ -7,7 +7,6 @@ use App\Models\Statement;
 use App\Models\User;
 use App\Services\StatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class StatementTest extends TestCase

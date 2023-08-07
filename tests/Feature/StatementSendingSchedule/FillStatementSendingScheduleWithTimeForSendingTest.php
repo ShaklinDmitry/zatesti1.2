@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\StatementSendingSchedule;
 
-use App\classes\StatementSendingSchedule\Models\StatementSendingSchedule;
+use App\Models\StatementSendingSchedule;
 use Tests\TestCase;
 
 class FillStatementSendingScheduleWithTimeForSendingTest extends TestCase
