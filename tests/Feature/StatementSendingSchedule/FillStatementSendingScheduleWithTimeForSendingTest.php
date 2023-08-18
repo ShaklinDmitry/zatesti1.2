@@ -3,10 +3,13 @@
 namespace Tests\Feature\StatementSendingSchedule;
 
 use App\Models\StatementSendingSchedule;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class FillStatementSendingScheduleWithTimeForSendingTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Тест для заполнения таблицы с расписанием
      * @return void

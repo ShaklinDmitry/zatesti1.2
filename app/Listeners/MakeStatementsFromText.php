@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\classes\GetTypeOfUserResponseCommand;
 use App\classes\Text\MakeStatementsFromTextCommand;
 use App\classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
+use App\classes\UserResponses\UserResponseType;
 use App\Events\SendUserResponse;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -30,6 +31,7 @@ class MakeStatementsFromText implements ShouldQueue
     public function handle(SendUserResponse $event)
     {
         $user = User::where('telegram_chat_id', $event->chatId)->firstOrFail();
+
         $makeStatementsFromTextCommand = new MakeStatementsFromTextCommand();
         $makeStatementsFromTextCommand->execute($user->id);
     }
@@ -40,8 +42,8 @@ class MakeStatementsFromText implements ShouldQueue
      * @return bool|void
      */
     public function shouldQueue($event){
-        $getTypeOfUserResponse = new GetTypeOfUserResponseCommand();
-        $typeOfUserResponse = $getTypeOfUserResponse->execute($event->text);
+        $userResponseType = new UserResponseType();
+        $typeOfUserResponse = $userResponseType->getUserResponseType($event->text);
 
         if(is_a($typeOfUserResponse, SplitTextOfStatementsUserResponseType::class)){
             return true;

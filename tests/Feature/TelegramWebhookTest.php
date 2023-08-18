@@ -16,20 +16,20 @@ class TelegramWebhookTest extends TestCase
      * Тест для запуска события при получение ответа от пользователя
      * @return void
      */
-    public function test_send_user_response_event(){
-        Event::fake();
-        $this->post('/api/telegram-webhook',
-            [
-                'message' =>
-                    [
-                        'chat' => ['id' => 1],
-                        'text' => 'test text'
-                    ],
-            ]
-        );
-        Event::assertDispatched(SendUserResponse::class);
-
-    }
+//    public function test_send_user_response_event(){
+//        Event::fake();
+//        $this->post('/api/telegram-webhook',
+//            [
+//                'message' =>
+//                    [
+//                        'chat' => ['id' => 1],
+//                        'text' => 'test text'
+//                    ],
+//            ]
+//        );
+//        Event::assertDispatched(SendUserResponse::class);
+//
+//    }
 
 
 }

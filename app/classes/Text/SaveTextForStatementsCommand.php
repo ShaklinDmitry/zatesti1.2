@@ -2,7 +2,7 @@
 
 namespace App\classes\Text;
 
-use App\Models\TextForStatements;
+use App\Models\TextForStatementsModel;
 
 class SaveTextForStatementsCommand
 {
@@ -10,10 +10,10 @@ class SaveTextForStatementsCommand
      * Функция для сохранения текста для высказываний
      * @param int $userId
      * @param string $text
-     * @return TextForStatements
+     * @return TextForStatementsModel
      */
-    public function execute(int $userId, string $text): TextForStatements{
-        $text = TextForStatements::create([
+    public function execute(int $userId, string $text): TextForStatementsModel{
+        $text = TextForStatementsModel::create([
             'text' => $text,
             'user_id' => $userId
         ]);

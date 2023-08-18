@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\TextForStatements;
+use App\Models\TextForStatementsModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class TextForStatementsFactory extends Factory
 {
 
-    protected $model = TextForStatements::class;
+    protected $model = TextForStatementsModel::class;
     /**
      * Define the model's default state.
      *

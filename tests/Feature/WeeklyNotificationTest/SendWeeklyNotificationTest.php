@@ -5,12 +5,16 @@ namespace Tests\Feature\WeeklyNotificationTest;
 use App\classes\Notifications\TelegramNotificationSystem;
 use App\classes\WeeklyNotification\SendWeeklyNotificationCommand;
 use App\classes\WeeklyNotification\UserWeeklyNotification;
+use App\classes\WeeklyNotification\UserWeeklyNotificationDTO;
+use App\classes\WeeklyNotification\WeeklyNotificationSender;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class SendWeeklyNotificationTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * тест отправки недельного уведомления пользователю
      * @return void
@@ -25,10 +29,10 @@ class SendWeeklyNotificationTest extends TestCase
 
         $telegramNotificationSystem = new TelegramNotificationSystem();
 
-        $userWeeklyNotification = new UserWeeklyNotification(user: $user, text: $notificationText);
+        $userWeeklyNotification = new UserWeeklyNotificationDTO(user: $user, text: $notificationText);
 
-        $sendWeeklyNotification = new SendWeeklyNotificationCommand($telegramNotificationSystem, $userWeeklyNotification);
-        $sendWeeklyNotification->execute();
+        $weeklyNotificationSender = new WeeklyNotificationSender($telegramNotificationSystem, $userWeeklyNotification);
+        $weeklyNotificationSender->sendWeeklyNotification();
 
         Notification::assertSentTo($user, TelegramNotificationSystem::class);
     }

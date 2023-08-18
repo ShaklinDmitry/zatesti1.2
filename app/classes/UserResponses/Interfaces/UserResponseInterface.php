@@ -6,5 +6,5 @@ use App\Models\User;
 
 interface UserResponseInterface
 {
-    public function save(User $user, string $userResponseText);
+    public function getUserResponsesForThisWeek(int $telegram_chat_id);
 }

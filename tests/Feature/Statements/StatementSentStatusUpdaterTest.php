@@ -4,10 +4,13 @@ namespace Tests\Feature\Statements;
 
 use App\classes\Statements\StatementSentStatusUpdater;
 use App\Models\Statement;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class StatementSentStatusUpdaterTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * тест на то чтобы поменять статус того что высказывание уже было отправлено
      * @return void

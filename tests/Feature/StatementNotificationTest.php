@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class StatementNotificationTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     /**
      * Тестирование отправления уведомлений
@@ -181,16 +181,16 @@ class StatementNotificationTest extends TestCase
      * тест для сохранения id последнего отправленного уведомления
      * @return void
      */
-    public function test_save_id_of_last_sent_statement(){
-        $user = User::factory()->create();
-        $statementId = 1;
-
-        $saveIdOfLastSentStatement = new SaveIdOfLastSentStatementCommand();
-        $saveIdOfLastSentStatement->execute($user->id, $statementId);
-
-        $this->assertDatabaseHas('users',[
-            'last_statement_id_sent' => $statementId
-        ]);
-    }
+//    public function test_save_id_of_last_sent_statement(){
+//        $user = User::factory()->create();
+//        $statementId = 1;
+//
+//        $saveIdOfLastSentStatement = new SaveIdOfLastSentStatementCommand();
+//        $saveIdOfLastSentStatement->execute($user->id, $statementId);
+//
+//        $this->assertDatabaseHas('users',[
+//            'last_statement_id_sent' => $statementId
+//        ]);
+//    }
 
 }

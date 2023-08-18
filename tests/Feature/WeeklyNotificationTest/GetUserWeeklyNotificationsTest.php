@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\WeeklyNotificationTest;
 
-use App\classes\WeeklyNotification\GetUserWeeklyNotifications;
+use App\classes\WeeklyNotification\WeeklyNotification;
+use App\classes\WeeklyNotification\WeeklyNotificationText;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use App\Models\UserResponse;
@@ -16,7 +17,7 @@ class GetUserWeeklyNotificationsTest extends TestCase
 
     public function test_get_user_weekly_notifications()
     {
-        $telegramChatId = 1;
+        $telegramChatId = '1';
 
         $user = User::factory()->create([
             'telegram_chat_id' => $telegramChatId
@@ -42,10 +43,8 @@ class GetUserWeeklyNotificationsTest extends TestCase
             'created_at' => $startOfWeek
         ]);
 
-        $getUserWeeklyNotifications = new GetUserWeeklyNotifications();
-        $userWeeklyNotifications = $getUserWeeklyNotifications->execute();
-
-    //    dd($userWeeklyNotifications);
+        $weeklyNotification = new WeeklyNotification(new StatementSendingSchedule(), new UserResponse(), new WeeklyNotificationText());
+        $userWeeklyNotifications = $weeklyNotification->getUserWeeklyNotifications();
 
         $summaryText = '0. test text 1'. PHP_EOL. '1. test text 2'.PHP_EOL;
 

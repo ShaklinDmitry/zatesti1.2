@@ -4,6 +4,8 @@ namespace App\classes\WeeklyNotification;
 
 use App\classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
 use App\classes\UserResponses\GetUserResponsesForThisWeekCommand;
+use App\Models\StatementSendingSchedule;
+use App\Models\UserResponse;
 
 class GetUserWeeklyNotifications
 {
@@ -18,26 +20,26 @@ class GetUserWeeklyNotifications
      * @throws \App\classes\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException
      * @throws \App\classes\UserResponses\Exception\NoUserResponsesForThisWeekException
      */
-    public function execute(){
-
-        $userWeeklyNotifications = [];
-
-        $getUsersWhoShouldBeNotifiedThisWeek = new GetUsersWhoShouldBeNotifiedThisWeekCommand();
-        $usersWhoShouldBeNotifiedThisWeek = $getUsersWhoShouldBeNotifiedThisWeek->execute();
-
-        foreach ($usersWhoShouldBeNotifiedThisWeek as $user){
-            $getUserResponsesForThisWeek = new GetUserResponsesForThisWeekCommand();
-            $userResponses = $getUserResponsesForThisWeek->execute($user->telegram_chat_id);
-
-            if($userResponses->isEmpty())
-                continue;
-
-            $createWeeklyNotificationText = new CreateWeeklyNotificationTextCommand($userResponses);
-            $weeklyNotificationText = $createWeeklyNotificationText->execute();
-
-            $userWeeklyNotifications[] = new UserWeeklyNotification(user:$user, text:$weeklyNotificationText);
-        }
-
-        return $userWeeklyNotifications;
-    }
+//    public function execute(){
+//
+//        $userWeeklyNotifications = [];
+//
+//        $statementSendingSchedule = new StatementSendingSchedule();
+//        $usersWhoShouldBeNotifiedThisWeek = $statementSendingSchedule->getUsersWhoShouldBeNotifiedThisWeek();
+//
+//        foreach ($usersWhoShouldBeNotifiedThisWeek as $user){
+//            $userResponse = new UserResponse();
+//            $userResponses = $userResponse->getUserResponsesForThisWeek($user->telegram_chat_id);
+//
+//            if($userResponses->isEmpty())
+//                continue;
+//
+//            $weeklyNotificationText = new WeeklyNotificationText();
+//            $text = $weeklyNotificationText->createText();
+//
+//            $userWeeklyNotifications[] = new WeeklyNotification(user: $user, text: $text);
+//        }
+//
+//        return $userWeeklyNotifications;
+//    }
 }

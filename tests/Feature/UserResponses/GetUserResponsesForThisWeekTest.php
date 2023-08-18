@@ -38,8 +38,8 @@ class GetUserResponsesForThisWeekTest extends TestCase
             'created_at' => $startOfWeek
         ]);
 
-        $getUserResponsesForThisWeek = new GetUserResponsesForThisWeekCommand();
-        $userResponses = $getUserResponsesForThisWeek->execute($telegram_chat_id);
+        $userResponse = new UserResponse();
+        $userResponses = $userResponse->getUserResponsesForThisWeek($telegram_chat_id);
 
         $this->assertDatabaseHas('user_response', [
             'text' => $userResponses[0]->text
@@ -58,7 +58,7 @@ class GetUserResponsesForThisWeekTest extends TestCase
     public function test_get_user_responses_for_this_week_exception(){
         $this->expectException(NoUserResponsesForThisWeekException::class);
 
-        $getUserResponsesForThisWeek = new GetUserResponsesForThisWeekCommand();
-        $userResponses = $getUserResponsesForThisWeek->execute(1);
+        $userResponse = new UserResponse();
+        $userResponses = $userResponse->getUserResponsesForThisWeek(1);
     }
 }

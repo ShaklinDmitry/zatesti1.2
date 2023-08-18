@@ -3,10 +3,13 @@
 namespace Tests\Feature\TextForStatements;
 
 use App\classes\Text\ParseTextIntoStatementsCommand;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ParseTextIntoStatementsTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Функция для того чтобы разбить текст на высказывания
      * @return void

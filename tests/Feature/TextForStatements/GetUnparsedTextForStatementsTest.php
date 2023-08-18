@@ -4,7 +4,7 @@ namespace Tests\Feature\TextForStatements;
 
 use App\classes\Text\GetUnparsedTextForStatementsCommand;
 use App\Exceptions\TextForStatementsIsNullException;
-use App\Models\TextForStatements;
+use App\Models\TextForStatementsModel;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -24,7 +24,7 @@ class GetUnparsedTextForStatementsTest extends TestCase
 
         $text = "Sentence1.Sentence2.Sentence3";
 
-        TextForStatements::factory()->create(
+        TextForStatementsModel::factory()->create(
             [
                 'text' => $text,
                 'user_id' => $user->id,
@@ -49,7 +49,7 @@ class GetUnparsedTextForStatementsTest extends TestCase
 
         $text = "Sentence1.Sentence2.Sentence3";
 
-        TextForStatements::factory()->create(
+        TextForStatementsModel::factory()->create(
             [
                 'text' => $text,
                 'user_id' => $user->id,

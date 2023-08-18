@@ -31,12 +31,12 @@ class GetUsersWhoShouldBeNotifiedThisWeekTest extends TestCase
             'exact_time' => $currentTime
         ]);
 
-        $getUsersWhoShouldBeNotifiedThisWeek = new GetUsersWhoShouldBeNotifiedThisWeekCommand();
-        $users = $getUsersWhoShouldBeNotifiedThisWeek->execute();
+        $statementSendingSchedule = new StatementSendingSchedule();
+        $usersWhoShouldBeNotifiedThisWeek = $statementSendingSchedule->getUsersWhoShouldBeNotifiedThisWeek();
 
         $this->assertDatabaseHas('send_statements_schedule', [
             'exact_time' => $currentTime,
-            'user_id' => $users[0]->id
+            'user_id' => $usersWhoShouldBeNotifiedThisWeek[0]->id
         ]);
 
     }
@@ -73,17 +73,17 @@ class GetUsersWhoShouldBeNotifiedThisWeekTest extends TestCase
             'exact_time' => $currentTime
         ]);
 
-        $getUsersWhoShouldBeNotifiedThisWeek = new GetUsersWhoShouldBeNotifiedThisWeekCommand();
-        $users = $getUsersWhoShouldBeNotifiedThisWeek->execute();
+        $statementSendingSchedule = new StatementSendingSchedule();
+        $usersWhoShouldBeNotifiedThisWeek = $statementSendingSchedule->getUsersWhoShouldBeNotifiedThisWeek();
 
         $this->assertDatabaseHas('send_statements_schedule', [
             'exact_time' => $currentTime,
-            'user_id' => $users[0]->id
+            'user_id' => $usersWhoShouldBeNotifiedThisWeek[0]->id
         ]);
 
         $this->assertDatabaseHas('send_statements_schedule', [
             'exact_time' => $currentTime,
-            'user_id' => $users[0]->id
+            'user_id' => $usersWhoShouldBeNotifiedThisWeek[0]->id
         ]);
     }
 
@@ -95,7 +95,7 @@ class GetUsersWhoShouldBeNotifiedThisWeekTest extends TestCase
     public function test_get_users_who_should_be_notified_this_week_exception(){
         $this->expectException(NoUsersForWeeklyNotificationsException::class);
 
-        $getUsersWhoShouldBeNotifiedThisWeek = new GetUsersWhoShouldBeNotifiedThisWeekCommand();
-        $users = $getUsersWhoShouldBeNotifiedThisWeek->execute();
+        $statementSendingSchedule = new StatementSendingSchedule();
+        $statementSendingSchedule->getUsersWhoShouldBeNotifiedThisWeek();
     }
 }

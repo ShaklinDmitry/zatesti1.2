@@ -6,10 +6,13 @@ use App\classes\Notifications\Interfaces\StatementNotificationSystem;
 use App\classes\Notifications\TelegramNotificationSystem;
 use App\classes\Statements\SendStatementCommand;
 use App\Jobs\SendStatements;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SendStatementsTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Тестирование того что job запустился
      * @return void

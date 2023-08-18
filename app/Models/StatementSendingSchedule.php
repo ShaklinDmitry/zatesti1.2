@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\classes\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException;
 use App\classes\StatementSendingSchedule\Interfaces\StatementSendingScheduleInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,5 +33,26 @@ class StatementSendingSchedule extends Model implements StatementSendingSchedule
                 'exact_time' => $time
             ]);
         }
+    }
+
+    /**
+     * Функция для того чтобы получить список пользователей, которым будет проводиться результирующая рассылка на этой неделе
+     * @return array
+     * @throws NoUsersForWeeklyNotificationsException
+     */
+    public function getUsersWhoShouldBeNotifiedThisWeek()
+    {
+        $listOfUsersInSchedule = StatementSendingSchedule::distinct()->get(['user_id']);
+
+        if($listOfUsersInSchedule->isEmpty()){
+            throw new NoUsersForWeeklyNotificationsException();
+        }
+
+        $users = [];
+        foreach ($listOfUsersInSchedule as $userRow){
+            $users[] = User::find($userRow->user_id);
+        }
+
+        return $users;
     }
 }

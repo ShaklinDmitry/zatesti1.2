@@ -5,11 +5,14 @@ namespace Tests\Feature\Notifications;
 use App\classes\Notifications\TelegramNotificationSystem;
 use App\Jobs\SendStatements;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class SendNotificationAboutNoStatementsForSendingTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *

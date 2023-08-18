@@ -2,7 +2,7 @@
 
 namespace App\classes\Text;
 
-use App\Models\TextForStatements;
+use App\Models\TextForStatementsModel;
 
 class MarkTextAsParsedCommand
 {
@@ -12,7 +12,7 @@ class MarkTextAsParsedCommand
      * @return int
      */
     public function execute(int $textId):int{
-        $markTextResult = TextForStatements::where('id', $textId)->update(['is_parsed' => 1]);
+        $markTextResult = TextForStatementsModel::where('id', $textId)->update(['is_parsed' => 1]);
 
         return $markTextResult;
     }

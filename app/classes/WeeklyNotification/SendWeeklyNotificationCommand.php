@@ -9,15 +9,15 @@ use App\Models\User;
 class SendWeeklyNotificationCommand
 {
 
-    public function __construct(private StatementNotificationSystem $statementNotification, private UserWeeklyNotification $userWeeklyNotification){
-    }
+//    public function __construct(private StatementNotificationSystem $statementNotification, private UserWeeklyNotificationDTO $userWeeklyNotification){
+//    }
 
     /**
      * функция для отправки уведомления пользователю
      * @return void
      */
-    public function execute(){
-        $this->statementNotification->setMessageText($this->userWeeklyNotification->text);
-        $this->userWeeklyNotification->user->notify($this->statementNotification);
-    }
+//    public function execute(){
+//        $this->statementNotification->setMessageText($this->userWeeklyNotification->text);
+//        $this->userWeeklyNotification->user->notify($this->statementNotification);
+//    }
 }

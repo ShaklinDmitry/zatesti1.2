@@ -7,7 +7,11 @@ use App\classes\Statements\SendStatementCommand;
 use App\classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
 use App\classes\WeeklyNotification\GetUserWeeklyNotifications;
 use App\classes\WeeklyNotification\SendWeeklyNotificationCommand;
+use App\classes\WeeklyNotification\WeeklyNotification;
+use App\classes\WeeklyNotification\WeeklyNotificationSender;
+use App\classes\WeeklyNotification\WeeklyNotificationText;
 use App\Models\StatementSendingSchedule;
+use App\Models\UserResponse;
 use App\Services\StatementScheduleService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -43,12 +47,12 @@ class StatementScheduleController extends Controller
     public function executeEverySunday(StatementNotificationSystem $statementNotificationSystem){
 
         try{
-            $getUserWeeklyNotifications = new GetUserWeeklyNotifications();
-            $userWeeklyNotifications = $getUserWeeklyNotifications->execute();
+            $weeklyNotification = new WeeklyNotification(new StatementSendingSchedule(), new UserResponse(), new WeeklyNotificationText());
+            $userWeeklyNotifications = $weeklyNotification->getUserWeeklyNotifications();
 
             foreach ($userWeeklyNotifications as $userWeeklyNotification){
-                $sendWeeklyNotification = new SendWeeklyNotificationCommand($statementNotificationSystem, $userWeeklyNotification);
-                $sendWeeklyNotification->execute();
+                $weeklyNotificationSender = new WeeklyNotificationSender($statementNotificationSystem, $userWeeklyNotification);
+                $weeklyNotificationSender->sendWeeklyNotification();
             }
         }catch(\Exception $exception){
             Log::info($exception->getMessage());

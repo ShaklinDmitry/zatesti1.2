@@ -4,11 +4,16 @@ namespace Tests\Feature\WeeklyNotificationTest;
 
 use App\classes\WeeklyNotification\CreateWeeklyNotificationTextCommand;
 use App\classes\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
+use App\classes\WeeklyNotification\WeeklyNotification;
+use App\classes\WeeklyNotification\WeeklyNotificationText;
 use App\Models\UserResponse;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class CreateWeeklyNotificationTextTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * тест для формирование текста за неделю для отправки пользователю
      * @return void
@@ -30,13 +35,13 @@ class CreateWeeklyNotificationTextTest extends TestCase
 
         $userResponses = collect([$userResponse1, $userResponse2]);
 
-        $createWeeklyNotificationText = new CreateWeeklyNotificationTextCommand($userResponses);
-        $weeklyNotificationText = $createWeeklyNotificationText->execute();
+        $weeklyNotificationText = new WeeklyNotificationText();
+        $text = $weeklyNotificationText->createText($userResponses);
 
         $expectedText = '0. '. $userResponseText1 . PHP_EOL .
             '1. '.$userResponseText2.PHP_EOL;
 
-        $this->assertSame($expectedText, $weeklyNotificationText);
+        $this->assertSame($expectedText, $text);
 
     }
 
@@ -49,7 +54,8 @@ class CreateWeeklyNotificationTextTest extends TestCase
 
         $userResponses = collect([]);
 
-        $createWeeklyNotificationText = new CreateWeeklyNotificationTextCommand($userResponses);
-        $weeklyNotificationText = $createWeeklyNotificationText->execute();
+        $weeklyNotificationText = new WeeklyNotificationText();
+        $text = $weeklyNotificationText->createText($userResponses);
+
     }
 }

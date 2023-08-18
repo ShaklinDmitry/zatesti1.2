@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Exceptions\TextForStatementsIsNullException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TextForStatements extends Model
+class TextForStatementsModel extends Model
 {
     use HasFactory;
 
@@ -17,4 +18,5 @@ class TextForStatements extends Model
      * @var array
      */
     protected $fillable = ['text','user_id'];
+
 }

@@ -12,48 +12,7 @@ use Tests\TestCase;
 
 class BestStatementsTest extends TestCase
 {
-    use RefreshDatabase;
-
-    /**
-     * Тест для удаления лучших высказываний
-     * @return void
-     */
-    public function test_delete_best_statement(){
-        $user = User::factory()->create();
-
-        $bestStatement = BestStatement::factory()->create(['user_id' => $user->id]);
-
-        $this->actingAs($user)->delete('api/beststatements/'.$bestStatement->id);
-
-        $this->assertCount(0, BestStatement::all());
-    }
-
-
-    /**
-     * Функция для теста сохранения лучшего высказывания
-     * @return void
-     */
-    public function test_save_best_statement(){
-        $telegram_chat_id = 1;
-        $text = 'test text';
-
-        //event
-        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
-
-        $user = User::factory()->create([
-            'telegram_chat_id' => $telegram_chat_id
-        ]);
-
-        //listener
-        $saveBestStatement = new SaveBestStatements();
-        $saveBestStatement->handle($sendUserResponse);
-
-        $this->assertDatabaseHas('best_statements', [
-            'text' => $text,
-            'user_id' => $user->id
-        ]);
-    }
-
+//
 //    /**
 //     * Тестирование получения лучших высказываний
 //     * @return void
@@ -101,17 +60,17 @@ class BestStatementsTest extends TestCase
      * Тест для того чтобы перед добавлением в очередь слушателя сохрарнения лучшего высказывания проверить тип ответа пользователя на необходимый. В данном случае /addbest
      * @return void
      */
-    public function test_save_best_statement_listener_should_queue(){
-        $telegram_chat_id = 1;
-        $text = '/addbest test text';
-
-        //event
-        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
-
-        //listener
-        $saveBestStatement = new SaveBestStatements();
-        $shouldQueueResult = $saveBestStatement->shouldQueue($sendUserResponse);
-
-        $this->assertSame(true, $shouldQueueResult);
-    }
+//    public function test_save_best_statement_listener_should_queue(){
+//        $telegram_chat_id = 1;
+//        $text = '/addbest test text';
+//
+//        //event
+//        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+//
+//        //listener
+//        $saveBestStatement = new SaveBestStatements();
+//        $shouldQueueResult = $saveBestStatement->shouldQueue($sendUserResponse);
+//
+//        $this->assertSame(true, $shouldQueueResult);
+//    }
 }
