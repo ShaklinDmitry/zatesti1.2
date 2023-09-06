@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -19,7 +19,7 @@ class TransferStatementToBestStatementTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $statement = Statement::factory()->create([
+        $statement = StatementEloquent::factory()->create([
             'id' => 1,
             'user_id' => $user->id
         ]);
@@ -37,7 +37,7 @@ class TransferStatementToBestStatementTest extends TestCase
         $response->assertJson(
             [
                 "data" => [
-                    "message" => "Statement " . $statement->id . " was transfered to best statements"
+                    "message" => "StatementEloquent " . $statement->id . " was transfered to best statements"
                 ]
             ]
         );

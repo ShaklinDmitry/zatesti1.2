@@ -3,7 +3,7 @@
 namespace App\classes\Statements;
 
 use App\Exceptions\NoStatementsForSendingException;
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 
 class GetStatementForSendingCommand
 {
@@ -14,7 +14,7 @@ class GetStatementForSendingCommand
     }
 
     public function execute(){
-        $statement = Statement::where('user_id', $this->userId)
+        $statement = StatementEloquent::where('user_id', $this->userId)
             ->where('send_date_time', '1970-01-01 00:00:00')
             ->where('text','<>','')
             ->first();

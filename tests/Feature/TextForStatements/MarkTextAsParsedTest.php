@@ -3,7 +3,7 @@
 namespace Tests\Feature\TextForStatements;
 
 use App\classes\Text\MarkTextAsParsedCommand;
-use App\Models\TextForStatementsModel;
+use App\Models\TextForStatementsEloquent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -22,7 +22,7 @@ class MarkTextAsParsedTest extends TestCase
 
         $text = "Sentence1.Sentence2.Sentence3";
 
-        $textForStatements = TextForStatementsModel::factory()->create(
+        $textForStatements = TextForStatementsEloquent::factory()->create(
             [
                 'text' => $text,
                 'user_id' => $user->id,
@@ -32,6 +32,6 @@ class MarkTextAsParsedTest extends TestCase
         $markTextAsParsed = new MarkTextAsParsedCommand();
         $markTextAsParsed->execute($textForStatements->id);
 
-        $this->assertSame(1, TextForStatementsModel::find($textForStatements->id)->is_parsed);
+        $this->assertSame(1, TextForStatementsEloquent::find($textForStatements->id)->is_parsed);
     }
 }

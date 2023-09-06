@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Statements;
 
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -19,7 +19,7 @@ class DeleteStatementTest extends TestCase
         $user = User::factory()->create();
         $text = "test text";
 
-        $statement = Statement::factory()->create(
+        $statement = StatementEloquent::factory()->create(
             [
                 'user_id' => $user->id,
                 'text' => $text
@@ -43,7 +43,7 @@ class DeleteStatementTest extends TestCase
         $request->assertJson(
             [
                 "data" => [
-                    "message" => "Statement was deleted."
+                    "message" => "StatementEloquent was deleted."
                 ]
             ]
         );

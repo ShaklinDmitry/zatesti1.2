@@ -66,7 +66,7 @@ class DeleteBestStatementTest extends TestCase
         $response->assertJson(
             [
                 "data" => [
-                    "message" => "Statement was deleted successfull."
+                    "message" => "StatementEloquent was deleted successfull."
                 ]
             ]
         );
@@ -85,7 +85,7 @@ class DeleteBestStatementTest extends TestCase
         $response->assertJson(
             [
                 "error" => [
-                    "message" => "Statement was not deleted."
+                    "message" => "StatementEloquent was not deleted."
                 ]
             ]
         );

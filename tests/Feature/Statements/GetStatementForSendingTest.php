@@ -4,7 +4,7 @@ namespace Tests\Feature\Statements;
 
 use App\classes\Statements\GetStatementForSendingCommand;
 use App\Exceptions\NoStatementsForSendingException;
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,7 +21,7 @@ class GetStatementForSendingTest extends TestCase
         $userId = 1;
         $text = 'test text';
 
-        $statement = Statement::factory()->create(
+        $statement = StatementEloquent::factory()->create(
             [
                 'user_id' => $userId,
                 'text' => $text

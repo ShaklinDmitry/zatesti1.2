@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\NoStatementsException;
 use App\Models\BestStatement;
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use Illuminate\Database\Eloquent\Collection;
 
 class StatementService
@@ -32,7 +32,7 @@ class StatementService
 //     */
 //    public function saveStatements(array $statements, int $user_id){
 //        foreach ($statements as $statementText){
-//            $statement = new Statement();
+//            $statement = new StatementEloquent();
 //            $statement->add($statementText, $user_id);
 //        }
 //    }
@@ -45,7 +45,7 @@ class StatementService
      * @throws NoStatementsException
      */
 //    public function getStatements(int $userId):Collection{
-//        $statements = Statement::where('user_id', $userId)->get();
+//        $statements = StatementEloquent::where('user_id', $userId)->get();
 //
 //        if($statements->isEmpty()){
 //            throw new NoStatementsException('No statements', 200);
@@ -58,11 +58,11 @@ class StatementService
      * Добавить высказывание в базу
      * @param string $text
      * @param int $userId
-     * @return Statement
+     * @return StatementEloquent
      */
-//    public function addStatement(string $text, int $userId):Statement {
+//    public function addStatement(string $text, int $userId):StatementEloquent {
 //
-//            $statement = Statement::create([
+//            $statement = StatementEloquent::create([
 //                'user_id' => $userId,
 //                'text' => $text
 //            ]);
@@ -78,7 +78,7 @@ class StatementService
      * @return mixed
      */
 //    public function getStatementForSending(int $userId){
-//        $statement = Statement::where('user_id', $userId)
+//        $statement = StatementEloquent::where('user_id', $userId)
 //                                ->where('send_date_time', '1970-01-01 00:00:00')
 //                                ->where('text','<>','')
 //                                ->first();
@@ -98,7 +98,7 @@ class StatementService
      */
 //    public function markStatementHasBeenSent(int $statementId){
 //
-//        return Statement::where('id',$statementId)->update(['send_date_time' => NOW()]);
+//        return StatementEloquent::where('id',$statementId)->update(['send_date_time' => NOW()]);
 //
 //    }
 
@@ -109,7 +109,7 @@ class StatementService
      * @return bool
      */
     public function deleteStatement(int $id): bool {
-        return Statement::where('id', $id)->delete();
+        return StatementEloquent::where('id', $id)->delete();
     }
 
     /**
@@ -117,7 +117,7 @@ class StatementService
      * @param int $userId
      * @return BestStatement
      */
-//    public function transferStatementToBestStatements(Statement $statement){
+//    public function transferStatementToBestStatements(StatementEloquent $statement){
 //        $newBestStatement = BestStatement::create([
 //            'user_id' => $statement->user_id,
 //            'text' => $statement->text

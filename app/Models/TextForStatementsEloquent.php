@@ -6,7 +6,7 @@ use App\Exceptions\TextForStatementsIsNullException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TextForStatementsModel extends Model
+class TextForStatementsEloquent extends Model
 {
     use HasFactory;
 

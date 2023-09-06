@@ -2,7 +2,7 @@
 
 namespace App\classes\Statements;
 
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 
 class AddStatementCommand
 {
@@ -10,11 +10,11 @@ class AddStatementCommand
      * Добавить высказывание
      * @param string $text
      * @param int $userId
-     * @return Statement
+     * @return \App\classes\Statements\Domain\Statement
      */
-    public function execute(string $text, int $userId):Statement{
+    public function execute(string $text, int $userId):StatementEloquent{
 
-        $statement = Statement::create([
+        $statement = StatementEloquent::create([
             'user_id' => $userId,
             'text' => $text
         ]);

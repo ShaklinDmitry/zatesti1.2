@@ -2,6 +2,13 @@
 
 namespace App\Jobs;
 
+use App\classes\Statements\Application\UseCases\CreateStatementUseCase;
+use App\classes\Statements\Domain\Statement;
+use App\classes\Text\Application\UseCases\GetStatementsFromTextUseCase;
+use App\classes\Text\Application\UseCases\GetUnparsedTextForStatementsUseCase;
+use App\classes\Text\Application\UseCases\MarkTextAsParsedUseCase;
+use App\classes\Text\Domain\TextForStatements;
+use App\classes\Text\Infrastructure\TextForStatementsRepository;
 use App\classes\Text\MakeStatementsFromTextCommand;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,7 +28,7 @@ class MakeStatementsFromTextForUser implements ShouldQueue
      */
     public function __construct(int $userId)
     {
-        $this->userId = $userId;
+        $this->userId = $userId; 
     }
 
     /**
@@ -31,11 +38,20 @@ class MakeStatementsFromTextForUser implements ShouldQueue
      */
     public function handle()
     {
-//        $textForStatementsService = new TextForStatementsService();
-//        $textForStatementsService->makeStatementsForUser($this->userId);
+        $textForStatementsRepository = new TextForStatementsRepository();
 
-        $makeStatementsFromTextCommand = new MakeStatementsFromTextCommand();
-        $makeStatementsFromTextCommand->execute($this->userId);
+        $getUnparsedTextForStatementsUseCase = new GetUnparsedTextForStatementsUseCase($textForStatementsRepository);
+        $unparsedText = $getUnparsedTextForStatementsUseCase->execute($this->userId);
 
+        $textForStatements = new TextForStatements($unparsedText->id ,$unparsedText->userId, $unparsedText->text);
+        $statements = $textForStatements->parseTextIntoStatements();
+
+        foreach ($statements as $text) {
+            $createStatementUseCase = new CreateStatementUseCase($textForStatementsRepository);
+            $createStatementUseCase->execute($this->userId, $text);
+        }
+
+        $markTextAsParsedUseCase = new MarkTextAsParsedUseCase($textForStatementsRepository);
+        $markTextAsParsedUseCase->execute($textForStatements);
     }
 }

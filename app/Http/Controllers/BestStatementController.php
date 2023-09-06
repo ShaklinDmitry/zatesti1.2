@@ -55,11 +55,11 @@ class BestStatementController extends Controller
             $destroy = $deleteBestStatement->execute($request->id);
 
             if($destroy){
-                return response() -> json(["data" => ["message" => "Statement was deleted successfull.",
+                return response() -> json(["data" => ["message" => "StatementEloquent was deleted successfull.",
                 ]],200);
             }
         }catch (NoBestStatementsToDeleteException $exception){
-            return response() -> json(["error" => ["message" => "Statement was not deleted.",
+            return response() -> json(["error" => ["message" => "StatementEloquent was not deleted.",
             ]],200);
         }
     }

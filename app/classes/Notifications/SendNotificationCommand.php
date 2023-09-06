@@ -3,7 +3,7 @@
 namespace App\classes\Notifications;
 
 use App\classes\Notifications\Interfaces\StatementNotificationSystem;
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use App\Models\User;
 
 class SendNotificationCommand
@@ -21,7 +21,7 @@ class SendNotificationCommand
      * @return bool|string
      * @throws \Exception
      */
-    public function execute(int $userId, Statement $statement)
+    public function execute(int $userId, StatementEloquent $statement)
     {
         $this->statementNotification->setMessageText($statement->text);
 

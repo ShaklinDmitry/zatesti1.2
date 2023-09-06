@@ -2,7 +2,7 @@
 
 namespace App\classes\Statements;
 
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 
 class StatementSentStatusUpdater
 {
@@ -12,6 +12,6 @@ class StatementSentStatusUpdater
      * @return mixed
      */
     public function setSentStatusTrue(int $statementId){
-        return Statement::where('id',$statementId)->update(['send_date_time' => NOW()]);
+        return StatementEloquent::where('id',$statementId)->update(['send_date_time' => NOW()]);
     }
 }

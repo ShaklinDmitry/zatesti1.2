@@ -3,7 +3,7 @@
 namespace Tests\Feature\Statements;
 
 use App\classes\Statements\StatementSentStatusUpdater;
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,7 +19,7 @@ class StatementSentStatusUpdaterTest extends TestCase
     {
         $currentTime = NOW();
 
-        $statement = Statement::factory()->create(
+        $statement = StatementEloquent::factory()->create(
             [
                 'send_date_time' => $currentTime,
                 'user_id' => 1

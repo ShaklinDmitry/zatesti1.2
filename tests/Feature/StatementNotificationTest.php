@@ -24,7 +24,7 @@ class StatementNotificationTest extends TestCase
 //            ['text' => "new statement for testing send statement"],
 //            ["Accept"=>"application/json"]);
 //
-//        $statement = Statement::where('user_id', $user->id)
+//        $statement = StatementEloquent::where('user_id', $user->id)
 //            ->where('send_date_time', '1970-01-01 00:00:00')
 //            ->where('text','<>','')
 //            ->first();

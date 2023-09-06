@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\classes\Text\Application\Events\TextForStatementsIsParsed;
 use App\Events\SendUserResponse;
 use App\Listeners\MakeStatementsFromText;
 use App\Listeners\MarkStatementHasBeenSent;
@@ -33,8 +34,7 @@ class EventServiceProvider extends ServiceProvider
             SaveBestStatements::class,
             SaveTextForStatements::class,
             MakeStatementsFromText::class
-        ]
-
+        ],
     ];
 
     /**

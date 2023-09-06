@@ -171,7 +171,7 @@ class TextForStatementsTest extends TestCase
 //
 //        $event = new SendUserResponse($telegram_chat_id, $text);
 //
-//        $makeStatementsFromText = new MakeStatementsFromText();
+//        $makeStatementsFromText = new TextForStatementsIsParsed();
 //        $makeStatementsFromText->handle($event);
 //
 //        $getStatements = new GetStatementsCommand();
@@ -202,7 +202,7 @@ class TextForStatementsTest extends TestCase
 //
 //        $this->actingAs($user)->post('/api/text/generate-statements');
 //
-//        $parsedText = TextForStatementsModel::where('is_parsed', 1)->first();
+//        $parsedText = TextForStatementsEloquent::where('is_parsed', 1)->first();
 //
 //        $this->assertSame("Sentence1.Sentence2.Sentence3", $parsedText->text);
 //

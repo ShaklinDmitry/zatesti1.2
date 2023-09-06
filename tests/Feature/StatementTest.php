@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Exceptions\NoStatementsException;
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use App\Models\User;
 use App\Services\StatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -122,13 +122,13 @@ class StatementTest extends TestCase
 //
 //        $user = User::factory()->create();
 //
-//        $statement = Statement::factory()->create(['user_id' => $user->id]);
+//        $statement = StatementEloquent::factory()->create(['user_id' => $user->id]);
 //
-//        $this->assertCount(1, Statement::all());
+//        $this->assertCount(1, StatementEloquent::all());
 //
 //        $this->actingAs($user)->delete('/api/statements/'.$statement->id);
 //
-//        $this->assertCount(0, Statement::all());
+//        $this->assertCount(0, StatementEloquent::all());
 //
 //    }
 //
@@ -139,7 +139,7 @@ class StatementTest extends TestCase
      */
 //    public function test_transfer_statement_to_best_statements(){
 //        $user = User::factory()->create();
-//        $statement = Statement::factory()->create(['user_id' => $user->id]);
+//        $statement = StatementEloquent::factory()->create(['user_id' => $user->id]);
 //
 //        $statementService = new StatementService();
 //        $statementService->transferStatementToBestStatements($statement);
@@ -155,7 +155,7 @@ class StatementTest extends TestCase
      */
 //    public function test_successful_transfer_statement_to_best_statements_api_response(){
 //        $user = User::factory()->create();
-//        $statement = Statement::factory()->create(['user_id' => $user->id]);
+//        $statement = StatementEloquent::factory()->create(['user_id' => $user->id]);
 //
 //        $transferStatementResponse = $this->actingAs($user)->post('/api/statements/transfer-to-best-statements',
 //                                                ['statementId' => $statement->id]);
@@ -163,7 +163,7 @@ class StatementTest extends TestCase
 //        $transferStatementResponse->assertJson(
 //            [
 //                "data" => [
-//                    "message" => 'Statement ' . $statement->id . ' was transfered to best statements',
+//                    "message" => 'StatementEloquent ' . $statement->id . ' was transfered to best statements',
 //                ]
 //            ]
 //        );

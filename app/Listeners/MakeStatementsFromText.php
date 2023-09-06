@@ -23,7 +23,7 @@ class MakeStatementsFromText implements ShouldQueue
     }
 
     /**
-     * Handle the event.
+     * для телеграмма
      *
      * @param  object  $event
      * @return void

@@ -7,7 +7,7 @@ use App\classes\Statements\GetStatementsCommand;
 use App\Exceptions\NoStatementsException;
 use App\Http\Requests\CreateStatementRequest;
 use App\Models\BestStatement;
-use App\Models\Statement;
+use App\Models\StatementEloquent;
 use App\Services\TextForStatementsService;
 use App\Services\UserResponseService;
 use Illuminate\Http\JsonResponse;
@@ -29,7 +29,7 @@ class StatementController extends Controller
             $statement = $addStatementCommand->execute($request->text, Auth::id());
 
             if($statement){
-                return response() -> json(["data" => ["message" => "Statement was create successfull.",
+                return response() -> json(["data" => ["message" => "StatementEloquent was create successfull.",
                 ]],200);
             }
         }catch(\Exception $exception){
@@ -78,10 +78,10 @@ class StatementController extends Controller
      * @return json
      */
     public function destroy(Request $request){
-        $delete = Statement::destroy($request->id);
+        $delete = StatementEloquent::destroy($request->id);
 
         if($delete){
-            return response() -> json(["data" => ["message" => "Statement was deleted."]], 200);
+            return response() -> json(["data" => ["message" => "StatementEloquent was deleted."]], 200);
         }
     }
 
@@ -91,7 +91,7 @@ class StatementController extends Controller
      * @return JsonResponse|void
      */
     public function transferToBestStatements(Request $request){
-        $statement = Statement::find($request->statementId);
+        $statement = StatementEloquent::find($request->statementId);
 
         $bestStatement = BestStatement::create([
             'user_id' => $statement->user_id,
@@ -99,7 +99,7 @@ class StatementController extends Controller
         ]);
 
         if($bestStatement){
-            return response() -> json(["data" => ["message" => 'Statement ' . $statement->id . ' was transfered to best statements']], 200);
+            return response() -> json(["data" => ["message" => 'StatementEloquent ' . $statement->id . ' was transfered to best statements']], 200);
         }
     }
 
