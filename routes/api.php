@@ -30,8 +30,8 @@ Route::middleware('auth:sanctum')->group(function (){
         Route::get('/beststatements', [\App\Http\Controllers\BestStatementController::class, 'getBestStatements']);
         Route::delete('/beststatements/{id}', [\App\Http\Controllers\BestStatementController::class, 'destroy']);
 
-        Route::post('/statements/text', [\App\Http\Controllers\TextForStatementsController::class, 'createText']);
-        Route::post('/text/generate-statements', [\App\Http\Controllers\TextForStatementsController::class, 'makeStatementsFromText']);
+        Route::post('/statements/text', [\App\Classes\Text\Infrastructure\Controllers\TextForStatementsController::class, 'createText']);
+        Route::post('/text/generate-statements', [\App\Classes\Text\Infrastructure\Controllers\TextForStatementsController::class, 'makeStatementsFromText']);
     }
 );
 
@@ -73,7 +73,7 @@ Route::post('/testFeature', function (){
 
     $statementService = new StatementService();
 
-    $telegramNotification = new \App\classes\Notifications\TelegramNotificationSystem();
+    $telegramNotification = new \App\Classes\Notifications\TelegramNotificationSystem();
     $statementService->sendStatements($currentTime, $telegramNotification);
 
 });

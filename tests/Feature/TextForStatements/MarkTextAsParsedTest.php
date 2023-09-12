@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\TextForStatements;
 
-use App\classes\Text\MarkTextAsParsedCommand;
+use App\Classes\Text\MarkTextAsParsedCommand;
 use App\Models\TextForStatementsEloquent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

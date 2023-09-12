@@ -2,10 +2,9 @@
 
 namespace Tests\Feature\Statements;
 
-use App\classes\Notifications\Interfaces\StatementNotificationSystem;
-use App\classes\Notifications\TelegramNotificationSystem;
-use App\classes\Statements\SendStatementCommand;
-use App\Jobs\SendStatements;
+use App\Classes\Notifications\TelegramNotificationSystem;
+use App\Classes\Statements\Infrastructure\Jobs\SendStatements;
+use App\Classes\Statements\SendStatementCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

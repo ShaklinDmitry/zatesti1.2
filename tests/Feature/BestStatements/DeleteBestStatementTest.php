@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\classes\BestStatements\DeleteBestStatementCommand;
-use App\classes\BestStatements\Exceptions\NoBestStatementsToDeleteException;
+use App\Classes\BestStatements\DeleteBestStatementCommand;
+use App\Classes\BestStatements\Exceptions\NoBestStatementsToDeleteException;
 use App\Models\BestStatement;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

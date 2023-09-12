@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\classes\UserResponses\Exception\NoUserResponsesForThisWeekException;
-use App\classes\UserResponses\Interfaces\UserResponseInterface;
+use App\Classes\UserResponses\Exception\NoUserResponsesForThisWeekException;
+use App\Classes\UserResponses\Interfaces\UserResponseInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

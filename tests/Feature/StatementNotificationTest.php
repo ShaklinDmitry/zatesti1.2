@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\classes\Notifications\SaveIdOfLastSentStatementCommand;
+use App\Classes\Notifications\SaveIdOfLastSentStatementCommand;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

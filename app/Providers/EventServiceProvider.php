@@ -2,18 +2,17 @@
 
 namespace App\Providers;
 
-use App\classes\Text\Application\Events\TextForStatementsIsParsed;
-use App\Events\SendUserResponse;
-use App\Listeners\MakeStatementsFromText;
+use App\Classes\Text\Application\Events\TextForStatementsIsParsed;
+use App\Classes\Text\Infrastructure\Listeners\MakeStatementsFromText;
+use App\Classes\Text\Infrastructure\Listeners\SaveTextForStatements;
+use App\Events\UserResponseSended;
 use App\Listeners\MarkStatementHasBeenSent;
 use App\Listeners\SaveBestStatements;
-use App\Listeners\SaveTextForStatements;
 use App\Listeners\SaveUserResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Events\NotificationSent;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -29,7 +28,7 @@ class EventServiceProvider extends ServiceProvider
         NotificationSent::class => [
             MarkStatementHasBeenSent::class
         ],
-        SendUserResponse::class => [
+        UserResponseSended::class => [
             SaveUserResponse::class,
             SaveBestStatements::class,
             SaveTextForStatements::class,

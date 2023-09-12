@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Events\SendUserResponse;
+use App\Events\UserResponseSended;
 use App\Listeners\SaveBestStatements;
 use App\Models\BestStatement;
 use App\Models\User;
@@ -23,7 +23,7 @@ class BestStatementsTest extends TestCase
 //        $text = 'test text';
 //
 //        //event
-//        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+//        $sendUserResponse = new UserResponseSended($telegram_chat_id, $text);
 //
 //        $user = User::factory()->create([
 //            'telegram_chat_id' => $telegram_chat_id
@@ -65,7 +65,7 @@ class BestStatementsTest extends TestCase
 //        $text = '/addbest test text';
 //
 //        //event
-//        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+//        $sendUserResponse = new UserResponseSended($telegram_chat_id, $text);
 //
 //        //listener
 //        $saveBestStatement = new SaveBestStatements();

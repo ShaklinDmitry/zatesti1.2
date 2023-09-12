@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\classes\GetTypeOfUserResponseCommand;
-use App\classes\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\classes\TypesOfUserResponses\UnknownUserResponseType;
+use App\Classes\GetTypeOfUserResponseCommand;
+use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
+use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
+use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
+use App\Classes\TypesOfUserResponses\UnknownUserResponseType;
 use App\DTO\UserResponseDTO;
-use App\Events\SendUserResponse;
+use App\Events\UserResponseSended;
 use App\Listeners\SaveUserResponse;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -27,7 +27,7 @@ class ResponseFromUserTest extends TestCase
 //            $text = 'test text';
 //
 //            //event
-//            $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+//            $sendUserResponse = new UserResponseSended($telegram_chat_id, $text);
 //
 //            User::factory()->create([
 //                'telegram_chat_id' => $telegram_chat_id

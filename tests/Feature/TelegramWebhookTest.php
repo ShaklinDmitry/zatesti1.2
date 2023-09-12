@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Events\SendUserResponse;
+use App\Events\UserResponseSended;
 use App\Listeners\SaveUserResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -27,7 +27,7 @@ class TelegramWebhookTest extends TestCase
 //                    ],
 //            ]
 //        );
-//        Event::assertDispatched(SendUserResponse::class);
+//        Event::assertDispatched(UserResponseSended::class);
 //
 //    }
 

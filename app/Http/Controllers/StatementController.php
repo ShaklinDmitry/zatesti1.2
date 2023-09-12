@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\classes\Statements\AddStatementCommand;
-use App\classes\Statements\GetStatementsCommand;
+use App\Classes\Statements\AddStatementCommand;
+use App\Classes\Statements\Application\UseCases\CreateStatementUseCase;
+use App\Classes\Statements\Application\UseCases\GetStatementsUseCase;
+use App\Classes\Statements\GetStatementsCommand;
+use App\Classes\Statements\Infrastructure\Repositories\StatementRepository;
 use App\Exceptions\NoStatementsException;
 use App\Http\Requests\CreateStatementRequest;
 use App\Models\BestStatement;
@@ -25,8 +28,10 @@ class StatementController extends Controller
     public function createStatement(CreateStatementRequest $request):JsonResponse{
 
         try{
-            $addStatementCommand = new AddStatementCommand();
-            $statement = $addStatementCommand->execute($request->text, Auth::id());
+            $statementRepository = new StatementRepository();
+
+            $createStatementUseCase = new CreateStatementUseCase(userId: Auth::id(), text: $request->text, statementRepository:  $statementRepository);
+            $statement = $createStatementUseCase->execute();
 
             if($statement){
                 return response() -> json(["data" => ["message" => "StatementEloquent was create successfull.",
@@ -46,8 +51,10 @@ class StatementController extends Controller
     public function getStatements():JsonResponse{
 
         try{
-            $getStatementsCommand = new GetStatementsCommand();
-            $statements = $getStatementsCommand->execute(Auth::id());
+            $statementRepository = new StatementRepository();
+
+            $getStatementUseCase = new GetStatementsUseCase(Auth::id(), $statementRepository);
+            $statements = $getStatementUseCase->execute();
 
             $responseData = [
                 "data" => [

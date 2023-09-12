@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\classes\Notifications\Interfaces\StatementNotificationSystem;
-use App\classes\Statements\SendStatementCommand;
-use App\classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
-use App\classes\WeeklyNotification\GetUserWeeklyNotifications;
-use App\classes\WeeklyNotification\SendWeeklyNotificationCommand;
-use App\classes\WeeklyNotification\WeeklyNotification;
-use App\classes\WeeklyNotification\WeeklyNotificationSender;
-use App\classes\WeeklyNotification\WeeklyNotificationText;
+use App\Classes\Notifications\Interfaces\StatementNotificationSystem;
+use App\Classes\Statements\Infrastructure\Jobs\SendStatements;
+use App\Classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Classes\WeeklyNotification\WeeklyNotification;
+use App\Classes\WeeklyNotification\WeeklyNotificationSender;
+use App\Classes\WeeklyNotification\WeeklyNotificationText;
 use App\Models\StatementSendingSchedule;
 use App\Models\UserResponse;
 use App\Services\StatementScheduleService;
@@ -28,12 +26,11 @@ class StatementScheduleController extends Controller
     public function executeEveryMinute(StatementNotificationSystem $statementNotification){
 
         try{
-            $sendStatements = new SendStatementCommand($statementNotification);
-
             $getUsersWhoShouldBeNotifiedAtTheCurrentTime = new GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand(date("H:i"));
             $users = $getUsersWhoShouldBeNotifiedAtTheCurrentTime->execute();
 
-            $sendStatements->execute($users);
+            SendStatements::dispatch($users, $statementNotification);
+
         }catch(\Exception $exception){
             Log::info($exception->getMessage());
         }

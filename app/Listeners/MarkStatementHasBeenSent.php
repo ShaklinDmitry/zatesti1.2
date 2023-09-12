@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\classes\Statements\StatementSentStatusUpdater;
+use App\Classes\Statements\StatementSentStatusUpdater;
 use App\Services\StatementService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;

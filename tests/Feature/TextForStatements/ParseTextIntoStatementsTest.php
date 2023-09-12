@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\TextForStatements;
 
-use App\classes\Text\ParseTextIntoStatementsCommand;
+use App\Classes\Text\ParseTextIntoStatementsCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

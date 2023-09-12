@@ -2,10 +2,10 @@
 
 namespace App\Listeners;
 
-use App\classes\BestStatements\SaveBestStatementCommand;
-use App\classes\GetTypeOfUserResponseCommand;
-use App\classes\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Events\SendUserResponse;
+use App\Classes\BestStatements\SaveBestStatementCommand;
+use App\Classes\GetTypeOfUserResponseCommand;
+use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
+use App\Events\UserResponseSended;
 use App\Services\BestStatementService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -24,10 +24,10 @@ class SaveBestStatements implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  \App\Events\SendUserResponse  $event
+     * @param  \App\Events\UserResponseSended  $event
      * @return void
      */
-    public function handle(SendUserResponse $event)
+    public function handle(UserResponseSended $event)
     {
         $saveBestStatementCommand = new SaveBestStatementCommand();
         $saveBestStatementCommand->execute($event->chatId, $event->text);

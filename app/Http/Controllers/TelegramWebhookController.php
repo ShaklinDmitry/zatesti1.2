@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SendUserResponse;
+use App\Events\UserResponseSended;
 use App\Services\UserResponseService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -21,7 +21,7 @@ class TelegramWebhookController extends Controller
             $chatId = $request['message']['chat']['id'];
             $text = $request['message']['text'];
 
-            SendUserResponse::dispatch($chatId, $text);
+            UserResponseSended::dispatch($chatId, $text);
 
         }catch(\Exception $exception){
             Log::info($exception->getMessage());

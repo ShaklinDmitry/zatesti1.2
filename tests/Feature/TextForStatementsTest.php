@@ -2,14 +2,10 @@
 
 namespace Tests\Feature;
 
-use App\classes\Statements\GetStatementsCommand;
-use App\Events\SendUserResponse;
+use App\Classes\Text\Infrastructure\Listeners\SaveTextForStatements;
+use App\Events\UserResponseSended;
 use App\Exceptions\TextForStatementsIsNullException;
-use App\Jobs\MakeStatementsFromTextForUser;
-use App\Listeners\MakeStatementsFromText;
-use App\Listeners\SaveTextForStatements;
 use App\Models\User;
-use App\Services\StatementService;
 use App\Services\TextForStatementsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -68,7 +64,7 @@ class TextForStatementsTest extends TestCase
         $telegram_chat_id = 1;
         $text = "this is test text";
 
-        $event = new SendUserResponse($telegram_chat_id, $text);
+        $event = new UserResponseSended($telegram_chat_id, $text);
 
         User::factory()->create(
             ['telegram_chat_id' => $telegram_chat_id]
@@ -87,7 +83,7 @@ class TextForStatementsTest extends TestCase
      * @return void
      */
 //    public function test_make_statements_from_text_job_dispatched(){
-//        $this->expectsJobs(MakeStatementsFromTextForUser::class);
+//        $this->expectsJobs(MakeStatementsFromText::class);
 //
 //        $user = User::factory()->create();
 //
@@ -169,7 +165,7 @@ class TextForStatementsTest extends TestCase
 //
 //        $text = "/splittext";
 //
-//        $event = new SendUserResponse($telegram_chat_id, $text);
+//        $event = new UserResponseSended($telegram_chat_id, $text);
 //
 //        $makeStatementsFromText = new TextForStatementsIsParsed();
 //        $makeStatementsFromText->handle($event);
@@ -217,7 +213,7 @@ class TextForStatementsTest extends TestCase
 //        $text = '/addtext test text';
 //
 //        //event
-//        $sendUserResponse = new SendUserResponse($telegram_chat_id, $text);
+//        $sendUserResponse = new UserResponseSended($telegram_chat_id, $text);
 //
 //        //listener
 //        $saveTextForStatements = new SaveTextForStatements();

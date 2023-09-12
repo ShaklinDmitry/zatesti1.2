@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\SendUserResponse;
+use App\Events\UserResponseSended;
 use App\Models\User;
 use App\Models\UserResponse;
 use App\Services\UserResponseService;
@@ -22,10 +22,10 @@ class  SaveUserResponse
     /**
      * Handle the event.
      *
-     * @param  \App\Events\SendUserResponse  $event
+     * @param  \App\Events\UserResponseSended  $event
      * @return void
      */
-    public function handle(SendUserResponse $event)
+    public function handle(UserResponseSended $event)
     {
         $user = User::where('telegram_chat_id', $event->chatId)->first();
 

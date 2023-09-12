@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Statements;
 
-use App\classes\Statements\StatementSentStatusUpdater;
+use App\Classes\Statements\StatementSentStatusUpdater;
 use App\Models\StatementEloquent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

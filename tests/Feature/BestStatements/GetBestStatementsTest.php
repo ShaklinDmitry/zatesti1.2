@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\classes\BestStatements\Exceptions\NoBestStatementsForUserException;
-use App\classes\BestStatements\GetBestStatementsCommand;
+use App\Classes\BestStatements\Exceptions\NoBestStatementsForUserException;
+use App\Classes\BestStatements\GetBestStatementsCommand;
 use App\Models\BestStatement;
 use App\Services\BestStatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
