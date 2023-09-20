@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\StatementSendingSchedule;
 
-use App\Classes\StatementSendingSchedule\Exception\NoUsersWhoScheduledToReceiveStatementNotificationException;
-use App\Classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Exception\NoUsersWhoScheduledToReceiveStatementNotificationException;
+use App\Modules\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

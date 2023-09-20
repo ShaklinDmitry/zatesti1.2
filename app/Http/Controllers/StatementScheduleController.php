@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Notifications\Interfaces\StatementNotificationSystem;
-use App\Classes\Statements\Infrastructure\Jobs\SendStatements;
-use App\Classes\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
-use App\Classes\WeeklyNotification\WeeklyNotification;
-use App\Classes\WeeklyNotification\WeeklyNotificationSender;
-use App\Classes\WeeklyNotification\WeeklyNotificationText;
+use App\Modules\Notifications\Interfaces\StatementNotificationSystem;
+use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
+use App\Modules\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\WeeklyNotification\WeeklyNotification;
+use App\Modules\WeeklyNotification\WeeklyNotificationSender;
+use App\Modules\WeeklyNotification\WeeklyNotificationText;
 use App\Models\StatementSendingSchedule;
 use App\Models\UserResponse;
 use App\Services\StatementScheduleService;

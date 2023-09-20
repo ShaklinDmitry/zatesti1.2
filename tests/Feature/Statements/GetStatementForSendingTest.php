@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Statements;
 
-use App\Classes\Statements\GetStatementForSendingCommand;
+use App\Modules\Statements\GetStatementForSendingCommand;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Models\StatementEloquent;
 use Illuminate\Foundation\Testing\RefreshDatabase;

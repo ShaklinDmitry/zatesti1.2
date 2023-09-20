@@ -22,16 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function (){
-        Route::post('/statements', [\App\Http\Controllers\StatementController::class, 'createStatement']);
-        Route::get('/statements', [\App\Http\Controllers\StatementController::class, 'getStatements']);
-        Route::delete('/statements/{id}', [\App\Http\Controllers\StatementController::class, 'destroy']);
-        Route::post('/statements/transfer-to-best-statements', [\App\Http\Controllers\StatementController::class, 'transferToBestStatements']);
+        Route::post('/statements', [\App\Modules\Statements\Infrastructure\Controllers\StatementController::class, 'createStatement']);
+        Route::get('/statements', [\App\Modules\Statements\Infrastructure\Controllers\StatementController::class, 'getStatements']);
+        Route::delete('/statements/{id}', [\App\Modules\Statements\Infrastructure\Controllers\StatementController::class, 'destroy']);
+        Route::post('/statements/transfer-to-best-statements', [\App\Modules\Statements\Infrastructure\Controllers\StatementController::class, 'transferToBestStatements']);
 
-        Route::get('/beststatements', [\App\Http\Controllers\BestStatementController::class, 'getBestStatements']);
-        Route::delete('/beststatements/{id}', [\App\Http\Controllers\BestStatementController::class, 'destroy']);
+        Route::get('/beststatements', [\App\Modules\BestStatements\Infrastructure\Controllers\BestStatementController::class, 'getBestStatements']);
+        Route::delete('/beststatements/{id}', [\App\Modules\BestStatements\Infrastructure\Controllers\BestStatementController::class, 'destroy']);
 
-        Route::post('/statements/text', [\App\Classes\Text\Infrastructure\Controllers\TextForStatementsController::class, 'createText']);
-        Route::post('/text/generate-statements', [\App\Classes\Text\Infrastructure\Controllers\TextForStatementsController::class, 'makeStatementsFromText']);
+        Route::post('/statements/text', [\App\Modules\Text\Infrastructure\Controllers\TextForStatementsController::class, 'createText']);
+        Route::post('/text/generate-statements', [\App\Modules\Text\Infrastructure\Controllers\TextForStatementsController::class, 'makeStatementsFromText']);
     }
 );
 
@@ -73,7 +73,7 @@ Route::post('/testFeature', function (){
 
     $statementService = new StatementService();
 
-    $telegramNotification = new \App\Classes\Notifications\TelegramNotificationSystem();
+    $telegramNotification = new \App\Modules\Notifications\TelegramNotificationSystem();
     $statementService->sendStatements($currentTime, $telegramNotification);
 
 });

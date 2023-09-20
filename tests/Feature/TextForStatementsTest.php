@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Classes\Text\Infrastructure\Listeners\SaveTextForStatements;
+use App\Modules\Text\Infrastructure\Listeners\SaveTextForStatements;
 use App\Events\UserResponseSended;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\User;

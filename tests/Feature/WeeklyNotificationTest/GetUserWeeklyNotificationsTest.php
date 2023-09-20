@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\WeeklyNotificationTest;
 
-use App\Classes\WeeklyNotification\WeeklyNotification;
-use App\Classes\WeeklyNotification\WeeklyNotificationText;
+use App\Modules\WeeklyNotification\WeeklyNotification;
+use App\Modules\WeeklyNotification\WeeklyNotificationText;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use App\Models\UserResponse;

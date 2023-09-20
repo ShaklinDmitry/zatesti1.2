@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\TextForStatements;
 
-use App\Classes\Text\GetUnparsedTextForStatementsCommand;
+use App\Modules\Text\GetUnparsedTextForStatementsCommand;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\TextForStatementsEloquent;
 use App\Models\User;

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Classes\Notifications\Interfaces\StatementNotificationSystem;
-use App\Classes\Notifications\TelegramNotificationSystem;
+use App\Modules\Notifications\Interfaces\StatementNotificationSystem;
+use App\Modules\Notifications\TelegramNotificationSystem;
 use Illuminate\Support\ServiceProvider;
 
 class StatementNotificationServiceProvider extends ServiceProvider

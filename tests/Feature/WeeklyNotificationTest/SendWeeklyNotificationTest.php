@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\WeeklyNotificationTest;
 
-use App\Classes\Notifications\TelegramNotificationSystem;
-use App\Classes\WeeklyNotification\SendWeeklyNotificationCommand;
-use App\Classes\WeeklyNotification\UserWeeklyNotification;
-use App\Classes\WeeklyNotification\UserWeeklyNotificationDTO;
-use App\Classes\WeeklyNotification\WeeklyNotificationSender;
+use App\Modules\Notifications\TelegramNotificationSystem;
+use App\Modules\WeeklyNotification\SendWeeklyNotificationCommand;
+use App\Modules\WeeklyNotification\UserWeeklyNotification;
+use App\Modules\WeeklyNotification\UserWeeklyNotificationDTO;
+use App\Modules\WeeklyNotification\WeeklyNotificationSender;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;

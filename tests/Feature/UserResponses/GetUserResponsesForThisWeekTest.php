@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\UserResponses;
 
-use App\Classes\UserResponses\Exception\NoUserResponsesForThisWeekException;
-use App\Classes\UserResponses\GetUserResponsesForThisWeekCommand;
+use App\Modules\UserResponses\Exception\NoUserResponsesForThisWeekException;
+use App\Modules\UserResponses\GetUserResponsesForThisWeekCommand;
 use App\Models\UserResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

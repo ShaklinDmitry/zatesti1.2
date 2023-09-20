@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\Classes\BestStatements\Exceptions\NoBestStatementsForUserException;
-use App\Classes\BestStatements\GetBestStatementsCommand;
-use App\Models\BestStatement;
+use App\Modules\BestStatements\GetBestStatementsCommand;
+use App\Modules\BestStatements\Infrastructure\Exceptions\NoBestStatementsForUserException;
+use App\Models\BestStatementEloquent;
 use App\Services\BestStatementService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -22,7 +22,7 @@ class GetBestStatementsTest extends TestCase
     {
         $userId = 1;
 
-        BestStatement::factory()->count(2)->sequence(
+        BestStatementEloquent::factory()->count(2)->sequence(
                 ["text" => "text1"],
                 ["text" => "text2"]
         )->create(

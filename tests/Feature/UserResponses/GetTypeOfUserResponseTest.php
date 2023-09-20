@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\UserResponses;
 
-use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Classes\TypesOfUserResponses\UnknownUserResponseType;
-use App\Classes\UserResponses\UserResponseType;
+use App\Modules\TypesOfUserResponses\AddBestStatementUserResponseType;
+use App\Modules\TypesOfUserResponses\AddTextForStatementsUserResponseType;
+use App\Modules\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
+use App\Modules\TypesOfUserResponses\UnknownUserResponseType;
+use App\Modules\UserResponses\UserResponseType;
 use App\Models\UserResponse;
 use Tests\TestCase;
 

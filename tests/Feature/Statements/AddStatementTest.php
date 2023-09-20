@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Statements;
 
-use App\Classes\Statements\AddStatementCommand;
+use App\Modules\Statements\AddStatementCommand;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

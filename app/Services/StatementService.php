@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\NoStatementsException;
-use App\Models\BestStatement;
+use App\Models\BestStatementEloquent;
 use App\Models\StatementEloquent;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -115,10 +115,10 @@ class StatementService
     /**
      * сделать высказывание "лучшим"
      * @param int $userId
-     * @return BestStatement
+     * @return BestStatementEloquent
      */
 //    public function transferStatementToBestStatements(StatementEloquent $statement){
-//        $newBestStatement = BestStatement::create([
+//        $newBestStatement = BestStatementEloquent::create([
 //            'user_id' => $statement->user_id,
 //            'text' => $statement->text
 //        ]);

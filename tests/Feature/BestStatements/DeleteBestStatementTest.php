@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\BestStatements;
 
-use App\Classes\BestStatements\DeleteBestStatementCommand;
-use App\Classes\BestStatements\Exceptions\NoBestStatementsToDeleteException;
-use App\Models\BestStatement;
+use App\Modules\BestStatements\DeleteBestStatementCommand;
+use App\Modules\BestStatements\Infrastructure\Exceptions\NoBestStatementsToDeleteException;
+use App\Models\BestStatementEloquent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -21,7 +21,7 @@ class DeleteBestStatementTest extends TestCase
     {
         $text = "test text";
 
-        $bestStatement = BestStatement::factory()->create(
+        $bestStatement = BestStatementEloquent::factory()->create(
             ["text" => $text]
         );
 
@@ -57,7 +57,7 @@ class DeleteBestStatementTest extends TestCase
     public function test_delete_best_statement_success_api_response(){
         $user = User::factory()->create();
 
-        $bestStatement = BestStatement::factory()->create(
+        $bestStatement = BestStatementEloquent::factory()->create(
             ["text" => 'test']
         );
 

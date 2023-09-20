@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\WeeklyNotificationTest;
 
-use App\Classes\WeeklyNotification\CreateWeeklyNotificationTextCommand;
-use App\Classes\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
-use App\Classes\WeeklyNotification\WeeklyNotification;
-use App\Classes\WeeklyNotification\WeeklyNotificationText;
+use App\Modules\WeeklyNotification\CreateWeeklyNotificationTextCommand;
+use App\Modules\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
+use App\Modules\WeeklyNotification\WeeklyNotification;
+use App\Modules\WeeklyNotification\WeeklyNotificationText;
 use App\Models\UserResponse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

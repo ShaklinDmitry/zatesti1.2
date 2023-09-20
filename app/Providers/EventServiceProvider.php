@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Classes\Text\Application\Events\TextForStatementsIsParsed;
-use App\Classes\Text\Infrastructure\Listeners\MakeStatementsFromText;
-use App\Classes\Text\Infrastructure\Listeners\SaveTextForStatements;
+use App\Modules\Statements\Infrastructure\Listeners\MarkStatementHasBeenSent;
+use App\Modules\Text\Application\Events\TextForStatementsIsParsed;
+use App\Modules\Text\Infrastructure\Listeners\MakeStatementsFromText;
+use App\Modules\Text\Infrastructure\Listeners\SaveTextForStatements;
 use App\Events\UserResponseSended;
-use App\Listeners\MarkStatementHasBeenSent;
 use App\Listeners\SaveBestStatements;
 use App\Listeners\SaveUserResponse;
 use Illuminate\Auth\Events\Registered;

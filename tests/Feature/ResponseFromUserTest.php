@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Classes\GetTypeOfUserResponseCommand;
-use App\Classes\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Classes\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Classes\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Classes\TypesOfUserResponses\UnknownUserResponseType;
+use App\Modules\GetTypeOfUserResponseCommand;
+use App\Modules\TypesOfUserResponses\AddBestStatementUserResponseType;
+use App\Modules\TypesOfUserResponses\AddTextForStatementsUserResponseType;
+use App\Modules\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
+use App\Modules\TypesOfUserResponses\UnknownUserResponseType;
 use App\DTO\UserResponseDTO;
 use App\Events\UserResponseSended;
 use App\Listeners\SaveUserResponse;
