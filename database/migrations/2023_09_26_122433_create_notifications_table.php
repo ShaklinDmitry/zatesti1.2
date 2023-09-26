@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->nullable();
             $table->text('sended_notification_text')->nullable();
-            $this->timestamp('time_send', 0)->nullable();
+            $table->timestamp('send_time', 0)->nullable();
             $table->timestamps();
         });
     }
