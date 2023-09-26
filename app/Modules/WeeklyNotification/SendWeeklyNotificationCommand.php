@@ -2,14 +2,10 @@
 
 namespace App\Modules\WeeklyNotification;
 
-use App\Modules\Notifications\Interfaces\StatementNotificationSystem;
-use App\Modules\Notifications\TelegramNotificationSystem;
-use App\Models\User;
-
 class SendWeeklyNotificationCommand
 {
 
-//    public function __construct(private StatementNotificationSystem $statementNotification, private UserWeeklyNotificationDTO $userWeeklyNotification){
+//    public function __construct(private StatementNotificationSystemInterface $statementNotification, private UserWeeklyNotificationDTO $userWeeklyNotification){
 //    }
 
     /**

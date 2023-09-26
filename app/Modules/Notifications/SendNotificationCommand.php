@@ -2,15 +2,15 @@
 
 namespace App\Modules\Notifications;
 
-use App\Modules\Notifications\Interfaces\StatementNotificationSystem;
 use App\Models\StatementEloquent;
 use App\Models\User;
+use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 
 class SendNotificationCommand
 {
     private $statementNotification;
 
-    public function __construct(StatementNotificationSystem $statementNotification)
+    public function __construct(StatementNotificationSystemInterface $statementNotification)
     {
         $this->statementNotification = $statementNotification;
     }

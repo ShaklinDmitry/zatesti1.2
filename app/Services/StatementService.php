@@ -16,7 +16,7 @@ class StatementService
      * @return void
      * @throws \Exception
      */
-//    public function sendStatements(string $sendTime, StatementNotificationSystem $statementNotification){
+//    public function sendStatements(string $sendTime, StatementNotificationSystemInterface $statementNotification){
 //        try{
 //
 //

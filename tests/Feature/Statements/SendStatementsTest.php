@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Statements;
 
-use App\Modules\Notifications\TelegramNotificationSystem;
+use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotificationSystem;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
 use App\Modules\Statements\SendStatementCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;

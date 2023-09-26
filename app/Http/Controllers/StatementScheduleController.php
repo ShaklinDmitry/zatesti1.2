@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Modules\Notifications\Interfaces\StatementNotificationSystem;
+use App\Models\StatementSendingSchedule;
+use App\Models\UserResponse;
+use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
 use App\Modules\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
 use App\Modules\WeeklyNotification\WeeklyNotification;
 use App\Modules\WeeklyNotification\WeeklyNotificationSender;
 use App\Modules\WeeklyNotification\WeeklyNotificationText;
-use App\Models\StatementSendingSchedule;
-use App\Models\UserResponse;
 use App\Services\StatementScheduleService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class StatementScheduleController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function executeEveryMinute(StatementNotificationSystem $statementNotification){
+    public function executeEveryMinute(StatementNotificationSystemInterface $statementNotification){
 
         try{
             $getUsersWhoShouldBeNotifiedAtTheCurrentTime = new GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand(date("H:i"));
@@ -41,7 +41,7 @@ class StatementScheduleController extends Controller
      * Для вызова в кроне раз в неделю в воскресенье
      * @return string
      */
-    public function executeEverySunday(StatementNotificationSystem $statementNotificationSystem){
+    public function executeEverySunday(StatementNotificationSystemInterface $statementNotificationSystem){
 
         try{
             $weeklyNotification = new WeeklyNotification(new StatementSendingSchedule(), new UserResponse(), new WeeklyNotificationText());

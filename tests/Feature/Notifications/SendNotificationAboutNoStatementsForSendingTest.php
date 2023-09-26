@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Notifications;
 
-use App\Modules\Notifications\TelegramNotificationSystem;
-use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
 use App\Models\User;
+use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotificationSystem;
+use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;

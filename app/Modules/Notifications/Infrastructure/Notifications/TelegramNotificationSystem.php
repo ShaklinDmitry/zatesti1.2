@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Modules\Notifications;
+namespace App\Modules\Notifications\Infrastructure\Notifications;
 
-use App\Modules\Notifications\Interfaces\StatementNotificationSystem;
+use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
-class TelegramNotificationSystem extends Notification implements StatementNotificationSystem
+class TelegramNotificationSystem extends Notification implements StatementNotificationSystemInterface
 {
     use Queueable;
 

@@ -2,11 +2,11 @@
 
 namespace App\Modules\WeeklyNotification;
 
-use App\Modules\Notifications\Interfaces\StatementNotificationSystem;
+use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 
 class WeeklyNotificationSender implements WeeklyNotificationSenderInterface
 {
-    public function __construct(private StatementNotificationSystem $statementNotificationSystem, private UserWeeklyNotificationDTO $userWeeklyNotification){
+    public function __construct(private StatementNotificationSystemInterface $statementNotificationSystem, private UserWeeklyNotificationDTO $userWeeklyNotification){
     }
 
 

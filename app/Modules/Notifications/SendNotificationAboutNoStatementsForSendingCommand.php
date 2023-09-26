@@ -3,6 +3,7 @@
 namespace App\Modules\Notifications;
 
 use App\Models\User;
+use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotificationSystem;
 
 class SendNotificationAboutNoStatementsForSendingCommand
 {
