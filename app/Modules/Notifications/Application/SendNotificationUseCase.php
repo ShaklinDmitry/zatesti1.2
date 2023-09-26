@@ -2,13 +2,14 @@
 
 namespace App\Modules\Notifications\Application;
 
+use App\Models\User;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\User\Application\SaveIdOfLastSentStatementUseCase;
 
 class SendNotificationUseCase
 {
 
-    public function __construct(private int $userId, private string $text, private StatementNotificationSystemInterface $statementNotificationSystem)
+    public function __construct(private User $user, private string $text, private StatementNotificationSystemInterface $statementNotificationSystem)
     {
     }
 
@@ -17,6 +18,6 @@ class SendNotificationUseCase
 
         //TODO сделать здесь event отправки уведомления
 
-
+        $this->user->notify($this->statementNotificationSystem);
     }
 }
