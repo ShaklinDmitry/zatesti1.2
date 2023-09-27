@@ -3,6 +3,7 @@
 namespace App\Modules\Statements\Infrastructure\Jobs;
 
 use App\Exceptions\NoStatementsForSendingException;
+use App\Modules\Notifications\Application\SendNotificationUseCase;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\Notifications\SendNotificationAboutNoStatementsForSendingCommand;
 use App\Modules\Notifications\SendNotificationCommand;
@@ -44,8 +45,8 @@ class SendStatements implements ShouldQueue
                 $getStatementForSendingUseCase = new GetStatementForSendingUseCase(userId: $user->id, statementRepository: $statementRepository);
                 $statement = $getStatementForSendingUseCase->execute();
 
-                $sendNotificationCommand = new SendNotificationCommand($this->statementNotification);
-                $sendNotificationCommand->execute($user->id, $statement);
+                $sendNotificationUseCase = new SendNotificationUseCase(User: $user, text: $statement->text, statementNotificationSystem: $this->statementNotification);
+                $sendNotificationUseCase->execute();
             }
         }catch(NoStatementsForSendingException $exception){
             $exceptionOptions = $exception->getOptions();
