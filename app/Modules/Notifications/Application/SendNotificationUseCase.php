@@ -16,8 +16,6 @@ class SendNotificationUseCase
     public function execute(){
         $this->statementNotificationSystem->setMessageText($this->text);
 
-        //TODO сделать здесь event отправки уведомления
-
         $this->user->notify($this->statementNotificationSystem);
     }
 }
