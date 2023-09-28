@@ -48,11 +48,6 @@ class SendStatements implements ShouldQueue
                 $sendNotificationUseCase = new SendNotificationUseCase(User: $user, text: $statement->text, statementNotificationSystem: $this->statementNotification);
                 $sendNotificationUseCase->execute();
             }
-        }catch(NoStatementsForSendingException $exception){
-            $exceptionOptions = $exception->getOptions();
-            $sendNotificationAboutNoStatementsForSending = new SendNotificationAboutNoStatementsForSendingCommand();
-            $sendNotificationAboutNoStatementsForSending->execute($exceptionOptions['userId']);
-            Log::info($exception->getMessage());
         }
         catch(\Exception $exception){
             Log::info($exception->getMessage());
