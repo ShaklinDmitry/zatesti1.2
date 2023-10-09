@@ -2,16 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Modules\GetTypeOfUserResponseCommand;
-use App\Modules\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Modules\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Modules\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Modules\TypesOfUserResponses\UnknownUserResponseType;
 use App\DTO\UserResponseDTO;
-use App\Events\UserResponseSended;
-use App\Listeners\SaveUserResponse;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ResponseFromUserTest extends TestCase

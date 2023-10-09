@@ -2,12 +2,13 @@
 
 namespace App\Modules\Text\Infrastructure\Listeners;
 
+use App\Events\UserResponseSended;
+use App\Models\User;
 use App\Modules\GetTypeOfUserResponseCommand;
 use App\Modules\Text\Application\UseCases\SaveTextForStatementsUseCase;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
-use App\Modules\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Events\UserResponseSended;
-use App\Models\User;
+use App\Modules\UserResponses\Application\GetUserResponseTypeUseCase;
+use App\Modules\UserResponses\TypesOfUserResponses\AddTextForStatementsUserResponseType;
 
 class SaveTextForStatements
 {
@@ -42,8 +43,8 @@ class SaveTextForStatements
      * @return bool|void
      */
     public function shouldQueue($event){
-        $getTypeOfUserResponse = new GetTypeOfUserResponseCommand();
-        $typeOfUserResponse = $getTypeOfUserResponse->execute($event->text);
+        $getUserResponseTypeUseCase = new GetUserResponseTypeUseCase($event->text);
+        $typeOfUserResponse = $getUserResponseTypeUseCase->execute();
 
         if(is_a($typeOfUserResponse, AddTextForStatementsUserResponseType::class)){
             return true;

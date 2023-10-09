@@ -2,12 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Events\UserResponseSended;
-use App\Listeners\SaveBestStatements;
-use App\Models\BestStatementEloquent;
-use App\Models\User;
 use App\Services\BestStatementService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class BestStatementsTest extends TestCase

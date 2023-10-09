@@ -2,10 +2,7 @@
 
 namespace App\Modules\WeeklyNotification;
 
-use App\Modules\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedThisWeekCommand;
 use App\Modules\UserResponses\GetUserResponsesForThisWeekCommand;
-use App\Models\StatementSendingSchedule;
-use App\Models\UserResponse;
 
 class GetUserWeeklyNotifications
 {
@@ -17,7 +14,7 @@ class GetUserWeeklyNotifications
      * Функционал для получения уведомленний котороые будут расслыаться пользователям раз в неделю
      * @return array
      * @throws Exceptions\CreateWeeklyNotificationTextException
-     * @throws \App\Modules\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException
+     * @throws \App\Modules\StatementSendingSchedule\Infrastructure\Exception\NoUsersForWeeklyNotificationsException
      * @throws \App\Modules\UserResponses\Exception\NoUserResponsesForThisWeekException
      */
 //    public function execute(){

@@ -6,7 +6,9 @@ use App\Models\StatementSendingSchedule;
 use App\Models\UserResponse;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
+use App\Modules\StatementSendingSchedule\Application\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase;
 use App\Modules\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use App\Modules\WeeklyNotification\WeeklyNotification;
 use App\Modules\WeeklyNotification\WeeklyNotificationSender;
 use App\Modules\WeeklyNotification\WeeklyNotificationText;
@@ -26,8 +28,12 @@ class StatementScheduleController extends Controller
     public function executeEveryMinute(StatementNotificationSystemInterface $statementNotification){
 
         try{
-            $getUsersWhoShouldBeNotifiedAtTheCurrentTime = new GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand(date("H:i"));
-            $users = $getUsersWhoShouldBeNotifiedAtTheCurrentTime->execute();
+            $statementSendingScheduleRepository = new StatementSendingScheduleRepository();
+
+            $getUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase = new GetUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase(date("H:i"), $statementSendingScheduleRepository);
+            $users = $getUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase->execute();
+
+            //TODO сделать преобразование в users модель
 
             SendStatements::dispatch($users, $statementNotification);
 
@@ -65,16 +71,18 @@ class StatementScheduleController extends Controller
      */
     public function setSendTime(Request $request, StatementSendingSchedule $statementSendingSchedule): JsonResponse{
 
-        $saveExactTime = $statementSendingSchedule->fillWithTimeForSending($request->exactTimes, Auth::id());
+//        $saveExactTime = $statementSendingSchedule->fillWithTimeForSending($request->exactTimes, Auth::id());
+//
+//        if($saveExactTime){
+//            $responseData = [
+//                "data" => [
+//                    "message" => "Time for sending statements was saved successful",
+//                ]
+//            ];
+//        }
+//
+//        return response() -> json($responseData,200);
 
-        if($saveExactTime){
-            $responseData = [
-                "data" => [
-                    "message" => "Time for sending statements was saved successful",
-                ]
-            ];
-        }
-
-        return response() -> json($responseData,200);
+        return 'doit later';
     }
 }

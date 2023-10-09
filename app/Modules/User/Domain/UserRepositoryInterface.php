@@ -10,4 +10,6 @@ interface UserRepositoryInterface
      * @return mixed
      */
     public function saveIdOfLastSentStatement(int $userId, int $statementId);
+
+    public function getUserById();
 }

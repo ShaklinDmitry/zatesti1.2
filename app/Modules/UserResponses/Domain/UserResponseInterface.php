@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Modules\UserResponses\Interfaces;
-
-use App\Models\User;
+namespace App\Modules\UserResponses\Domain;
 
 interface UserResponseInterface
 {

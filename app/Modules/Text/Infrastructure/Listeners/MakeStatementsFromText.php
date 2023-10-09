@@ -2,13 +2,13 @@
 
 namespace App\Modules\Text\Infrastructure\Listeners;
 
+use App\Events\UserResponseSended;
+use App\Models\User;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextUseCase;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\Text\MakeStatementsFromTextCommand;
-use App\Modules\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Modules\UserResponses\UserResponseType;
-use App\Events\UserResponseSended;
-use App\Models\User;
+use App\Modules\UserResponses\Domain\UserResponseType;
+use App\Modules\UserResponses\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class MakeStatementsFromText implements ShouldQueue

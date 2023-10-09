@@ -3,11 +3,8 @@
 namespace App\Modules\WeeklyNotification;
 
 use App\Modules\StatementSendingSchedule\Interfaces\StatementSendingScheduleInterface;
-use App\Modules\UserResponses\Interfaces\UserResponseInterface;
+use App\Modules\UserResponses\Domain\UserResponseInterface;
 use App\Modules\WeeklyNotification\Exceptions\CreateWeeklyNotificationTextException;
-use App\Models\StatementSendingSchedule;
-use App\Models\UserResponse;
-use Illuminate\Support\Collection;
 
 class WeeklyNotification implements WeeklyNotificationInterface
 {
@@ -19,7 +16,7 @@ class WeeklyNotification implements WeeklyNotificationInterface
      * Функционал для получения уведомленний котороые будут расслыаться пользователям раз в неделю
      * @return array
      * @throws CreateWeeklyNotificationTextException
-     * @throws \App\Modules\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException
+     * @throws \App\Modules\StatementSendingSchedule\Infrastructure\Exception\NoUsersForWeeklyNotificationsException
      * @throws \App\Modules\UserResponses\Exception\NoUserResponsesForThisWeekException
      */
     public function getUserWeeklyNotifications(): array{

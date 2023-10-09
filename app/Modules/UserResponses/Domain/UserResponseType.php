@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Modules\UserResponses;
+namespace App\Modules\UserResponses\Domain;
 
-use App\Modules\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Modules\TypesOfUserResponses\AddTextForStatementsUserResponseType;
-use App\Modules\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
-use App\Modules\TypesOfUserResponses\UnknownUserResponseType;
+use App\Modules\UserResponses\TypesOfUserResponses\AddBestStatementUserResponseType;
+use App\Modules\UserResponses\TypesOfUserResponses\AddTextForStatementsUserResponseType;
+use App\Modules\UserResponses\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
+use App\Modules\UserResponses\TypesOfUserResponses\UnknownUserResponseType;
+use function App\Modules\UserResponses\str_contains;
 
 class UserResponseType
 {

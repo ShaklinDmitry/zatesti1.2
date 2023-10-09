@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Modules\StatementSendingSchedule\Exception\NoUsersForWeeklyNotificationsException;
+use App\Modules\StatementSendingSchedule\Infrastructure\Exception\NoUsersForWeeklyNotificationsException;
 use App\Modules\StatementSendingSchedule\Interfaces\StatementSendingScheduleInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\StatementSendingSchedule\Exception;
+namespace App\Modules\StatementSendingSchedule\Infrastructure\Exception;
 
 use Exception;
 

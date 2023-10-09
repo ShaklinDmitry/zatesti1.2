@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Modules\BestStatements\Infrastructure\Listeners;
 
+use App\Events\UserResponseSended;
 use App\Modules\BestStatements\Application\AddBestStatementUseCase;
 use App\Modules\BestStatements\Infrastructure\Repositories\BestStatementRepository;
 use App\Modules\BestStatements\SaveBestStatementCommand;
 use App\Modules\GetTypeOfUserResponseCommand;
-use App\Modules\TypesOfUserResponses\AddBestStatementUserResponseType;
-use App\Events\UserResponseSended;
+use App\Modules\UserResponses\Application\GetUserResponseTypeUseCase;
+use App\Modules\UserResponses\TypesOfUserResponses\AddBestStatementUserResponseType;
 use App\Services\BestStatementService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -42,8 +43,8 @@ class SaveBestStatements implements ShouldQueue
      * @return bool|void
      */
     public function shouldQueue($event){
-        $getTypeOfUserResponse = new GetTypeOfUserResponseCommand();
-        $typeOfUserResponse = $getTypeOfUserResponse->execute($event->text);
+        $getUserResponseTypeUseCase = new GetUserResponseTypeUseCase($event->text);
+        $typeOfUserResponse = $getUserResponseTypeUseCase->execute();
 
         if(is_a($typeOfUserResponse, AddBestStatementUserResponseType::class)){
             return true;

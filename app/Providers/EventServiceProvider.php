@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\UserResponseSended;
+use App\Listeners\SaveUserResponse;
+use App\Modules\BestStatements\Infrastructure\Listeners\SaveBestStatements;
 use App\Modules\Statements\Infrastructure\Listeners\MarkStatementHasBeenSent;
 use App\Modules\Text\Application\Events\TextForStatementsIsParsed;
 use App\Modules\Text\Infrastructure\Listeners\MakeStatementsFromText;
 use App\Modules\Text\Infrastructure\Listeners\SaveTextForStatements;
-use App\Events\UserResponseSended;
-use App\Listeners\SaveBestStatements;
-use App\Listeners\SaveUserResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\TypesOfUserResponses;
+namespace App\Modules\UserResponses\TypesOfUserResponses;
 
 class AddTextForStatementsUserResponseType
 {
