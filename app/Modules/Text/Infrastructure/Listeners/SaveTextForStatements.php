@@ -5,6 +5,7 @@ namespace App\Modules\Text\Infrastructure\Listeners;
 use App\Events\UserResponseSended;
 use App\Models\User;
 use App\Modules\GetTypeOfUserResponseCommand;
+use App\Modules\Text\Application\Services\TextForStatementsService;
 use App\Modules\Text\Application\UseCases\SaveTextForStatementsUseCase;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\UserResponses\Application\GetUserResponseTypeUseCase;
@@ -32,10 +33,8 @@ class SaveTextForStatements
     {
         $user = User::where('telegram_chat_id', $event->chatId)->firstOrFail();
 
-        $saveTextForStatementsUseCase = new SaveTextForStatementsUseCase(userId: $user->id,text: $event->text,textForStatementsRepository: new TextForStatementsRepository());
-        $saveTextForStatementsUseCase->execute();
-
-
+        $textForStatementsService = new TextForStatementsService();
+        $textForStatementsService->saveText(userId: $user->id,text: $event->text,textForStatementsRepository: new TextForStatementsRepository());
     }
 
 
