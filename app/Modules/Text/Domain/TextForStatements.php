@@ -10,7 +10,7 @@ class TextForStatements implements TextForStatementsInterface
 {
 
     private bool $isParsed;
-    public int $guid;
+    public string $guid;
 
     public function __construct(public int $userId, public string $text)
     {

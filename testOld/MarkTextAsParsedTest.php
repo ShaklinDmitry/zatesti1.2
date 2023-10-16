@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Feature\TextForStatements;
 
-use App\Modules\Text\MarkTextAsParsedCommand;
 use App\Models\TextForStatementsEloquent;
 use App\Models\User;
+use App\Modules\Text\MarkTextAsParsedCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

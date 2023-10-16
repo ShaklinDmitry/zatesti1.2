@@ -34,6 +34,8 @@ class SaveTextForStatements
 
         $saveTextForStatementsUseCase = new SaveTextForStatementsUseCase(userId: $user->id,text: $event->text,textForStatementsRepository: new TextForStatementsRepository());
         $saveTextForStatementsUseCase->execute();
+
+
     }
 
 

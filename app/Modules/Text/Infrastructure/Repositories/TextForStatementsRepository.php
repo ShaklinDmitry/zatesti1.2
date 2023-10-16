@@ -55,7 +55,7 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
             'user_id' => $userId
         ]);
 
-        $textForStatementDTO = new  TextForStatementDTO(guid: $text->guid, userId: $text->userId, text: $text->text);
+        $textForStatementDTO = new  TextForStatementDTO(guid: $text->guid, userId: $text->user_id, text: $text->text);
 
         return $textForStatementDTO;
 

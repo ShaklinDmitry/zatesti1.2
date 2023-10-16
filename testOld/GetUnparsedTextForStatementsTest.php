@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Feature\TextForStatements;
 
-use App\Modules\Text\GetUnparsedTextForStatementsCommand;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\TextForStatementsEloquent;
 use App\Models\User;
+use App\Modules\Text\GetUnparsedTextForStatementsCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

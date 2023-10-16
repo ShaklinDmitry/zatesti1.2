@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Text\Application;
+namespace App\Modules\Text\Application\Services;
 
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 

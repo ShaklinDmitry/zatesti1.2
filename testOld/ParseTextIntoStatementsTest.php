@@ -1,6 +1,5 @@
 <?php
 
-namespace Tests\Feature\TextForStatements;
 
 use App\Modules\Text\ParseTextIntoStatementsCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;

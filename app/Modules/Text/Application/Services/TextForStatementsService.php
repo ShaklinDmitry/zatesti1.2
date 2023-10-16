@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Text\Application;
+namespace App\Modules\Text\Application\Services;
 
 use App\Modules\Statements\Application\UseCases\CreateStatementUseCase;
 use App\Modules\Text\Application\DTO\TextForStatementDTO;
