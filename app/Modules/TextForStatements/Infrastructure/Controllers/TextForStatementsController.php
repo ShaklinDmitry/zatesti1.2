@@ -32,7 +32,7 @@ class TextForStatementsController extends Controller
             if($textForStatements){
                 $responseData = [
                     "data" => [
-                        "message" => "Text was added.",
+                        "message" => "TextForStatements was added.",
                         "text_id" => $textForStatements->id
                     ]
                 ];

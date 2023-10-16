@@ -10,10 +10,11 @@ class TextForStatements implements TextForStatementsInterface
 {
 
     private bool $isParsed;
+    public int $guid;
 
-    public function __construct(public int $id, public int $userId, public string $text)
+    public function __construct(public int $userId, public string $text)
     {
-
+        $this->guid = uniqid();
     }
 
     /**

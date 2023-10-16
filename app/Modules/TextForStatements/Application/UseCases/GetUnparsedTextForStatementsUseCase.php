@@ -2,9 +2,9 @@
 
 namespace App\Modules\Text\Application\UseCases;
 
-use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
-use App\Modules\Text\Infrastructure\DTO\TextForStatementData;
 use App\Exceptions\TextForStatementsIsNullException;
+use App\Modules\Text\Application\DTO\TextForStatementDTO;
+use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
 class GetUnparsedTextForStatementsUseCase
 {
@@ -17,10 +17,10 @@ class GetUnparsedTextForStatementsUseCase
     /**
      * Для получения не распарсенного текста для высказываний
      * @param $userId
-     * @return TextForStatementData
+     * @return TextForStatementDTO
      * @throws TextForStatementsIsNullException
      */
-    public function execute(int $userId): TextForStatementData{
+    public function execute(int $userId): TextForStatementDTO{
         $unParsedText = $this->textForStatementsRepository->getUnparsedTextForStatementsByUserId($userId);
 
         return $unParsedText;

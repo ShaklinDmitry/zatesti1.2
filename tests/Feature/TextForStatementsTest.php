@@ -49,7 +49,7 @@ class TextForStatementsTest extends TestCase
         $response->assertJson(
             [
                 "data" => [
-                    "message" => "Text was added.",
+                    "message" => "TextForStatements was added.",
                 ]
             ]
         );

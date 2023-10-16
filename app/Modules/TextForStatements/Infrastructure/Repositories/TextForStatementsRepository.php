@@ -3,9 +3,9 @@
 namespace App\Modules\Text\Infrastructure\Repositories;
 
 
-use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
-use App\Modules\Text\Infrastructure\DTO\TextForStatementData;
 use App\Models\TextForStatementsEloquent;
+use App\Modules\Text\Application\DTO\TextForStatementDTO;
+use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
 class TextForStatementsRepository implements TextForStatementsRepositoryInterface
 {
@@ -14,7 +14,7 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
      * @param int $userId
      * @return mixed
      */
-    public function getUnparsedTextForStatementsByUserId(int $userId): TextForStatementData
+    public function getUnparsedTextForStatementsByUserId(int $userId): TextForStatementDTO
     {
         return TextForStatementsEloquent::where(['is_parsed' => 0], ['user_id' => $userId])->first();
     }
@@ -33,10 +33,10 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
      * @param int $textId
      * @return mixed
      */
-    public function getTextForStatementsByTextId(int $textId): TextForStatementData{
+    public function getTextForStatementsByTextId(int $textId): TextForStatementDTO{
         $textForStatement = TextForStatementsEloquent::where(['id' => $textId])->first();
 
-        $textForStatementData = new TextForStatementData($textForStatement->id, $textForStatement->userId, $textForStatement->text);
+        $textForStatementData = new TextForStatementDTO($textForStatement->id, $textForStatement->userId, $textForStatement->text);
 
         return $textForStatementData;
     }
@@ -45,18 +45,19 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
      * Функция для сохранения текста для высказываний
      * @param int $userId
      * @param string $text
-     * @return TextForStatementData
+     * @return TextForStatementDTO
      */
-    public function saveTextForStatements(int $userId, string $text): TextForStatementData
+    public function saveTextForStatements(string $guid, int $userId, string $text): TextForStatementDTO
     {
         $text = TextForStatementsEloquent::create([
+            'guid' => $guid,
             'text' => $text,
             'user_id' => $userId
         ]);
 
-        $textForStatementData = new  TextForStatementData(id: $text->id, userId: $text->userId, text: $text->text);
+        $textForStatementDTO = new  TextForStatementDTO(guid: $text->guid, userId: $text->userId, text: $text->text);
 
-        return $textForStatementData;
+        return $textForStatementDTO;
 
     }
 }

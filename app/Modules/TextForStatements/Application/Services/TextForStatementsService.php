@@ -3,20 +3,27 @@
 namespace App\Modules\Text\Application;
 
 use App\Modules\Statements\Application\UseCases\CreateStatementUseCase;
+use App\Modules\Text\Application\DTO\TextForStatementDTO;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
 class TextForStatementsService implements TextForStatementsServiceInterface
 {
 
-    public function saveText(int $userId, string $text, TextForStatementsRepositoryInterface $textForStatementsRepository){
+    /**
+     * Сохранить текст для высказываний
+     * @param int $userId
+     * @param string $text
+     * @param TextForStatementsRepositoryInterface $textForStatementsRepository
+     * @return TextForStatementDTO
+     */
+    public function saveText(int $userId, string $text, TextForStatementsRepositoryInterface $textForStatementsRepository): TextForStatementDTO{
 
         $textForStatements = new TextForStatements($userId, $text);
 
-        $textForStatementsData = $textForStatementsRepository->saveTextForStatements($userId, $text);
+        $textForStatementsDTO = $textForStatementsRepository->saveTextForStatements($textForStatements->guid, $textForStatements->userId, $textForStatements->text);
 
-
-        return $textForStatements;
+        return $textForStatementsDTO;
     }
 
     public function makeStatementsFromText(int $userId, TextForStatementsRepositoryInterface $textForStatementsRepository){
