@@ -2,8 +2,8 @@
 
 namespace App\Modules\Statements\Application\UseCases;
 
+use App\Modules\Statements\Application\DTOs\StatementDTO;
 use App\Modules\Statements\Domain\StatementRepositoryInterface;
-use App\Modules\Statements\Infrastructure\DTOs\StatementDTO;
 
 class GetStatementForSendingUseCase
 {

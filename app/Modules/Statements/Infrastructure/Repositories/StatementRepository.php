@@ -2,12 +2,12 @@
 
 namespace App\Modules\Statements\Infrastructure\Repositories;
 
-use App\Modules\Statements\Domain\StatementRepositoryInterface;
-use App\Modules\Statements\Infrastructure\DTOs\StatementDTO;
-use App\Modules\Statements\Infrastructure\DTOs\StatementDTOCollection;
 use App\Exceptions\NoStatementsException;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Models\StatementEloquent;
+use App\Modules\Statements\Application\DTOs\StatementDTO;
+use App\Modules\Statements\Application\DTOs\StatementDTOCollection;
+use App\Modules\Statements\Domain\StatementRepositoryInterface;
 
 class StatementRepository implements StatementRepositoryInterface
 {
@@ -17,18 +17,19 @@ class StatementRepository implements StatementRepositoryInterface
      * @param string $text
      * @return StatementDTO
      */
-    public function createStatement(int $userId, string $text): StatementDTO
+    public function createStatement(string $guid, int $userId, string $text): StatementDTO
     {
         $statement = StatementEloquent::create(
             [
                 'user_id' => $userId,
-                'text' => $text
+                'text' => $text,
+                'guid' => $guid
             ]
         );
 
-        $statementData = new StatementDTO($statement->id, $statement->userId, $statement->text);
+        $statementDTO = new StatementDTO($statement->guid, $statement->userId, $statement->text);
 
-        return $statementData;
+        return $statementDTO;
     }
 
     /**
@@ -50,7 +51,7 @@ class StatementRepository implements StatementRepositoryInterface
                 null,['userId' => $userId]);
         }
 
-        $statementData = new StatementDTO(id: $statement->id, userId: $statement->userId, text: $statement->text);
+        $statementData = new StatementDTO(guid: $statement->guid, userId: $statement->userId, text: $statement->text);
 
         return $statementData;
     }
@@ -72,7 +73,7 @@ class StatementRepository implements StatementRepositoryInterface
 
         $statementDataCollection = new StatementDTOCollection();
         foreach ($statements as $statement){
-            $statementData = new StatementDTO(id: $statement->id, userId: $statement->userId, text: $statement->text);
+            $statementData = new StatementDTO(guid: $statement->guid, userId: $statement->userId, text: $statement->text);
             $statementDataCollection->addStatementData($statementData);
         }
 

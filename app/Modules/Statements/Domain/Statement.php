@@ -6,15 +6,16 @@ class Statement implements StatementInterface
 {
 
     private \DateTime $sendDateTime;
-
+    public string $guid;
 
     /**
      * @param int $id
      * @param int $userId
      * @param string $text
      */
-    public function __construct(public int $id, public int $userId, public string $text)
+    public function __construct(public int $userId, public string $text)
     {
+        $this->guid = uniqid();
     }
 
     /**

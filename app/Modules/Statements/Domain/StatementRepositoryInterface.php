@@ -2,8 +2,8 @@
 
 namespace App\Modules\Statements\Domain;
 
-use App\Modules\Statements\Infrastructure\DTOs\StatementDTO;
-use App\Modules\Statements\Infrastructure\DTOs\StatementDTOCollection;
+use App\Modules\Statements\Application\DTOs\StatementDTO;
+use App\Modules\Statements\Application\DTOs\StatementDTOCollection;
 
 interface StatementRepositoryInterface
 {
@@ -13,7 +13,7 @@ interface StatementRepositoryInterface
      * @param string $text
      * @return StatementDTO
      */
-    public function createStatement(int $userId, string $text): StatementDTO;
+    public function createStatement(string $guid, int $userId, string $text): StatementDTO;
 
     /**
      * получить высказывания для отправления пользователям

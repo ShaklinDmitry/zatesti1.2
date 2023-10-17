@@ -16,7 +16,11 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
      */
     public function getUnparsedTextForStatementsByUserId(int $userId): TextForStatementDTO
     {
-        return TextForStatementsEloquent::where(['is_parsed' => 0], ['user_id' => $userId])->first();
+        $textForStatement = TextForStatementsEloquent::where(['is_parsed' => 0], ['user_id' => $userId])->first();
+
+        $textForStatementDTO = new TextForStatementDTO($textForStatement->id, $textForStatement->user_id, $textForStatement->text);
+
+        return $textForStatementDTO;
     }
 
 

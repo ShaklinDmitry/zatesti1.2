@@ -6,7 +6,7 @@ use App\Modules\Text\Application\Events\TextForStatementsIsParsed;
 use App\Exceptions\TextForStatementsIsNullException;
 use App\Models\TextForStatementsEloquent;
 
-class TextForStatements implements TextForStatementsInterface
+class TextForStatements
 {
 
     private bool $isParsed;

@@ -2,25 +2,28 @@
 
 namespace App\Modules\Text\Application\UseCases;
 
+use App\Modules\Text\Application\DTO\TextForStatementDTO;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
-class SaveTextForStatementsUseCase
+class SaveTextForStatementsUseCase implements SaveTextForStatementsUseCaseInterface
 {
 
-
-    public function __construct(private int $userId, private string $text, private TextForStatementsRepositoryInterface $textForStatementsRepository)
+    public function __construct(private TextForStatementsRepositoryInterface $textForStatementsRepository)
     {
     }
 
     /**
      * Сохранить текст для высказываний
-     * @return TextForStatements
+     * @param int $userId
+     * @param string $text
+     * @return TextForStatementDTO
      */
-    public function execute(): TextForStatements{
-        $textForStatementsData = $this->textForStatementsRepository->saveTextForStatements($this->userId, $this->text);
+    public function execute(int $userId, string $text): TextForStatementDTO{
+        $textForStatements = new TextForStatements($userId, $text);
 
-        $textForStatements = new TextForStatements($textForStatementsData->id, $textForStatementsData->userId, $textForStatementsData->text);
-        return $textForStatements;
+        $textForStatementsDTO = $this->textForStatementsRepository->saveTextForStatements($textForStatements->guid, $textForStatements->userId, $textForStatements->text);
+
+        return $textForStatementsDTO;
     }
 }

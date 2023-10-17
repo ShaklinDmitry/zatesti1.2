@@ -3,29 +3,37 @@
 namespace App\Modules\Text\Application\UseCases;
 
 use App\Modules\Statements\Application\UseCases\CreateStatementUseCase;
+use App\Modules\Statements\Application\UseCases\CreateStatementUseCaseInterface;
+use App\Modules\Statements\Domain\StatementRepositoryInterface;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
 class MakeStatementsFromTextUseCase
 {
 
-    public function __construct(private int $userId, private TextForStatementsRepositoryInterface $textForStatementsRepository)
+    /**
+     * @param TextForStatementsRepositoryInterface $textForStatementsRepository
+     * @param CreateStatementUseCaseInterface $createStatementUseCase
+     */
+    public function __construct(private TextForStatementsRepositoryInterface $textForStatementsRepository, private CreateStatementUseCaseInterface $createStatementUseCase)
     {
     }
 
-    public function execute(): void {
-        $getUnparsedTextForStatementsUseCase = new GetUnparsedTextForStatementsUseCase($this->textForStatementsRepository);
-        $unparsedText = $getUnparsedTextForStatementsUseCase->execute($this->userId);
+    /**
+     * @param int $userId
+     * @return void
+     */
+    public function execute(int $userId): void {
+        $unParsedText = $this->textForStatementsRepository->getUnparsedTextForStatementsByUserId($userId);
 
-        $textForStatements = new TextForStatements($unparsedText->id ,$unparsedText->userId, $unparsedText->text);
+        $textForStatements = new TextForStatements(userId: $unParsedText->userId,text: $unParsedText->text);
         $statements = $textForStatements->parseTextIntoStatements();
 
         foreach ($statements as $text) {
-            $createStatementUseCase = new CreateStatementUseCase($this->userId, $text, $this->textForStatementsRepository);
-            $createStatementUseCase->execute();
+            $this->createStatementUseCase->execute($userId, $text);
         }
 
-        $markTextAsParsedUseCase = new MarkTextAsParsedUseCase($this->textForStatementsRepository);
-        $markTextAsParsedUseCase->execute($textForStatements);
+        $parsedText = $textForStatements->markTextAsParsed();
+        $this->textForStatementsRepository->markTextParsed($parsedText->id);
     }
 }

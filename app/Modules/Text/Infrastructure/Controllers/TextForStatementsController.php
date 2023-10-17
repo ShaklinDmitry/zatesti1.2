@@ -55,9 +55,8 @@ class TextForStatementsController extends Controller
     public function makeStatementsFromText(){
 
         try{
-            $textForStatementsRepository = new TextForStatementsRepository();
 
-            MakeStatementsFromText::dispatch(Auth::id(), $textForStatementsRepository);
+            MakeStatementsFromText::dispatch(Auth::id());
 
             $responseData = [
                 "data" => [

@@ -2,25 +2,29 @@
 
 namespace App\Modules\Statements\Application\UseCases;
 
+use App\Modules\Statements\Application\DTOs\StatementDTO;
 use App\Modules\Statements\Domain\Statement;
 use App\Modules\Statements\Domain\StatementRepositoryInterface;
 
-class CreateStatementUseCase
+class CreateStatementUseCase implements CreateStatementUseCaseInterface
 {
 
-    public function __construct(private int $userId, private string $text, private StatementRepositoryInterface $statementRepository)
+    public function __construct(private StatementRepositoryInterface $statementRepository)
     {
     }
 
     /**
      * Создание высказывания
-     * @return Statement
+     * @param int $userId
+     * @param string $text
+     * @return StatementDTO
      */
-    public function execute():Statement{
-        $statementData = $this->statementRepository->createStatement($this->userId, $this->text);
+    public function execute(int $userId, string $text):StatementDTO{
 
-        $statement = new Statement($statementData->id, $statementData->userId, $statementData->text);
+        $statement = new Statement($userId, $text);
 
-        return $statement;
+        $statementDTO = $this->statementRepository->createStatement($statement->userId, $statement->text);
+
+        return $statementDTO;
     }
 }

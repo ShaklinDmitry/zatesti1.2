@@ -3,12 +3,16 @@
 namespace App\Modules\Text\Application\Services;
 
 use App\Modules\Statements\Application\UseCases\CreateStatementUseCase;
+use App\Modules\Statements\Domain\StatementRepositoryInterface;
 use App\Modules\Text\Application\DTO\TextForStatementDTO;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
 class TextForStatementsService implements TextForStatementsServiceInterface
 {
+    public function __construct(public TextForStatementsRepositoryInterface $textForStatementsRepository, public ?StatementRepositoryInterface $statementRepositoryInterface)
+    {
+    }
 
     /**
      * Сохранить текст для высказываний
@@ -17,23 +21,28 @@ class TextForStatementsService implements TextForStatementsServiceInterface
      * @param TextForStatementsRepositoryInterface $textForStatementsRepository
      * @return TextForStatementDTO
      */
-    public function saveText(int $userId, string $text, TextForStatementsRepositoryInterface $textForStatementsRepository): TextForStatementDTO{
+    public function saveText(int $userId, string $text): TextForStatementDTO{
 
         $textForStatements = new TextForStatements($userId, $text);
 
-        $textForStatementsDTO = $textForStatementsRepository->saveTextForStatements($textForStatements->guid, $textForStatements->userId, $textForStatements->text);
+        $textForStatementsDTO = $this->textForStatementsRepository->saveTextForStatements($textForStatements->guid, $textForStatements->userId, $textForStatements->text);
 
         return $textForStatementsDTO;
     }
 
-    public function makeStatementsFromText(int $userId, TextForStatementsRepositoryInterface $textForStatementsRepository){
-        $unParsedText = $textForStatementsRepository->getUnparsedTextForStatementsByUserId($userId);
+    /**
+     * @param int $userId
+     * @param TextForStatementsRepositoryInterface $textForStatementsRepository
+     * @return void
+     */
+    public function makeStatementsFromText(int $userId){
+        $unParsedText = $this->textForStatementsRepository->getUnparsedTextForStatementsByUserId($userId);
 
-        $textForStatements = new TextForStatements($unParsedText->id ,$unParsedText->userId, $unParsedText->text);
+        $textForStatements = new TextForStatements(userId: $unParsedText->userId,text: $unParsedText->text);
         $statements = $textForStatements->parseTextIntoStatements();
 
         foreach ($statements as $text) {
-            $createStatementUseCase = new CreateStatementUseCase($userId, $text, $textForStatementsRepository);
+            $createStatementUseCase = new CreateStatementUseCase($userId, $text, $this->statementRepositoryInterface);
             $createStatementUseCase->execute();
         }
 

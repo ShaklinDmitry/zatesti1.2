@@ -31,7 +31,9 @@ class MakeStatementsFromText implements ShouldQueue
      */
     public function handle()
     {
-        $makeStatementsFromTextUseCase = new MakeStatementsFromTextUseCase($this->textForStatementsRepository, $this->userId);
-        $makeStatementsFromTextUseCase->execute();
+        app()
+
+        $makeStatementsFromTextUseCase = new MakeStatementsFromTextUseCase($this->textForStatementsRepository, );
+        $makeStatementsFromTextUseCase->execute($this->userId);
     }
 }

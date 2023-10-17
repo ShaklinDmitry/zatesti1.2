@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Statements\Infrastructure\DTOs;
+namespace App\Modules\Statements\Application\DTOs;
 
 class StatementDTOCollection
 {
