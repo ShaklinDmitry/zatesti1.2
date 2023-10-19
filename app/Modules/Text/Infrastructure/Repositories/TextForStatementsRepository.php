@@ -33,17 +33,6 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
         return TextForStatementsEloquent::where('id', $textId)->update(['is_parsed' => 1]);
     }
 
-    /**
-     * @param int $textId
-     * @return mixed
-     */
-    public function getTextForStatementsByTextId(int $textId): TextForStatementDTO{
-        $textForStatement = TextForStatementsEloquent::where(['id' => $textId])->first();
-
-        $textForStatementData = new TextForStatementDTO($textForStatement->id, $textForStatement->userId, $textForStatement->text);
-
-        return $textForStatementData;
-    }
 
     /**
      * Функция для сохранения текста для высказываний
