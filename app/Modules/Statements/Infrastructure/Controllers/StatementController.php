@@ -3,7 +3,7 @@
 namespace App\Modules\Statements\Infrastructure\Controllers;
 
 use App\Modules\Statements\AddStatementCommand;
-use App\Modules\Statements\Application\UseCases\CreateStatementUseCase;
+use App\Modules\Statements\Application\UseCases\CreateStatementCommand;
 use App\Modules\Statements\Application\UseCases\GetStatementsUseCase;
 use App\Modules\Statements\GetStatementsCommand;
 use App\Modules\Statements\Infrastructure\Repositories\StatementRepository;
@@ -32,7 +32,7 @@ class StatementController extends Controller
         try{
             $statementRepository = new StatementRepository();
 
-            $createStatementUseCase = new CreateStatementUseCase(userId: Auth::id(), text: $request->text, statementRepository:  $statementRepository);
+            $createStatementUseCase = new CreateStatementCommand(userId: Auth::id(), text: $request->text, statementRepository:  $statementRepository);
             $statement = $createStatementUseCase->execute();
 
             if($statement){

@@ -6,9 +6,12 @@ use App\Modules\Statements\Application\DTOs\StatementDTO;
 use App\Modules\Statements\Domain\Statement;
 use App\Modules\Statements\Domain\StatementRepositoryInterface;
 
-class CreateStatementUseCase implements CreateStatementUseCaseInterface
+class CreateStatementCommand implements CreateStatementCommandInterface
 {
 
+    /**
+     * @param StatementRepositoryInterface $statementRepository
+     */
     public function __construct(private StatementRepositoryInterface $statementRepository)
     {
     }
@@ -23,7 +26,7 @@ class CreateStatementUseCase implements CreateStatementUseCaseInterface
 
         $statement = new Statement($userId, $text);
 
-        $statementDTO = $this->statementRepository->createStatement($statement->userId, $statement->text);
+        $statementDTO = $this->statementRepository->createStatement(guid: $statement->guid,  userId: $statement->userId, text: $statement->text);
 
         return $statementDTO;
     }

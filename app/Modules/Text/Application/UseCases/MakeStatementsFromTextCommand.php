@@ -2,20 +2,20 @@
 
 namespace App\Modules\Text\Application\UseCases;
 
-use App\Modules\Statements\Application\UseCases\CreateStatementUseCase;
-use App\Modules\Statements\Application\UseCases\CreateStatementUseCaseInterface;
+use App\Modules\Statements\Application\UseCases\CreateStatementCommand;
+use App\Modules\Statements\Application\UseCases\CreateStatementCommandInterface;
 use App\Modules\Statements\Domain\StatementRepositoryInterface;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
-class MakeStatementsFromTextUseCase
+class MakeStatementsFromTextCommand
 {
 
     /**
      * @param TextForStatementsRepositoryInterface $textForStatementsRepository
-     * @param CreateStatementUseCaseInterface $createStatementUseCase
+     * @param CreateStatementCommandInterface $createStatementCommand
      */
-    public function __construct(private TextForStatementsRepositoryInterface $textForStatementsRepository, private CreateStatementUseCaseInterface $createStatementUseCase)
+    public function __construct(private TextForStatementsRepositoryInterface $textForStatementsRepository, private CreateStatementCommandInterface $createStatementCommand)
     {
     }
 
@@ -30,7 +30,7 @@ class MakeStatementsFromTextUseCase
         $statements = $textForStatements->parseTextIntoStatements();
 
         foreach ($statements as $text) {
-            $this->createStatementUseCase->execute($userId, $text);
+            $this->createStatementCommand->execute($userId, $text);
         }
 
         $parsedText = $textForStatements->markTextAsParsed();

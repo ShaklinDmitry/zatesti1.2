@@ -13,6 +13,7 @@ class StatementRepository implements StatementRepositoryInterface
 {
     /**
      * Добавить новое высказывание.
+     * @param string $guid
      * @param int $userId
      * @param string $text
      * @return StatementDTO
@@ -21,13 +22,13 @@ class StatementRepository implements StatementRepositoryInterface
     {
         $statement = StatementEloquent::create(
             [
+                'guid' => $guid,
                 'user_id' => $userId,
                 'text' => $text,
-                'guid' => $guid
             ]
         );
 
-        $statementDTO = new StatementDTO($statement->guid, $statement->userId, $statement->text);
+        $statementDTO = new StatementDTO($statement->guid, $statement->user_id, $statement->text);
 
         return $statementDTO;
     }

@@ -12,6 +12,7 @@ class StatementEloquent extends Model
     protected $table = 'statement';
 
     protected $fillable = [
+        'guid',
         'text',
         'user_id',
     ];

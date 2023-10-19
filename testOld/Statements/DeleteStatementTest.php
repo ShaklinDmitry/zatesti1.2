@@ -1,6 +1,5 @@
 <?php
 
-namespace Tests\Feature\Statements;
 
 use App\Models\StatementEloquent;
 use App\Models\User;

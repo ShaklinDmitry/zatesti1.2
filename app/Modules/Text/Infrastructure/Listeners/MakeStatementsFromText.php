@@ -5,7 +5,7 @@ namespace App\Modules\Text\Infrastructure\Listeners;
 use App\Events\UserResponseSended;
 use App\Models\User;
 use App\Modules\Text\Application\Services\TextForStatementsService;
-use App\Modules\Text\Application\UseCases\MakeStatementsFromTextUseCase;
+use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\Text\MakeStatementsFromTextCommand;
 use App\Modules\UserResponses\Domain\UserResponseType;
@@ -36,7 +36,7 @@ class MakeStatementsFromText implements ShouldQueue
 
         $textForStatementsRepository = new TextForStatementsRepository();
 
-//        $makeStatementsFromTextUseCase = new MakeStatementsFromTextUseCase($user->id, $textForStatementsRepository);
+//        $makeStatementsFromTextUseCase = new MakeStatementsFromTextCommand($user->id, $textForStatementsRepository);
 //        $makeStatementsFromTextUseCase->execute();
 
         $textForStatementsService = new TextForStatementsService();

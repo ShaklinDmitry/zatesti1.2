@@ -1,6 +1,5 @@
 <?php
 
-namespace Tests\Feature\Statements;
 
 use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotificationSystem;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;

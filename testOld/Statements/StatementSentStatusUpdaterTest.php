@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Feature\Statements;
 
-use App\Modules\Statements\StatementSentStatusUpdater;
 use App\Models\StatementEloquent;
+use App\Modules\Statements\StatementSentStatusUpdater;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

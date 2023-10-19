@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Feature\Statements;
 
-use App\Modules\Statements\AddStatementCommand;
 use App\Models\User;
+use App\Modules\Statements\AddStatementCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

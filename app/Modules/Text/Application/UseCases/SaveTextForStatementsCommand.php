@@ -6,7 +6,7 @@ use App\Modules\Text\Application\DTO\TextForStatementDTO;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
-class SaveTextForStatementsUseCase implements SaveTextForStatementsUseCaseInterface
+class SaveTextForStatementsCommand implements SaveTextForStatementsUseCaseInterface
 {
 
     public function __construct(private TextForStatementsRepositoryInterface $textForStatementsRepository)

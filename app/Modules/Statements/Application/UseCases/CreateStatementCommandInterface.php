@@ -2,7 +2,7 @@
 
 namespace App\Modules\Statements\Application\UseCases;
 
-interface CreateStatementUseCaseInterface
+interface CreateStatementCommandInterface
 {
     /**
      * @param int $userId

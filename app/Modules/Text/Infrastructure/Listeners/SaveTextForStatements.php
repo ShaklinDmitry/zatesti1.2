@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Modules\GetTypeOfUserResponseCommand;
 use App\Modules\Text\Application\Services\TextForStatementsService;
 use App\Modules\Text\Application\Services\TextForStatementsServiceInterface;
-use App\Modules\Text\Application\UseCases\SaveTextForStatementsUseCase;
+use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommand;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\UserResponses\Application\GetUserResponseTypeUseCase;
 use App\Modules\UserResponses\TypesOfUserResponses\AddTextForStatementsUserResponseType;

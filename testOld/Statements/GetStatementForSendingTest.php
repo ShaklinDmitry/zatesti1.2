@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Feature\Statements;
 
-use App\Modules\Statements\GetStatementForSendingCommand;
 use App\Exceptions\NoStatementsForSendingException;
 use App\Models\StatementEloquent;
+use App\Modules\Statements\GetStatementForSendingCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

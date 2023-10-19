@@ -9,6 +9,7 @@ interface StatementRepositoryInterface
 {
     /**
      * Добавить новое высказывание
+     * @param string $guid
      * @param int $userId
      * @param string $text
      * @return StatementDTO

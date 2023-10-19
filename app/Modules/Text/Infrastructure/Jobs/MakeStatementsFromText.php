@@ -3,7 +3,7 @@
 namespace App\Modules\Text\Infrastructure\Jobs;
 
 use App\Modules\Text\Application\UseCases\GetStatementsFromTextUseCase;
-use App\Modules\Text\Application\UseCases\MakeStatementsFromTextUseCase;
+use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,7 +33,7 @@ class MakeStatementsFromText implements ShouldQueue
     {
         app()
 
-        $makeStatementsFromTextUseCase = new MakeStatementsFromTextUseCase($this->textForStatementsRepository, );
+        $makeStatementsFromTextUseCase = new MakeStatementsFromTextCommand($this->textForStatementsRepository, );
         $makeStatementsFromTextUseCase->execute($this->userId);
     }
 }

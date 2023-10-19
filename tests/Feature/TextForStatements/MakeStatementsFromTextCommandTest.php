@@ -4,11 +4,14 @@ namespace Tests\Feature\TextForStatements;
 
 use App\Models\TextForStatementsEloquent;
 use App\Models\User;
+use App\Modules\Statements\Application\UseCases\CreateStatementCommand;
+use App\Modules\Statements\Infrastructure\Repositories\StatementRepository;
 use App\Modules\Text\Application\Services\TextForStatementsService;
+use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use Tests\TestCase;
 
-class MakeStatementsFromTextUseCaseTest extends TestCase
+class MakeStatementsFromTextCommandTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -28,8 +31,12 @@ class MakeStatementsFromTextUseCaseTest extends TestCase
         );
 
         $textForStatementsRepository = new TextForStatementsRepository();
-        $textForStatementsService = new TextForStatementsService();
-        $textForStatementsService->makeStatementsFromText(userId: $user->id,textForStatementsRepository: $textForStatementsRepository);
+
+        $statementRepository = new StatementRepository();
+        $createStatementCommand = new CreateStatementCommand($statementRepository);
+
+        $makeStatementsFromTextCommand = new MakeStatementsFromTextCommand($textForStatementsRepository, $createStatementCommand);
+        $makeStatementsFromTextCommand->execute(userId: $user->id);
 
         $this->assertDatabaseHas("statement", [
             'text' => "Sentence1",

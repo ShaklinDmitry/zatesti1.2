@@ -2,7 +2,7 @@
 
 namespace App\Modules\Text\Application\Services;
 
-use App\Modules\Statements\Application\UseCases\CreateStatementUseCase;
+use App\Modules\Statements\Application\UseCases\CreateStatementCommand;
 use App\Modules\Statements\Domain\StatementRepositoryInterface;
 use App\Modules\Text\Application\DTO\TextForStatementDTO;
 use App\Modules\Text\Domain\TextForStatements;
@@ -42,7 +42,7 @@ class TextForStatementsService implements TextForStatementsServiceInterface
         $statements = $textForStatements->parseTextIntoStatements();
 
         foreach ($statements as $text) {
-            $createStatementUseCase = new CreateStatementUseCase($userId, $text, $this->statementRepositoryInterface);
+            $createStatementUseCase = new CreateStatementCommand($userId, $text, $this->statementRepositoryInterface);
             $createStatementUseCase->execute();
         }
 
