@@ -24,7 +24,7 @@ class MakeStatementsFromTextCommandTest extends TestCase
     public function test_make_statements_from_text()
     {
         $user = User::factory()->create();
-        $text = "Sentence1. Sentence2. Sentence3.";
+        $text = "Sentence1.Sentence2.Sentence3.";
 
         $textForStatement = TextForStatementsEloquent::factory()->create(
             [
@@ -43,6 +43,12 @@ class MakeStatementsFromTextCommandTest extends TestCase
 
         $this->assertDatabaseHas("statement", [
             'text' => "Sentence1",
+        ]);
+        $this->assertDatabaseHas("statement", [
+            'text' => "Sentence2",
+        ]);
+        $this->assertDatabaseHas("statement", [
+            'text' => "Sentence3",
         ]);
 
     }
