@@ -34,6 +34,6 @@ class MakeStatementsFromTextCommand
         }
 
         $parsedText = $textForStatements->markTextAsParsed();
-        $this->textForStatementsRepository->markTextParsed($parsedText->id);
+        $this->textForStatementsRepository->markTextParsed($parsedText->id); 
     }
 }

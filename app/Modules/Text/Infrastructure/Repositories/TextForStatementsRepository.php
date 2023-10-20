@@ -25,12 +25,12 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
 
 
     /**
-     * Отметить текст как распарсенный
-     * @param int $textId
+     * Отметить текст как распарсенный.
+     * @param string $guid
      * @return mixed
      */
-    public function markTextParsed(int $textId){
-        return TextForStatementsEloquent::where('id', $textId)->update(['is_parsed' => 1]);
+    public function markTextParsed(string $guid){
+        return TextForStatementsEloquent::where('guid', $guid)->update(['is_parsed' => 1]);
     }
 
 
