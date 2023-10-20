@@ -10,8 +10,6 @@ use Tests\TestCase;
 class TextForStatementsRepositoryTest extends TestCase
 {
     /**
-     * A basic feature test example.
-     *
      * @return void
      */
     public function test_mark_text_as_parsed()

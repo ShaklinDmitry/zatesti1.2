@@ -9,10 +9,13 @@ use App\Modules\Statements\Infrastructure\Repositories\StatementRepository;
 use App\Modules\Text\Application\Services\TextForStatementsService;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MakeStatementsFromTextCommandTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic feature test example.
      *
