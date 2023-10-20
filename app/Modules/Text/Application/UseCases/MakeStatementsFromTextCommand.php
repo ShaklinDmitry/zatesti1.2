@@ -8,7 +8,7 @@ use App\Modules\Statements\Domain\StatementRepositoryInterface;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 
-class MakeStatementsFromTextCommand
+class MakeStatementsFromTextCommand implements MakeStatementsFromTextCommandInterface
 {
 
     /**

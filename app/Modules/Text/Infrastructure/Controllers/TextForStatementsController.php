@@ -21,28 +21,28 @@ class TextForStatementsController extends Controller
      */
     public function createText(TextForStatementsRequest $request):JsonResponse{
 
-        try{
-
-            $textForStatementsRepository = new TextForStatementsRepository();
-
-            $saveTextForStatementsUseCase = new SaveTextForStatementsCommand(userId: Auth::id(), text: $request->text, textForStatementsRepository: $textForStatementsRepository);
-            $textForStatements = $saveTextForStatementsUseCase->execute();
-
-            if($textForStatements){
-                $responseData = [
-                    "data" => [
-                        "message" => "Text was added.",
-                        "text_id" => $textForStatements->id
-                    ]
-                ];
-            }
-
-            return response() -> json($responseData,200);
-
-        }catch (\Exception $exception){
-            return response() -> json(["error" => ["message" => $exception->getMessage(),
-            ]], $exception->getCode());
-        }
+//        try{
+//
+//            $textForStatementsRepository = new TextForStatementsRepository();
+//
+//            $saveTextForStatementsUseCase = new SaveTextForStatementsCommand(userId: Auth::id(), text: $request->text, textForStatementsRepository: $textForStatementsRepository);
+//            $textForStatements = $saveTextForStatementsUseCase->execute();
+//
+//            if($textForStatements){
+//                $responseData = [
+//                    "data" => [
+//                        "message" => "Text was added.",
+//                        "text_id" => $textForStatements->id
+//                    ]
+//                ];
+//            }
+//
+//            return response() -> json($responseData,200);
+//
+//        }catch (\Exception $exception){
+//            return response() -> json(["error" => ["message" => $exception->getMessage(),
+//            ]], $exception->getCode());
+//        }
 
     }
 

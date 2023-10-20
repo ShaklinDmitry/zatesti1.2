@@ -2,9 +2,11 @@
 
 namespace App\Modules\Text\Infrastructure\Jobs;
 
+use App\Modules\Statements\Application\UseCases\CreateStatementCommandInterface;
 use App\Modules\Text\Application\UseCases\GetStatementsFromTextUseCase;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
-use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
+use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommandInterface;
+use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,24 +18,18 @@ class MakeStatementsFromText implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * Create a new job instance.
-     *
-     * @return void
+     * @param int $userId
      */
-    public function __construct(private int $userId, private TextForStatementsRepository $textForStatementsRepository)
+    public function __construct(private int $userId)
     {
     }
 
     /**
-     * Execute the job.
-     *
+     * @param MakeStatementsFromTextCommandInterface $makeStatementsFromTextCommand
      * @return void
      */
-    public function handle()
+    public function handle(MakeStatementsFromTextCommandInterface $makeStatementsFromTextCommand)
     {
-        app()
-
-        $makeStatementsFromTextUseCase = new MakeStatementsFromTextCommand($this->textForStatementsRepository, );
-        $makeStatementsFromTextUseCase->execute($this->userId);
+        $makeStatementsFromTextCommand->execute($this->userId);
     }
 }

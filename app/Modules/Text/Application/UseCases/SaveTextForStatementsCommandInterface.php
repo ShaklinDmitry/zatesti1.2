@@ -2,7 +2,7 @@
 
 namespace App\Modules\Text\Application\UseCases;
 
-interface SaveTextForStatementsUseCaseInterface
+interface SaveTextForStatementsCommandInterface
 {
     public function execute(int $userId, string $text);
 }
