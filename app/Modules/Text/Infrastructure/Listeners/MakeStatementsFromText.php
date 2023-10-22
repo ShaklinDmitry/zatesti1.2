@@ -6,8 +6,8 @@ use App\Events\UserResponseSended;
 use App\Models\User;
 use App\Modules\Text\Application\Services\TextForStatementsService;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
+use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommandInterface;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
-use App\Modules\Text\MakeStatementsFromTextCommand;
 use App\Modules\UserResponses\Domain\UserResponseType;
 use App\Modules\UserResponses\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -30,17 +30,11 @@ class MakeStatementsFromText implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle(UserResponseSended $event)
+    public function handle(UserResponseSended $event, MakeStatementsFromTextCommandInterface $makeStatementsFromTextCommand)
     {
         $user = User::where('telegram_chat_id', $event->chatId)->firstOrFail();
 
-        $textForStatementsRepository = new TextForStatementsRepository();
-
-//        $makeStatementsFromTextUseCase = new MakeStatementsFromTextCommand($user->id, $textForStatementsRepository);
-//        $makeStatementsFromTextUseCase->execute();
-
-        $textForStatementsService = new TextForStatementsService();
-        $textForStatementsService->makeStatementsFromText($user->id);
+        $makeStatementsFromTextCommand->execute($user->id);
     }
 
     /**
