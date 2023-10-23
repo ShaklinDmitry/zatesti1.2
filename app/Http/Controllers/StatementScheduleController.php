@@ -6,8 +6,7 @@ use App\Models\StatementSendingSchedule;
 use App\Models\UserResponse;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
-use App\Modules\StatementSendingSchedule\Application\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase;
-use App\Modules\StatementSendingSchedule\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Application\GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
 use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use App\Modules\WeeklyNotification\WeeklyNotification;
 use App\Modules\WeeklyNotification\WeeklyNotificationSender;
@@ -30,7 +29,7 @@ class StatementScheduleController extends Controller
         try{
             $statementSendingScheduleRepository = new StatementSendingScheduleRepository();
 
-            $getUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase = new GetUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase(date("H:i"), $statementSendingScheduleRepository);
+            $getUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase = new GetUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand(date("H:i"), $statementSendingScheduleRepository);
             $users = $getUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase->execute();
 
             //TODO сделать преобразование в users модель
