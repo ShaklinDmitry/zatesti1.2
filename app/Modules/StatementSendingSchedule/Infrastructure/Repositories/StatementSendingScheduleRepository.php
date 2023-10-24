@@ -4,6 +4,7 @@ namespace App\Modules\StatementSendingSchedule\Infrastructure\Repositories;
 
 
 use App\Models\StatementSendingSchedule;
+use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTO;
 use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTOCollection;
 use App\Modules\StatementSendingSchedule\Domain\StatementSendingScheduleRepositoryInterface;
 use App\Modules\StatementSendingSchedule\Infrastructure\Exception\NoUsersForWeeklyNotificationsException;
@@ -15,7 +16,7 @@ class StatementSendingScheduleRepository implements StatementSendingScheduleRepo
      * @return array
      * @throws NoUsersForWeeklyNotificationsException
      */
-    public function getUsersWhoShouldBeNotifiedThisWeek():array
+    public function getStatementSendingScheduleForUsersWhoShouldBeNotifiedThisWeek():array
     {
         $listOfUsersInSchedule = StatementSendingSchedule::distinct()->get(['user_id']);
 
@@ -29,16 +30,22 @@ class StatementSendingScheduleRepository implements StatementSendingScheduleRepo
 
     /**
      * @param string $currentTime
-     * @return array
+     * @return StatementSendingScheduleDTOCollection
      * @throws NoUsersWhoScheduledToReceiveStatementNotificationException
      */
-    public function getUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime):array{
+    public function getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime): StatementSendingScheduleDTOCollection{
         $statementSendingSchedule = StatementSendingSchedule::where('exact_time', $currentTime)->get();
 
         if($statementSendingSchedule->isEmpty()){
             throw new NoUsersWhoScheduledToReceiveStatementNotificationException();
         }
 
-        return $statementSendingSchedule->toArray();
+        $statementSendingScheduleDTOCollection = new StatementSendingScheduleDTOCollection();
+        foreach ($statementSendingSchedule as $statementSendingScheduleValue){
+            $statementSendingScheduleDTO = new StatementSendingScheduleDTO($statementSendingScheduleValue->guid, $statementSendingScheduleValue->user_id, $statementSendingScheduleValue->exact_time);
+            $statementSendingScheduleDTOCollection->addDTOToCollection($statementSendingScheduleDTO);
+        }
+
+        return $statementSendingScheduleDTOCollection;
     }
 }

@@ -4,7 +4,11 @@ namespace App\Modules\StatementSendingSchedule\Domain;
 
 interface StatementSendingScheduleRepositoryInterface
 {
-    public function getUsersWhoShouldBeNotifiedThisWeek();
+    public function getStatementSendingScheduleForUsersWhoShouldBeNotifiedThisWeek();
 
-    public function getUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime);
+    /**
+     * @param \DateTime $currentTime
+     * @return mixed
+     */
+    public function getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime);
 }

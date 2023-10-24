@@ -1,6 +1,5 @@
 <?php
 
-namespace Tests\Feature\StatementSendingSchedule;
 
 use App\Models\StatementSendingSchedule;
 use Illuminate\Foundation\Testing\RefreshDatabase;

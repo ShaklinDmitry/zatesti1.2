@@ -14,6 +14,7 @@ class StatementSendingSchedule extends Model implements StatementSendingSchedule
     protected $table = 'send_statements_schedule';
 
     protected $fillable = [
+        'guid',
         'user_id',
         'exact_time'
     ];
