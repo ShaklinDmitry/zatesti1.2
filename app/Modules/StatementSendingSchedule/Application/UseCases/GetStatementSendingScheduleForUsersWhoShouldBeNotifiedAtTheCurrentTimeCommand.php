@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Modules\StatementSendingSchedule\Application;
+namespace App\Modules\StatementSendingSchedule\Application\UseCases;
 
-use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTO;
 use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTOCollection;
 use App\Modules\StatementSendingSchedule\Domain\StatementSendingScheduleRepositoryInterface;
 
-class GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand
+class GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand implements GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface
 {
     /**
      * @param StatementSendingScheduleRepositoryInterface $statementSendingScheduleRepository

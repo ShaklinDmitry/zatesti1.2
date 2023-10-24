@@ -5,7 +5,7 @@ namespace Tests\Feature\StatementSendingSchedule;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTO;
-use App\Modules\StatementSendingSchedule\Application\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
 use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\UserResponse;
 use App\Modules\Statements\Application\UseCases\CreateStatementCommand;
 use App\Modules\Statements\Application\UseCases\CreateStatementCommandInterface;
+use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommandInterface;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
@@ -26,6 +28,12 @@ class AppServiceProvider extends ServiceProvider
             $сreateStatementCommand = new CreateStatementCommand();
 
             return new MakeStatementsFromTextCommand($textForStatementsRepository, $сreateStatementCommand);
+        });
+
+        $this->app->bind(GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface::class, function($app){
+            $statementSendingScheduleRepository = new StatementSendingScheduleRepository();
+
+            return new GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand($statementSendingScheduleRepository);
         });
 
 

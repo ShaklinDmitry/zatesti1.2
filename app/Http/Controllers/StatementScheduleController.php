@@ -6,7 +6,8 @@ use App\Models\StatementSendingSchedule;
 use App\Models\UserResponse;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
-use App\Modules\StatementSendingSchedule\Application\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface;
 use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use App\Modules\WeeklyNotification\WeeklyNotification;
 use App\Modules\WeeklyNotification\WeeklyNotificationSender;
@@ -14,7 +15,6 @@ use App\Modules\WeeklyNotification\WeeklyNotificationText;
 use App\Services\StatementScheduleService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class StatementScheduleController extends Controller
@@ -24,15 +24,16 @@ class StatementScheduleController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function executeEveryMinute(StatementNotificationSystemInterface $statementNotification){
+    public function executeEveryMinute(StatementNotificationSystemInterface $statementNotification, GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface $getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand){
 
         try{
-            $statementSendingScheduleRepository = new StatementSendingScheduleRepository();
+            $currentTime = date("H:i");
 
-            $getUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase = new GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand(date("H:i"), $statementSendingScheduleRepository);
-            $users = $getUsersWhoShouldBeNotifiedAtTheCurrentTimeUseCase->execute();
+            $statementSendingSchedule = $getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand->execute($currentTime);
 
-            //TODO сделать преобразование в users модель
+            foreach ($statementSendingSchedule->getCollection() as $statementSendingScheduleDTO){
+
+            }
 
             SendStatements::dispatch($users, $statementNotification);
 
