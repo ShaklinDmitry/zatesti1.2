@@ -5,7 +5,7 @@ namespace App\Modules\StatementSendingSchedule\Application\UseCases;
 use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTOCollection;
 use App\Modules\StatementSendingSchedule\Domain\StatementSendingScheduleRepositoryInterface;
 
-class GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand implements GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface
+class GetStatementSendingScheduleByTimeCommand implements GetStatementSendingScheduleByTimeCommandInterface
 {
     /**
      * @param StatementSendingScheduleRepositoryInterface $statementSendingScheduleRepository

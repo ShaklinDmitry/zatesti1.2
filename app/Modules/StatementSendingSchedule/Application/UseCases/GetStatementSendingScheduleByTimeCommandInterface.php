@@ -4,7 +4,7 @@ namespace App\Modules\StatementSendingSchedule\Application\UseCases;
 
 use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTOCollection;
 
-interface GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface
+interface GetStatementSendingScheduleByTimeCommandInterface
 {
     /**
      * @param string $currentTime

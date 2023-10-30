@@ -29,10 +29,10 @@ class StatementNotificationTest extends TestCase
 //            ->where('text','<>','')
 //            ->first();
 //
-//        $sendNotificationCommand = new SendNotificationCommand(new TelegramNotificationSystem());
+//        $sendNotificationCommand = new SendNotificationCommand(new TelegramNotification());
 //        $sendNotificationCommand->execute($user->id, $statement);
 //
-//        Notification::assertSentTo($user, TelegramNotificationSystem::class);
+//        Notification::assertSentTo($user, TelegramNotification::class);
 //    }
 
 
@@ -49,13 +49,13 @@ class StatementNotificationTest extends TestCase
 //
 //        $user = User::factory()->create(['id' => 1]);
 //
-//        $telegramNotification = new TelegramNotificationSystem();
+//        $telegramNotification = new TelegramNotification();
 //
 //        $sendStatements = new SendStatements(array($user), $telegramNotification);
 //
 //        $sendStatements->handle();
 //
-//        Notification::assertSentTo($user,TelegramNotificationSystem::class, function ($notification, $channels){
+//        Notification::assertSentTo($user,TelegramNotification::class, function ($notification, $channels){
 //            $this->assertSame('There is no statements for sending', $notification->getMessage());
 //            return true;
 //        });
@@ -174,7 +174,7 @@ class StatementNotificationTest extends TestCase
 //        $notificationService = new NotificationService();
 //        $notificationService->sendWeeklyReport();
 //
-//        Notification::assertSentTo($user, TelegramNotificationSystem::class);
+//        Notification::assertSentTo($user, TelegramNotification::class);
 //    }
 
     /**

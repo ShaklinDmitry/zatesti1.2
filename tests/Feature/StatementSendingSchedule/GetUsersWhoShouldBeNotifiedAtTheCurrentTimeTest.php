@@ -5,7 +5,7 @@ namespace Tests\Feature\StatementSendingSchedule;
 use App\Models\StatementSendingSchedule;
 use App\Models\User;
 use App\Modules\StatementSendingSchedule\Application\DTOs\StatementSendingScheduleDTO;
-use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
+use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleByTimeCommand;
 use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -38,7 +38,7 @@ class GetUsersWhoShouldBeNotifiedAtTheCurrentTimeTest extends TestCase
 
         $statementSendingScheduleRepository = new StatementSendingScheduleRepository();
 
-        $getUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand = new GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand($statementSendingScheduleRepository);
+        $getUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand = new GetStatementSendingScheduleByTimeCommand($statementSendingScheduleRepository);
         $statementSendingScheduleDTOCollection = $getUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand->execute($currentTime);
 
         $expectedStatementSendingScheduleDTOCollection = [

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotificationSystem;
+use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
 use Illuminate\Support\ServiceProvider;
 
 class StatementNotificationServiceProvider extends ServiceProvider
@@ -15,7 +15,7 @@ class StatementNotificationServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(StatementNotificationSystemInterface::class, TelegramNotificationSystem::class);
+        $this->app->bind(StatementNotificationSystemInterface::class, TelegramNotification::class);
     }
 
     /**

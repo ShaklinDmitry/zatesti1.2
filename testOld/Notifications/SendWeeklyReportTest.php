@@ -1,6 +1,5 @@
 <?php
 
-namespace Tests\Feature\Notifications;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

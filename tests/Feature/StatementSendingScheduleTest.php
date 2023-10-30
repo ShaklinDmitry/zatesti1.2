@@ -124,7 +124,7 @@ class StatementSendingScheduleTest extends TestCase
 //            'exact_time' => $currentTime
 //        ]);
 //
-//        $telegramNotification = new TelegramNotificationSystem();
+//        $telegramNotification = new TelegramNotification();
 //
 //        $statementService = new StatementService();
 //        $statementService->sendStatements($currentTime, $telegramNotification);

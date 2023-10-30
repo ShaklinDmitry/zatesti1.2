@@ -4,7 +4,6 @@ namespace App\Modules\Notifications\Application;
 
 use App\Models\User;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
-use App\Modules\User\Application\SaveIdOfLastSentStatementUseCase;
 
 class SendNotificationUseCase
 {

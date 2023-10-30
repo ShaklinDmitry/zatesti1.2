@@ -11,5 +11,9 @@ interface UserRepositoryInterface
      */
     public function saveIdOfLastSentStatement(int $userId, int $statementId);
 
-    public function getUserById();
+    /**
+     * @param int $userId
+     * @return mixed
+     */
+    public function getUserById(int $userId);
 }

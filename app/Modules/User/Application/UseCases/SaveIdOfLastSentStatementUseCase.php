@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\User\Application;
+namespace App\Modules\User\Application\UseCases;
 
 use App\Modules\User\Domain\UserRepositoryInterface;
 

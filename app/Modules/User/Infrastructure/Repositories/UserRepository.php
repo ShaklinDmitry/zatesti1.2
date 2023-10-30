@@ -18,4 +18,15 @@ class UserRepository implements UserRepositoryInterface
         $user->last_statement_id_sent = $statementId;
         $user->save();
     }
+
+
+    /**
+     * @param int $userId
+     * @return User
+     */
+    public function getUserById(int $userId): User
+    {
+        $user = User::find($userId);
+        return $user;
+    }
 }

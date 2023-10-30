@@ -3,7 +3,7 @@
 namespace Tests\Feature\WeeklyNotificationTest;
 
 use App\Models\User;
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotificationSystem;
+use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
 use App\Modules\WeeklyNotification\UserWeeklyNotification;
 use App\Modules\WeeklyNotification\UserWeeklyNotificationDTO;
 use App\Modules\WeeklyNotification\WeeklyNotificationSender;
@@ -26,13 +26,13 @@ class SendWeeklyNotificationTest extends TestCase
 
         $notificationText = 'test text';
 
-        $telegramNotificationSystem = new TelegramNotificationSystem();
+        $telegramNotificationSystem = new TelegramNotification();
 
         $userWeeklyNotification = new UserWeeklyNotificationDTO(user: $user, text: $notificationText);
 
         $weeklyNotificationSender = new WeeklyNotificationSender($telegramNotificationSystem, $userWeeklyNotification);
         $weeklyNotificationSender->sendWeeklyNotification();
 
-        Notification::assertSentTo($user, TelegramNotificationSystem::class);
+        Notification::assertSentTo($user, TelegramNotification::class);
     }
 }

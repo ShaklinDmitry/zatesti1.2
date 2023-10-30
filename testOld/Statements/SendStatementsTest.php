@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotificationSystem;
+use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
 use App\Modules\Statements\SendStatementCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,7 +19,7 @@ class SendStatementsTest extends TestCase
     {
         $this->expectsJobs(SendStatements::class);
 
-        $sendStatements = new SendStatementCommand(new TelegramNotificationSystem());
+        $sendStatements = new SendStatementCommand(new TelegramNotification());
         $sendStatements->execute(array());
     }
 }

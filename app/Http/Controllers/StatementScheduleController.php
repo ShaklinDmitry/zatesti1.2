@@ -6,8 +6,8 @@ use App\Models\StatementSendingSchedule;
 use App\Models\UserResponse;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
-use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand;
-use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface;
+use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleByTimeCommand;
+use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleByTimeCommandInterface;
 use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use App\Modules\WeeklyNotification\WeeklyNotification;
 use App\Modules\WeeklyNotification\WeeklyNotificationSender;
@@ -24,24 +24,24 @@ class StatementScheduleController extends Controller
      * @return void
      * @throws \Exception
      */
-    public function executeEveryMinute(StatementNotificationSystemInterface $statementNotification, GetStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommandInterface $getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand){
-
-        try{
-            $currentTime = date("H:i");
-
-            $statementSendingSchedule = $getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand->execute($currentTime);
-
-            foreach ($statementSendingSchedule->getCollection() as $statementSendingScheduleDTO){
-
-            }
-
-            SendStatements::dispatch($users, $statementNotification);
-
-        }catch(\Exception $exception){
-            Log::info($exception->getMessage());
-        }
-
-    }
+//    public function executeEveryMinute(StatementNotificationSystemInterface $statementNotification, GetStatementSendingScheduleByTimeCommandInterface $getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand){
+//
+//        try{
+//            $currentTime = date("H:i");
+//
+//            $statementSendingSchedule = $getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTimeCommand->execute($currentTime);
+//
+//            foreach ($statementSendingSchedule->getCollection() as $statementSendingScheduleDTO){
+//
+//            }
+//
+//            SendStatements::dispatch($users, $statementNotification);
+//
+//        }catch(\Exception $exception){
+//            Log::info($exception->getMessage());
+//        }
+//
+//    }
 
     /**
      * Для вызова в кроне раз в неделю в воскресенье
@@ -63,26 +63,4 @@ class StatementScheduleController extends Controller
         }
     }
 
-    /**
-     * Для сохранения времени когда нужно отправлять пользователям высказывания
-     * @param Request $request
-     * @param StatementScheduleService $statementScheduleService
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function setSendTime(Request $request, StatementSendingSchedule $statementSendingSchedule): JsonResponse{
-
-//        $saveExactTime = $statementSendingSchedule->fillWithTimeForSending($request->exactTimes, Auth::id());
-//
-//        if($saveExactTime){
-//            $responseData = [
-//                "data" => [
-//                    "message" => "Time for sending statements was saved successful",
-//                ]
-//            ];
-//        }
-//
-//        return response() -> json($responseData,200);
-
-        return 'doit later';
-    }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Modules\Notifications\Infrastructure\Notifications;
 
-use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
+use App\Modules\Notifications\Domain\StatementNotificationInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;
 use NotificationChannels\Telegram\TelegramMessage;
 
-class TelegramNotificationSystem extends Notification implements StatementNotificationSystemInterface
+class TelegramNotification extends Notification implements StatementNotificationInterface
 {
     use Queueable;
 
