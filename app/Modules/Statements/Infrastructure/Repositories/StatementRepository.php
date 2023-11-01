@@ -52,7 +52,7 @@ class StatementRepository implements StatementRepositoryInterface
                 null,['userId' => $userId]);
         }
 
-        $statementData = new StatementDTO(guid: $statement->guid, userId: $statement->userId, text: $statement->text);
+        $statementData = new StatementDTO(guid: $statement->guid, userId: $statement->user_id, text: $statement->text);
 
         return $statementData;
     }

@@ -2,12 +2,11 @@
 
 namespace App\Modules\Statements\Infrastructure\Jobs;
 
-use App\Exceptions\NoStatementsForSendingException;
-use App\Modules\Notifications\Application\SendNotificationUseCase;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
 use App\Modules\Notifications\SendNotificationAboutNoStatementsForSendingCommand;
 use App\Modules\Notifications\SendNotificationCommand;
-use App\Modules\Statements\Application\UseCases\GetStatementForSendingUseCase;
+use App\Modules\StatementNotifications\Application\SendNotificationUseCase;
+use App\Modules\Statements\Application\UseCases\GetStatementForSendingCommand;
 use App\Modules\Statements\GetStatementForSendingCommand;
 use App\Modules\Statements\Infrastructure\Repositories\StatementRepository;
 use App\Services\NotificationService;
@@ -42,7 +41,7 @@ class SendStatements implements ShouldQueue
             foreach ($this->users as $user){
                 $statementRepository = new StatementRepository();
 
-                $getStatementForSendingUseCase = new GetStatementForSendingUseCase(userId: $user->id, statementRepository: $statementRepository);
+                $getStatementForSendingUseCase = new GetStatementForSendingCommand(userId: $user->id, statementRepository: $statementRepository);
                 $statement = $getStatementForSendingUseCase->execute();
 
                 $sendNotificationUseCase = new SendNotificationUseCase(User: $user, text: $statement->text, statementNotificationSystem: $this->statementNotification);

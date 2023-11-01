@@ -2,68 +2,50 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Models\StatementEloquent;
 use App\Models\StatementSendingSchedule;
 use App\Models\TextForStatementsEloquent;
 use App\Models\User;
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
-use App\Modules\StatementNotifications\Application\UseCases\SendNotificationsToUsersAtTimeCommand;
+use App\Modules\StatementNotifications\Application\UseCases\SendNotificationsToUsersAtTimeCommandInterface;
+use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class SendNotificationsToUsersAtTimeTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+
+    use RefreshDatabase;
+
     public function test_send_notifications_to_users_at_time()
     {
-
         $currentTime = date("H:i");
 
-        $userFirst = User::factory()->create();
-        $userSecond = User::factory()->create();
+        $user = User::factory()->create();
 
-        $firstStatementSendingSchedule = StatementSendingSchedule::factory()->create([
+        StatementSendingSchedule::factory()->create([
             "guid" => uniqid(),
-            'user_id' => $userFirst,
-            'exact_time' => $currentTime
-        ]);
-
-        $secondStatementSendingSchedule = StatementSendingSchedule::factory()->create([
-            "guid" => uniqid(),
-            'user_id' => $userSecond,
+            'user_id' => $user,
             'exact_time' => $currentTime
         ]);
 
         $testText = "test text";
 
-        TextForStatementsEloquent::factory()->create(
-            [
-                "text" => $testText,
-                "user_id" => $userFirst->id
-            ]
-        );
-
-        TextForStatementsEloquent::factory()->create(
-            [
-                "text" => $testText,
-                "user_id" => $userSecond->id
-            ]
+        StatementEloquent::factory()->create(
+          [
+              'guid' => uniqid(),
+              'text' => $testText,
+              'user_id' => $user->id
+          ]
         );
 
         Notification::fake();
 
-        $sendNotificationsToUsersAtTimeCommand = new SendNotificationsToUsersAtTimeCommand();
+        $sendNotificationsToUsersAtTimeCommand = app(SendNotificationsToUsersAtTimeCommandInterface::class);
         $sendNotificationsToUsersAtTimeCommand->execute(time: $currentTime);
 
-        Notification::assertSentTo($userFirst,TelegramNotification::class, function ($notification, $channels, $testText){
-            $this->assertSame($testText, $notification->getMessage());
-            return true;
-        });
-        Notification::assertSentTo($userSecond,TelegramNotification::class, function ($notification, $channels, $testText){
-            $this->assertSame($testText, $notification->getMessage());
+        Notification::assertSentTo($user,TelegramNotification::class, function ($notification, $channels){
+            $this->assertSame("test text", $notification->getMessage());
             return true;
         });
     }

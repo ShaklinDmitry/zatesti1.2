@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Modules\Notifications\Infrastructure\Notifications;
+namespace App\Modules\StatementNotifications\Infrastructure\Notifications;
 
-use App\Modules\Notifications\Domain\StatementNotificationInterface;
+use App\Modules\StatementNotifications\Domain\StatementNotificationInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Telegram\TelegramChannel;

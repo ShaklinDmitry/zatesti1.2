@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Notifications\Application;
+namespace App\Modules\StatementNotifications\Application;
 
 use App\Models\User;
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;

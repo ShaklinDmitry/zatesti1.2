@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Notifications\Domain;
+namespace App\Modules\StatementNotifications\Domain;
 
 interface StatementNotificationInterface
 {

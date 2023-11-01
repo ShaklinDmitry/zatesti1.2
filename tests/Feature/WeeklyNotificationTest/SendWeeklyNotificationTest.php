@@ -3,7 +3,7 @@
 namespace Tests\Feature\WeeklyNotificationTest;
 
 use App\Models\User;
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
+use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification;
 use App\Modules\WeeklyNotification\UserWeeklyNotification;
 use App\Modules\WeeklyNotification\UserWeeklyNotificationDTO;
 use App\Modules\WeeklyNotification\WeeklyNotificationSender;

@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Modules\Notifications\Domain\StatementNotificationSystemInterface;
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
+use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification;
 use Illuminate\Support\ServiceProvider;
 
 class StatementNotificationServiceProvider extends ServiceProvider

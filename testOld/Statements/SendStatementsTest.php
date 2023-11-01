@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
+use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
 use App\Modules\Statements\SendStatementCommand;
 use Illuminate\Foundation\Testing\RefreshDatabase;

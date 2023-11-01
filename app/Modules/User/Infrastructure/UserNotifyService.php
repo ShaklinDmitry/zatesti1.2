@@ -3,10 +3,14 @@
 namespace App\Modules\User\Infrastructure;
 
 use App\Models\User;
-use App\Modules\Notifications\Domain\StatementNotificationInterface;
+use App\Modules\StatementNotifications\Domain\StatementNotificationInterface;
+use App\Modules\User\Domain\UserNotifyServiceInterface;
 
 class UserNotifyService implements UserNotifyServiceInterface
 {
+    /**
+     * @param StatementNotificationInterface $statementNotification
+     */
     public function __construct(private StatementNotificationInterface $statementNotification)
     {
     }

@@ -73,7 +73,7 @@ Route::post('/testFeature', function (){
 
     $statementService = new StatementService();
 
-    $telegramNotification = new \App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification();
+    $telegramNotification = new \App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification();
     $statementService->sendStatements($currentTime, $telegramNotification);
 
 });

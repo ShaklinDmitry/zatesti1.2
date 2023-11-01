@@ -2,7 +2,7 @@
 
 
 use App\Models\User;
-use App\Modules\Notifications\Infrastructure\Notifications\TelegramNotification;
+use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification;
 use App\Modules\Statements\Infrastructure\Jobs\SendStatements;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
