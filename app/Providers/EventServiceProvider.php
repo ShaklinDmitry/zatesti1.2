@@ -28,12 +28,12 @@ class EventServiceProvider extends ServiceProvider
         NotificationSent::class => [
             MarkStatementHasBeenSent::class
         ],
-        UserResponseSended::class => [
-            SaveUserResponse::class,
-            SaveBestStatements::class,
-            SaveTextForStatements::class,
-            MakeStatementsFromText::class
-        ],
+//        UserResponseSended::class => [
+//      //      SaveUserResponse::class,
+//      //      SaveBestStatements::class,
+//            SaveTextForStatements::class,
+//            MakeStatementsFromText::class
+//        ],
     ];
 
     /**

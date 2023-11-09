@@ -12,7 +12,17 @@ class TelegramNotification extends Notification implements StatementNotification
 {
     use Queueable;
 
-    protected $message;
+    public $message;
+
+    public $statementGuid;
+
+    /**
+     * @param string $guid
+     * @return void
+     */
+    public function setStatementGuid(string $statementGuid){
+        $this->statementGuid = $statementGuid;
+    }
 
     /**
      * добавить текст для уведомления

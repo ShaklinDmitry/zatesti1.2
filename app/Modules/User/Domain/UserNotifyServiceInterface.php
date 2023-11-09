@@ -9,5 +9,5 @@ interface UserNotifyServiceInterface
      * @param string $text
      * @return mixed
      */
-    public function notifyUser(int $userId, string $text);
+    public function notifyUser(int $userId, string $text, string $statementGuid);
 }

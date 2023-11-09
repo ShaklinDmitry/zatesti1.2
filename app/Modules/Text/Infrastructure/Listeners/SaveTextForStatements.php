@@ -8,9 +8,12 @@ use App\Modules\GetTypeOfUserResponseCommand;
 use App\Modules\Text\Application\Services\TextForStatementsService;
 use App\Modules\Text\Application\Services\TextForStatementsServiceInterface;
 use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommand;
+use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommandInterface;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\UserResponses\Application\GetUserResponseTypeUseCase;
 use App\Modules\UserResponses\TypesOfUserResponses\AddTextForStatementsUserResponseType;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SaveTextForStatements
 {
@@ -19,7 +22,7 @@ class SaveTextForStatements
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private SaveTextForStatementsCommandInterface $saveTextForStatementsCommand)
     {
         //
     }
@@ -34,13 +37,14 @@ class SaveTextForStatements
     {
         $user = User::where('telegram_chat_id', $event->chatId)->firstOrFail();
 
-        $textForStatementsService = $this->app->make(TextForStatementsServiceInterface::class);
-        $textForStatementsService->saveText(userId: $user->id,text: $event->text,textForStatementsRepository: new TextForStatementsRepository());
+        Log::debug('save text line 40');
+
+        $this->saveTextForStatementsCommand->execute(userId: $user->id, text: $event->text);
+
     }
 
 
     /**
-     * Функция для того чтобы добавлять в очередь только тех слушателей, у которых тип ответа пользователя "Добавить текст для высказываний"
      * @param $event
      * @return bool|void
      */
@@ -48,7 +52,11 @@ class SaveTextForStatements
         $getUserResponseTypeUseCase = new GetUserResponseTypeUseCase($event->text);
         $typeOfUserResponse = $getUserResponseTypeUseCase->execute();
 
+        Log::debug("shouldQueue for save text");
+
         if(is_a($typeOfUserResponse, AddTextForStatementsUserResponseType::class)){
+            Log::debug("shouldQueue for save text is true!!!!");
+
             return true;
         }
     }

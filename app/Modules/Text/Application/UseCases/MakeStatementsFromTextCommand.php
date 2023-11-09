@@ -7,6 +7,7 @@ use App\Modules\Statements\Application\UseCases\CreateStatementCommandInterface;
 use App\Modules\Statements\Domain\StatementRepositoryInterface;
 use App\Modules\Text\Domain\TextForStatements;
 use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
+use Illuminate\Support\Facades\Log;
 
 class MakeStatementsFromTextCommand implements MakeStatementsFromTextCommandInterface
 {
@@ -25,6 +26,8 @@ class MakeStatementsFromTextCommand implements MakeStatementsFromTextCommandInte
      */
     public function execute(int $userId): void {
         $unParsedText = $this->textForStatementsRepository->getUnparsedTextForStatementsByUserId($userId);
+
+        Log::debug(serialize($unParsedText));
 
         $textForStatements = new TextForStatements(userId: $unParsedText->userId,text: $unParsedText->text);
         $statements = $textForStatements->parseTextIntoStatements();

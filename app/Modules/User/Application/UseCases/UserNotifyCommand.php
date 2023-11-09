@@ -21,7 +21,7 @@ class UserNotifyCommand implements UserNotifyCommandInterface
      * @param string $text
      * @return void
      */
-    public function execute(int $userId, string $text){
-        $this->userNotifyService->notifyUser($userId, $text);
+    public function execute(int $userId, string $text, string $statementGuid){
+        $this->userNotifyService->notifyUser($userId, $text, $statementGuid);
     }
 }

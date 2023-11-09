@@ -19,12 +19,13 @@ class UserNotifyService implements UserNotifyServiceInterface
     /**
      * @param int $userId
      * @param string $text
-     * @param StatementNotificationInterface $statementNotification
-     * @return void
+     * @param string $statementGuid
+     * @return mixed|void
      */
-    public function notifyUser(int $userId, string $text){
+    public function notifyUser(int $userId, string $text, string $statementGuid){
         $user = User::find($userId);
         $this->statementNotification->setMessageText($text);
+        $this->statementNotification->setStatementGuid($statementGuid);
         $user->notify($this->statementNotification);
     }
 }

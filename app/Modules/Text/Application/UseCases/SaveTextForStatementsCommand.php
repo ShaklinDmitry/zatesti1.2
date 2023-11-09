@@ -9,6 +9,9 @@ use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 class SaveTextForStatementsCommand implements SaveTextForStatementsCommandInterface
 {
 
+    /**
+     * @param TextForStatementsRepositoryInterface $textForStatementsRepository
+     */
     public function __construct(private TextForStatementsRepositoryInterface $textForStatementsRepository)
     {
     }

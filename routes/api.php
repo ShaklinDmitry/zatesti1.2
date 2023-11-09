@@ -40,9 +40,10 @@ Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login']);
 
 Route::post('/statements-schedule',[\App\Http\Controllers\StatementScheduleController::class, 'setSendTime'])->middleware('auth:sanctum');
 
-Route::get('/check-schedule-every-minute',[\App\Http\Controllers\StatementScheduleController::class, 'executeEveryMinute']);
-Route::get('/check-schedule-every-sunday',[\App\Http\Controllers\StatementScheduleController::class, 'executeEverySunday']);
+//Route::get('/check-schedule-every-minute',[\App\Http\Controllers\StatementScheduleController::class, 'executeEveryMinute']);
+//Route::get('/check-schedule-every-sunday',[\App\Http\Controllers\StatementScheduleController::class, 'executeEverySunday']);
 
+Route::get('/send-statement-at-time',[\App\Modules\StatementNotifications\Infrastructure\Controllers\StatementNotificationController::class, 'SendNotificationsToUsersAtTime']);
 
 Route::post('/telegram-webhook',[\App\Http\Controllers\TelegramWebhookController::class, 'sendUserAnswer']);
 
@@ -64,16 +65,9 @@ Route::get('telegram', function () {
 
 });
 
-Route::post('/testFeature', function (){
-    $currentTime = date("H:i");
-    StatementSendingSchedule::factory()->create([
-        'user_id' => 3,
-        'exact_time' => $currentTime
-    ]);
+Route::get('/testSendStatement', function (){
 
-    $statementService = new StatementService();
-
-    $telegramNotification = new \App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification();
-    $statementService->sendStatements($currentTime, $telegramNotification);
+    $userNotifyCommand = app(\App\Modules\User\Application\UseCases\UserNotifyCommand::class);
+    $userNotifyCommand->execute(3, 'test text', 2);
 
 });

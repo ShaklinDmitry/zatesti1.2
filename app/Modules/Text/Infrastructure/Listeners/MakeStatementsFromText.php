@@ -11,6 +11,7 @@ use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\UserResponses\Domain\UserResponseType;
 use App\Modules\UserResponses\TypesOfUserResponses\SplitTextOfStatementsUserResponseType;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
 
 class MakeStatementsFromText implements ShouldQueue
 {
@@ -19,22 +20,21 @@ class MakeStatementsFromText implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private MakeStatementsFromTextCommandInterface $makeStatementsFromTextCommand)
     {
-        //
+
     }
 
     /**
-     * для телеграмма
-     *
-     * @param  object  $event
+     * @param UserResponseSended $event
+     * @param MakeStatementsFromTextCommandInterface $makeStatementsFromTextCommand
      * @return void
      */
-    public function handle(UserResponseSended $event, MakeStatementsFromTextCommandInterface $makeStatementsFromTextCommand)
+    public function handle(UserResponseSended $event)
     {
         $user = User::where('telegram_chat_id', $event->chatId)->firstOrFail();
 
-        $makeStatementsFromTextCommand->execute($user->id);
+        $this->makeStatementsFromTextCommand->execute($user->id);
     }
 
     /**
@@ -46,7 +46,11 @@ class MakeStatementsFromText implements ShouldQueue
         $userResponseType = new UserResponseType();
         $typeOfUserResponse = $userResponseType->getUserResponseType($event->text);
 
+        Log::debug("shouldQueue for make statements from text");
+
         if(is_a($typeOfUserResponse, SplitTextOfStatementsUserResponseType::class)){
+            Log::debug("shouldQueue for make statements from text line 52");
+
             return true;
         }
     }

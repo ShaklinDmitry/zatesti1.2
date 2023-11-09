@@ -27,23 +27,22 @@ class StatementController extends Controller
      * @param CreateStatementRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function createStatement(CreateStatementRequest $request):JsonResponse{
-
-        try{
-            $statementRepository = new StatementRepository();
-
-            $createStatementUseCase = new CreateStatementCommand(userId: Auth::id(), text: $request->text, statementRepository:  $statementRepository);
-            $statement = $createStatementUseCase->execute();
-
-            if($statement){
-                return response() -> json(["data" => ["message" => "StatementEloquent was create successfull.",
-                ]],200);
-            }
-        }catch(\Exception $exception){
-            return response() -> json(["error" => ["message" => $exception->getMessage(),
-            ]],$exception->getCode());
-        }
-    }
+//    public function createStatement(CreateStatementRequest $request):JsonResponse{
+//
+//        try{
+//
+//            $createStatementUseCase = new CreateStatementCommand(userId: Auth::id(), text: $request->text);
+//            $statement = $createStatementUseCase->execute();
+//
+//            if($statement){
+//                return response() -> json(["data" => ["message" => "StatementEloquent was create successfull.",
+//                ]],200);
+//            }
+//        }catch(\Exception $exception){
+//            return response() -> json(["error" => ["message" => $exception->getMessage(),
+//            ]],$exception->getCode());
+//        }
+//    }
 
 
     /**

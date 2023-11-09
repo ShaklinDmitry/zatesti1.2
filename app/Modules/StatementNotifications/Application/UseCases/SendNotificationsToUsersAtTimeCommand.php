@@ -27,7 +27,7 @@ class SendNotificationsToUsersAtTimeCommand implements SendNotificationsToUsersA
         $statementSendingScheduleCollection = $this->getStatementSendingScheduleByTimeCommand->execute($time)->getCollection();
         foreach ($statementSendingScheduleCollection as $statementSendingSchedule){
                 $statement = $this->getStatementForSendingCommand->execute($statementSendingSchedule->userId);
-                $this->userNotifyCommand->execute($statementSendingSchedule->userId, $statement->text);
+                $this->userNotifyCommand->execute($statementSendingSchedule->userId, $statement->text, $statement->guid);
         }
     }
 }

@@ -9,12 +9,17 @@ use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNoti
 use App\Modules\Statements\Application\UseCases\CreateStatementCommand;
 use App\Modules\Statements\Application\UseCases\GetStatementForSendingCommand;
 use App\Modules\Statements\Application\UseCases\GetStatementForSendingCommandInterface;
+use App\Modules\Statements\Application\UseCases\SetStatementSendDateTimeCommand;
+use App\Modules\Statements\Application\UseCases\SetStatementSendDateTimeCommandInterface;
+use App\Modules\Statements\Domain\StatementRepositoryInterface;
 use App\Modules\Statements\Infrastructure\Repositories\StatementRepository;
 use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleByTimeCommand;
 use App\Modules\StatementSendingSchedule\Application\UseCases\GetStatementSendingScheduleByTimeCommandInterface;
 use App\Modules\StatementSendingSchedule\Infrastructure\Repositories\StatementSendingScheduleRepository;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommandInterface;
+use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommand;
+use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommandInterface;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\User\Application\UseCases\UserNotifyCommand;
 use App\Modules\User\Application\UseCases\UserNotifyCommandInterface;
@@ -31,10 +36,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(StatementRepositoryInterface::class, function ($app){
+            return new StatementRepository();
+        });
+
         $this->app->bind(MakeStatementsFromTextCommandInterface::class, function ($app) {
 
             $textForStatementsRepository = new TextForStatementsRepository();
-            $сreateStatementCommand = new CreateStatementCommand();
+            $statementRepository = new StatementRepository();
+
+            $сreateStatementCommand = new CreateStatementCommand($statementRepository);
 
             return new MakeStatementsFromTextCommand($textForStatementsRepository, $сreateStatementCommand);
         });
@@ -73,7 +84,14 @@ class AppServiceProvider extends ServiceProvider
             return new SendNotificationsToUsersAtTimeCommand($getStatementSendingScheduleByTimeCommand, $userNotifyCommand, $getStatementForSendingCommand);
         });
 
+        $this->app->bind(SaveTextForStatementsCommandInterface::class, function($app){
+            $textForStatementsRepository = new TextForStatementsRepository();
+            return new SaveTextForStatementsCommand($textForStatementsRepository);
+        });
 
+        $this->app->bind(SetStatementSendDateTimeCommandInterface::class, function ($app){
+            return new SetStatementSendDateTimeCommand($app->make(StatementRepositoryInterface::class));
+        });
 
     }
 

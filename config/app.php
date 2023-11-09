@@ -176,7 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
    //     App\Providers\TextForStatementsServiceProvider::class,
         App\Providers\StatementNotificationServiceProvider::class,
-        \App\Providers\TextForStatementsServiceProvider::class
     ],
 
     /*

@@ -19,7 +19,7 @@ class GetStatementSendingScheduleByTimeCommand implements GetStatementSendingSch
      * @return StatementSendingScheduleDTOCollection
      */
     public function execute(string $currentTime):StatementSendingScheduleDTOCollection{
-        $statementSendingScheduleDTOCollection = $this->statementSendingScheduleRepository->getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTime($currentTime);
+        $statementSendingScheduleDTOCollection = $this->statementSendingScheduleRepository->getStatementSendingScheduleByTime($currentTime);
 
         return $statementSendingScheduleDTOCollection;
     }

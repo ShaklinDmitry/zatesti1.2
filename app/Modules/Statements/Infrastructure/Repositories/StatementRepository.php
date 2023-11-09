@@ -82,12 +82,11 @@ class StatementRepository implements StatementRepositoryInterface
     }
 
     /**
-     * Установить дату отправки выскаывания.
-     * @param int $statementId
+     * @param int $statementGuid
      * @return bool
      */
-    public function setStatementSendDateTime(int $statementId): bool
+    public function setStatementSendDateTime(string $statementGuid): bool
     {
-        return StatementEloquent::where('id',$statementId)->update(['send_date_time' => NOW()]);
+        return StatementEloquent::where('guid',$statementGuid)->update(['send_date_time' => NOW()]);
     }
 }

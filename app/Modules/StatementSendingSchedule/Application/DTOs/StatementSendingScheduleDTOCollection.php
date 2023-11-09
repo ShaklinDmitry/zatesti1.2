@@ -5,7 +5,7 @@ namespace App\Modules\StatementSendingSchedule\Application\DTOs;
 
 class StatementSendingScheduleDTOCollection
 {
-    private array $collection;
+    private array $collection = array();
 
     /**
      * Функция для добавления dto высказывания в коллекцию.

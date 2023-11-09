@@ -7,5 +7,5 @@ interface UserNotifyCommandInterface
     /**
      * @return mixed
      */
-    public function execute(int $userId, string $text);
+    public function execute(int $userId, string $text, string $statementGuid);
 }

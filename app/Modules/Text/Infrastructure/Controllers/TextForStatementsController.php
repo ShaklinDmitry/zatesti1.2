@@ -3,6 +3,7 @@
 namespace App\Modules\Text\Infrastructure\Controllers;
 
 use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommand;
+use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommandInterface;
 use App\Modules\Text\Infrastructure\Jobs\MakeStatementsFromText;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\Text\Infrastructure\Requests\TextForStatementsRequest;
@@ -17,32 +18,23 @@ class TextForStatementsController extends Controller
     /**
      * Функция, которая сохраняет текст
      * @param TextForStatementsRequest $request
+     * @param SaveTextForStatementsCommandInterface $saveTextForStatementsCommand
      * @return JsonResponse
      */
-    public function createText(TextForStatementsRequest $request):JsonResponse{
+    public function createText(TextForStatementsRequest $request, SaveTextForStatementsCommandInterface $saveTextForStatementsCommand):JsonResponse{
 
-//        try{
-//
-//            $textForStatementsRepository = new TextForStatementsRepository();
-//
-//            $saveTextForStatementsUseCase = new SaveTextForStatementsCommand(userId: Auth::id(), text: $request->text, textForStatementsRepository: $textForStatementsRepository);
-//            $textForStatements = $saveTextForStatementsUseCase->execute();
-//
-//            if($textForStatements){
-//                $responseData = [
-//                    "data" => [
-//                        "message" => "Text was added.",
-//                        "text_id" => $textForStatements->id
-//                    ]
-//                ];
-//            }
-//
-//            return response() -> json($responseData,200);
-//
-//        }catch (\Exception $exception){
-//            return response() -> json(["error" => ["message" => $exception->getMessage(),
-//            ]], $exception->getCode());
-//        }
+        $textForStatementsDTO = $saveTextForStatementsCommand->execute(userId: Auth::id(), text: $request->text);
+
+        if($textForStatementsDTO){
+            $responseData = [
+                    "data" => [
+                        "message" => "Text was added.",
+                        "text_id" => $textForStatementsDTO->guid
+                    ]
+                ];
+        }
+
+        return response() -> json($responseData,200);
 
     }
 
@@ -53,8 +45,6 @@ class TextForStatementsController extends Controller
      */
     public function makeStatementsFromText(){
 
-        try{
-
             MakeStatementsFromText::dispatch(Auth::id());
 
             $responseData = [
@@ -64,13 +54,7 @@ class TextForStatementsController extends Controller
             ];
 
             return response() -> json($responseData,200);
-
-        }catch (TextForStatementsIsNullException $exception){
-
-            return response() -> json(["error" => ["message" => $exception->getMessage(),
-            ]],$exception->getCode());
-
-        }
+            
     }
 
 }

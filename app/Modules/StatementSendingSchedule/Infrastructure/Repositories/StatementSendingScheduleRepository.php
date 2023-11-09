@@ -16,29 +16,24 @@ class StatementSendingScheduleRepository implements StatementSendingScheduleRepo
      * @return array
      * @throws NoUsersForWeeklyNotificationsException
      */
-    public function getStatementSendingScheduleForUsersWhoShouldBeNotifiedThisWeek():array
-    {
-        $listOfUsersInSchedule = StatementSendingSchedule::distinct()->get(['user_id']);
-
-        if($listOfUsersInSchedule->isEmpty()){
-            throw new NoUsersForWeeklyNotificationsException();
-        }
-
-        return $listOfUsersInSchedule->toArray();
-
-    }
+//    public function getStatementSendingScheduleForUsersWhoShouldBeNotifiedThisWeek():array
+//    {
+//        $listOfUsersInSchedule = StatementSendingSchedule::distinct()->get(['user_id']);
+//
+//        if($listOfUsersInSchedule->isEmpty()){
+//            throw new NoUsersForWeeklyNotificationsException();
+//        }
+//
+//        return $listOfUsersInSchedule->toArray();
+//
+//    }
 
     /**
      * @param string $currentTime
      * @return StatementSendingScheduleDTOCollection
-     * @throws NoUsersWhoScheduledToReceiveStatementNotificationException
      */
-    public function getStatementSendingScheduleForUsersWhoShouldBeNotifiedAtTheCurrentTime(string $currentTime): StatementSendingScheduleDTOCollection{
+    public function getStatementSendingScheduleByTime(string $currentTime): StatementSendingScheduleDTOCollection{
         $statementSendingSchedule = StatementSendingSchedule::where('exact_time', $currentTime)->get();
-
-        if($statementSendingSchedule->isEmpty()){
-            throw new NoUsersWhoScheduledToReceiveStatementNotificationException();
-        }
 
         $statementSendingScheduleDTOCollection = new StatementSendingScheduleDTOCollection();
         foreach ($statementSendingSchedule as $statementSendingScheduleValue){

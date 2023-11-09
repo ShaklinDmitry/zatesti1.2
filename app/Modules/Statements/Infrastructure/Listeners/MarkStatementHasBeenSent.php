@@ -2,9 +2,10 @@
 
 namespace App\Modules\Statements\Infrastructure\Listeners;
 
-use App\Modules\Statements\Application\UseCases\SetStatementSendDateTimeUseCase;
+use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification;
+use App\Modules\Statements\Application\UseCases\SetStatementSendDateTimeCommand;
 use App\Modules\Statements\Infrastructure\Repositories\StatementRepository;
-use App\Modules\Statements\StatementSentStatusUpdater;
+use Illuminate\Support\Facades\Log;
 
 class MarkStatementHasBeenSent
 {
@@ -13,7 +14,7 @@ class MarkStatementHasBeenSent
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private SetStatementSendDateTimeCommand $setStatementSendDateTimeCommand)
     {
     }
 
@@ -25,9 +26,12 @@ class MarkStatementHasBeenSent
      */
     public function handle($event)
     {
-        $statementRepository = new StatementRepository();
+        Log::debug(serialize($event));
 
-        $setStatementSendDateTimeUseCase = new SetStatementSendDateTimeUseCase($event->notifiable['last_statement_id_sent'], $statementRepository);
-        $setStatementSendDateTimeUseCase->execute();
+        if($event->notification instanceof TelegramNotification){
+            Log::debug('im here');
+            $this->setStatementSendDateTimeCommand->execute($event->notification->statementGuid);
+        }
+
     }
 }

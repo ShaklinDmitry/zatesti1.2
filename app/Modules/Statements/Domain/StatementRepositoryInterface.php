@@ -31,8 +31,8 @@ interface StatementRepositoryInterface
     public function getAllStatementsByUserId(int $userId): StatementDTOCollection;
 
     /**
-     * для установки времени отправки высказывания
+     * @param string $statementGuid
      * @return mixed
      */
-    public function setStatementSendDateTime(int $statementId);
+    public function setStatementSendDateTime(string $statementGuid);
 }
