@@ -18,7 +18,7 @@ class TextForStatementsRepository implements TextForStatementsRepositoryInterfac
     {
         $textForStatement = TextForStatementsEloquent::where(['is_parsed' => 0], ['user_id' => $userId])->first();
 
-        $textForStatementDTO = new TextForStatementDTO($textForStatement->id, $textForStatement->user_id, $textForStatement->text);
+        $textForStatementDTO = new TextForStatementDTO($textForStatement->guid, $textForStatement->user_id, $textForStatement->text);
 
         return $textForStatementDTO;
     }

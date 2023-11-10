@@ -25,20 +25,17 @@ class MakeStatementsFromTextCommandTest extends TestCase
     {
         $user = User::factory()->create();
         $text = "Sentence1.Sentence2.Sentence3.";
+        $guid = uniqid();
 
         $textForStatement = TextForStatementsEloquent::factory()->create(
             [
                 "text" => $text,
-                "user_id" => $user->id
+                "user_id" => $user->id,
+                "guid" => $guid
             ]
         );
 
-        $textForStatementsRepository = new TextForStatementsRepository();
-
-        $statementRepository = new StatementRepository();
-        $createStatementCommand = new CreateStatementCommand($statementRepository);
-
-        $makeStatementsFromTextCommand = new MakeStatementsFromTextCommand($textForStatementsRepository, $createStatementCommand);
+        $makeStatementsFromTextCommand = app(MakeStatementsFromTextCommand::class);
         $makeStatementsFromTextCommand->execute(userId: $user->id);
 
         $this->assertDatabaseHas("statement", [
@@ -51,5 +48,12 @@ class MakeStatementsFromTextCommandTest extends TestCase
             'text' => "Sentence3",
         ]);
 
+        //проверка  на то что текст отмечен как распарсенный
+        $this->assertDatabaseHas("text",[
+            'text' => $text,
+            'user_id' => $user->id,
+            'guid' => $guid,
+            'is_parsed' => 1
+        ]);
     }
 }

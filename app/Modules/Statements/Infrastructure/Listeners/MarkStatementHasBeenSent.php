@@ -26,12 +26,8 @@ class MarkStatementHasBeenSent
      */
     public function handle($event)
     {
-        Log::debug(serialize($event));
-
         if($event->notification instanceof TelegramNotification){
-            Log::debug('im here');
             $this->setStatementSendDateTimeCommand->execute($event->notification->statementGuid);
         }
-
     }
 }

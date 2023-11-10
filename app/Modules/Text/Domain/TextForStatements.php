@@ -12,9 +12,13 @@ class TextForStatements
     private bool $isParsed;
     public string $guid;
 
-    public function __construct(public int $userId, public string $text)
+    public function __construct(public int $userId, public string $text, string $guid = NULL)
     {
-        $this->guid = uniqid();
+        if($guid == NULL){
+            $this->guid = uniqid();
+        }else{
+            $this->guid = $guid;
+        }
     }
 
     /**

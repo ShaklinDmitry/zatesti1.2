@@ -7,6 +7,7 @@ use App\Modules\StatementNotifications\Application\UseCases\SendNotificationsToU
 use App\Modules\StatementNotifications\Domain\StatementNotificationInterface;
 use App\Modules\StatementNotifications\Infrastructure\Notifications\TelegramNotification;
 use App\Modules\Statements\Application\UseCases\CreateStatementCommand;
+use App\Modules\Statements\Application\UseCases\CreateStatementCommandInterface;
 use App\Modules\Statements\Application\UseCases\GetStatementForSendingCommand;
 use App\Modules\Statements\Application\UseCases\GetStatementForSendingCommandInterface;
 use App\Modules\Statements\Application\UseCases\SetStatementSendDateTimeCommand;
@@ -20,6 +21,7 @@ use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommand;
 use App\Modules\Text\Application\UseCases\MakeStatementsFromTextCommandInterface;
 use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommand;
 use App\Modules\Text\Application\UseCases\SaveTextForStatementsCommandInterface;
+use App\Modules\Text\Domain\TextForStatementsRepositoryInterface;
 use App\Modules\Text\Infrastructure\Repositories\TextForStatementsRepository;
 use App\Modules\User\Application\UseCases\UserNotifyCommand;
 use App\Modules\User\Application\UseCases\UserNotifyCommandInterface;
@@ -38,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(StatementRepositoryInterface::class, function ($app){
             return new StatementRepository();
+        });
+
+        $this->app->bind(TextForStatementsRepositoryInterface::class, function($app){
+            return new TextForStatementsRepository();
         });
 
         $this->app->bind(MakeStatementsFromTextCommandInterface::class, function ($app) {
@@ -93,6 +99,10 @@ class AppServiceProvider extends ServiceProvider
             return new SetStatementSendDateTimeCommand($app->make(StatementRepositoryInterface::class));
         });
 
+        $this->app->bind(CreateStatementCommandInterface::class, function ($app){
+            $statementRepository = app(StatementRepositoryInterface::class);
+            return new CreateStatementCommand($statementRepository);
+        });
     }
 
     /**

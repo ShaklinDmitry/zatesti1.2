@@ -27,15 +27,12 @@ class MakeStatementsFromTextCommand implements MakeStatementsFromTextCommandInte
     public function execute(int $userId): void {
         $unParsedText = $this->textForStatementsRepository->getUnparsedTextForStatementsByUserId($userId);
 
-        Log::debug(serialize($unParsedText));
-
-        $textForStatements = new TextForStatements(userId: $unParsedText->userId,text: $unParsedText->text);
+        $textForStatements = new TextForStatements(userId: $unParsedText->userId,text: $unParsedText->text, guid: $unParsedText->guid);
         $statements = $textForStatements->parseTextIntoStatements();
 
         foreach ($statements as $text) {
             $this->createStatementCommand->execute($userId, $text);
         }
-
         $parsedText = $textForStatements->markTextAsParsed();
         $this->textForStatementsRepository->markTextParsed($parsedText->guid);
     }
